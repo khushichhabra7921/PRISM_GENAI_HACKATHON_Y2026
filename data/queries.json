@@ -1,0 +1,1166 @@
+{
+  "metadata": {
+    "synthetic": true,
+    "generator": "scripts/make_synthetic_kit.py",
+    "seed": 2026,
+    "note": "Synthetic data written from general One UI knowledge; not official Samsung content."
+  },
+  "queries": [
+    {
+      "id": "q001",
+      "query": "The mobile phone swipe navigation moves up or down instead of left or right after downloading an app",
+      "domain": "Navigation",
+      "register": "formal",
+      "siis_id": "siis_d01",
+      "siis_ids": [
+        "siis_d01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q002",
+      "query": "swipe gestures go the wrong way after installing an app",
+      "domain": "Navigation",
+      "register": "casual",
+      "siis_id": "siis_d01",
+      "siis_ids": [
+        "siis_d01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q003",
+      "query": "navigation gestures broken",
+      "domain": "Navigation",
+      "register": "keyword",
+      "siis_id": "siis_d01",
+      "siis_ids": [
+        "siis_d01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q004",
+      "query": "how do i switch from buttons to swipe gestures",
+      "domain": "Navigation",
+      "register": "casual",
+      "siis_id": "siis_d01",
+      "siis_ids": [
+        "siis_d01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q005",
+      "query": "My screen keeps flickering",
+      "domain": "Display",
+      "register": "casual",
+      "siis_id": "siis_d02",
+      "siis_ids": [
+        "siis_d02"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q006",
+      "query": "display flicker at low brightness",
+      "domain": "Display",
+      "register": "keyword",
+      "siis_id": "siis_d02",
+      "siis_ids": [
+        "siis_d02"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q007",
+      "query": "screen flikers randomly its so annoying",
+      "domain": "Display",
+      "register": "typo",
+      "siis_id": "siis_d02",
+      "siis_ids": [
+        "siis_d02"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q008",
+      "query": "My screen is too dark even at full brightness",
+      "domain": "Display",
+      "register": "casual",
+      "siis_id": "siis_d03",
+      "siis_ids": [
+        "siis_d03"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q009",
+      "query": "screen dim",
+      "domain": "Display",
+      "register": "keyword",
+      "siis_id": "siis_d03",
+      "siis_ids": [
+        "siis_d03"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q010",
+      "query": "The display turns off after a few seconds",
+      "domain": "Display",
+      "register": "formal",
+      "siis_id": "siis_d04",
+      "siis_ids": [
+        "siis_d04"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q011",
+      "query": "how to make the screen stay on longer",
+      "domain": "Display",
+      "register": "casual",
+      "siis_id": "siis_d04",
+      "siis_ids": [
+        "siis_d04"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q012",
+      "query": "touch screen not responding to my taps",
+      "domain": "Display",
+      "register": "casual",
+      "siis_id": "siis_d05",
+      "siis_ids": [
+        "siis_d05"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q013",
+      "query": "WHY WONT MY TOUCHSCREEN WORK",
+      "domain": "Display",
+      "register": "frustrated",
+      "siis_id": "siis_d05",
+      "siis_ids": [
+        "siis_d05"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q014",
+      "query": "the screen looks yellow",
+      "domain": "Display",
+      "register": "casual",
+      "siis_id": "siis_d06",
+      "siis_ids": [
+        "siis_d06"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q015",
+      "query": "colours look washed out on my display",
+      "domain": "Display",
+      "register": "formal",
+      "siis_id": "siis_d06",
+      "siis_ids": [
+        "siis_d06"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q016",
+      "query": "always on display not showing the clock",
+      "domain": "Display",
+      "register": "casual",
+      "siis_id": "siis_d07",
+      "siis_ids": [
+        "siis_d07"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q017",
+      "query": "screen wont rotate",
+      "domain": "Display",
+      "register": "typo",
+      "siis_id": "siis_d08",
+      "siis_ids": [
+        "siis_d08"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q018",
+      "query": "auto rotate not working in videos",
+      "domain": "Display",
+      "register": "keyword",
+      "siis_id": "siis_d08",
+      "siis_ids": [
+        "siis_d08"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q019",
+      "query": "text is too small to read",
+      "domain": "Display",
+      "register": "casual",
+      "siis_id": "siis_d09",
+      "siis_ids": [
+        "siis_d09"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q020",
+      "query": "dark mode keeps turning off by itself",
+      "domain": "Display",
+      "register": "casual",
+      "siis_id": "siis_d10",
+      "siis_ids": [
+        "siis_d10"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q021",
+      "query": "phone is tapping things on its own",
+      "domain": "Display",
+      "register": "casual",
+      "siis_id": "siis_d11",
+      "siis_ids": [
+        "siis_d11"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q022",
+      "query": "ghost touch problem",
+      "domain": "Display",
+      "register": "keyword",
+      "siis_id": "siis_d11",
+      "siis_ids": [
+        "siis_d11"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q023",
+      "query": "scrolling looks choppy not smooth",
+      "domain": "Display",
+      "register": "casual",
+      "siis_id": "siis_d12",
+      "siis_ids": [
+        "siis_d12"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q024",
+      "query": "My battery is draining really fast",
+      "domain": "Battery",
+      "register": "casual",
+      "siis_id": "siis_b01",
+      "siis_ids": [
+        "siis_b01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q025",
+      "query": "battery drain",
+      "domain": "Battery",
+      "register": "keyword",
+      "siis_id": "siis_b01",
+      "siis_ids": [
+        "siis_b01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q026",
+      "query": "battery dies in like 3 hours this is ridiculous",
+      "domain": "Battery",
+      "register": "frustrated",
+      "siis_id": "siis_b01",
+      "siis_ids": [
+        "siis_b01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q027",
+      "query": "The battery life of my device has decreased significantly",
+      "domain": "Battery",
+      "register": "formal",
+      "siis_id": "siis_b01",
+      "siis_ids": [
+        "siis_b01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q028",
+      "query": "batery drainig fast",
+      "domain": "Battery",
+      "register": "typo",
+      "siis_id": "siis_b01",
+      "siis_ids": [
+        "siis_b01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q029",
+      "query": "phone charging very slowly",
+      "domain": "Battery",
+      "register": "casual",
+      "siis_id": "siis_b02",
+      "siis_ids": [
+        "siis_b02"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q030",
+      "query": "charger not charging properly",
+      "domain": "Battery",
+      "register": "keyword",
+      "siis_id": "siis_b02",
+      "siis_ids": [
+        "siis_b02"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q031",
+      "query": "fast charging stopped working",
+      "domain": "Battery",
+      "register": "casual",
+      "siis_id": "siis_b02",
+      "siis_ids": [
+        "siis_b02"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q032",
+      "query": "phone gets very hot while charging",
+      "domain": "Battery",
+      "register": "casual",
+      "siis_id": "siis_b03",
+      "siis_ids": [
+        "siis_b03"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q033",
+      "query": "battery drops overnight while I sleep",
+      "domain": "Battery",
+      "register": "casual",
+      "siis_id": "siis_b04",
+      "siis_ids": [
+        "siis_b04"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q034",
+      "query": "loses 20 percent overnight on standby",
+      "domain": "Battery",
+      "register": "keyword",
+      "siis_id": "siis_b04",
+      "siis_ids": [
+        "siis_b04"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q035",
+      "query": "battery got worse after the latest update",
+      "domain": "Battery",
+      "register": "casual",
+      "siis_id": "siis_b05",
+      "siis_ids": [
+        "siis_b05"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q036",
+      "query": "wireless charger not working",
+      "domain": "Battery",
+      "register": "keyword",
+      "siis_id": "siis_b06",
+      "siis_ids": [
+        "siis_b06"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q037",
+      "query": "phone stops charging at 85 percent",
+      "domain": "Battery",
+      "register": "casual",
+      "siis_id": "siis_b07",
+      "siis_ids": [
+        "siis_b07"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q038",
+      "query": "why wont it charge past 80%",
+      "domain": "Battery",
+      "register": "frustrated",
+      "siis_id": "siis_b07",
+      "siis_ids": [
+        "siis_b07"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q039",
+      "query": "gps is killing my battery",
+      "domain": "Battery",
+      "register": "casual",
+      "siis_id": "siis_b08",
+      "siis_ids": [
+        "siis_b08"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q040",
+      "query": "phone turns off at 30 percent battery",
+      "domain": "Battery",
+      "register": "casual",
+      "siis_id": "siis_b09",
+      "siis_ids": [
+        "siis_b09"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q041",
+      "query": "battery percentage not showing in status bar",
+      "domain": "Battery",
+      "register": "casual",
+      "siis_id": "siis_b10",
+      "siis_ids": [
+        "siis_b10"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q042",
+      "query": "My camera photos come out blurry",
+      "domain": "Camera",
+      "register": "casual",
+      "siis_id": "siis_c01",
+      "siis_ids": [
+        "siis_c01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q043",
+      "query": "blurry pictures",
+      "domain": "Camera",
+      "register": "keyword",
+      "siis_id": "siis_c01",
+      "siis_ids": [
+        "siis_c01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q044",
+      "query": "camera cant focus properly",
+      "domain": "Camera",
+      "register": "typo",
+      "siis_id": "siis_c01",
+      "siis_ids": [
+        "siis_c01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q045",
+      "query": "Camera failed error message",
+      "domain": "Camera",
+      "register": "keyword",
+      "siis_id": "siis_c02",
+      "siis_ids": [
+        "siis_c02"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q046",
+      "query": "camera app keeps crashing when I open it",
+      "domain": "Camera",
+      "register": "casual",
+      "siis_id": "siis_c02",
+      "siis_ids": [
+        "siis_c02"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q047",
+      "query": "camera shows a black screen",
+      "domain": "Camera",
+      "register": "casual",
+      "siis_id": "siis_c03",
+      "siis_ids": [
+        "siis_c03"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q048",
+      "query": "flash not working on camera",
+      "domain": "Camera",
+      "register": "keyword",
+      "siis_id": "siis_c04",
+      "siis_ids": [
+        "siis_c04"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q049",
+      "query": "photos look low quality and grainy",
+      "domain": "Camera",
+      "register": "casual",
+      "siis_id": "siis_c05",
+      "siis_ids": [
+        "siis_c05"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q050",
+      "query": "how to turn off camera shutter sound",
+      "domain": "Camera",
+      "register": "casual",
+      "siis_id": "siis_c06",
+      "siis_ids": [
+        "siis_c06"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q051",
+      "query": "video recording stops by itself",
+      "domain": "Camera",
+      "register": "casual",
+      "siis_id": "siis_c07",
+      "siis_ids": [
+        "siis_c07"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q052",
+      "query": "selfies are flipped mirrored",
+      "domain": "Camera",
+      "register": "keyword",
+      "siis_id": "siis_c08",
+      "siis_ids": [
+        "siis_c08"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q053",
+      "query": "my videos are super shaky",
+      "domain": "Camera",
+      "register": "casual",
+      "siis_id": "siis_c09",
+      "siis_ids": [
+        "siis_c09"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q054",
+      "query": "My phone is very slow",
+      "domain": "Performance",
+      "register": "casual",
+      "siis_id": "siis_p01",
+      "siis_ids": [
+        "siis_p01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q055",
+      "query": "phone lagging",
+      "domain": "Performance",
+      "register": "keyword",
+      "siis_id": "siis_p01",
+      "siis_ids": [
+        "siis_p01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q056",
+      "query": "The device performance has degraded and applications respond slowly",
+      "domain": "Performance",
+      "register": "formal",
+      "siis_id": "siis_p01",
+      "siis_ids": [
+        "siis_p01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q057",
+      "query": "my phone got slow after the update",
+      "domain": "Performance",
+      "register": "casual",
+      "siis_id": "siis_p02",
+      "siis_ids": [
+        "siis_p02"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q058",
+      "query": "laggy after software update",
+      "domain": "Performance",
+      "register": "keyword",
+      "siis_id": "siis_p02",
+      "siis_ids": [
+        "siis_p02"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q059",
+      "query": "apps keep crashing",
+      "domain": "Performance",
+      "register": "keyword",
+      "siis_id": "siis_p03",
+      "siis_ids": [
+        "siis_p03"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q060",
+      "query": "apps close by themselves randomly",
+      "domain": "Performance",
+      "register": "casual",
+      "siis_id": "siis_p03",
+      "siis_ids": [
+        "siis_p03"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q061",
+      "query": "storage full cant install apps",
+      "domain": "Performance",
+      "register": "keyword",
+      "siis_id": "siis_p04",
+      "siis_ids": [
+        "siis_p04"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q062",
+      "query": "phone keeps freezing",
+      "domain": "Performance",
+      "register": "casual",
+      "siis_id": "siis_p05",
+      "siis_ids": [
+        "siis_p05"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q063",
+      "query": "phone hangs and wont respond at all",
+      "domain": "Performance",
+      "register": "frustrated",
+      "siis_id": "siis_p05",
+      "siis_ids": [
+        "siis_p05"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q064",
+      "query": "apps reload every time i switch",
+      "domain": "Performance",
+      "register": "casual",
+      "siis_id": "siis_p06",
+      "siis_ids": [
+        "siis_p06"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q065",
+      "query": "phone overheats when gaming",
+      "domain": "Performance",
+      "register": "casual",
+      "siis_id": "siis_p07",
+      "siis_ids": [
+        "siis_p07"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q066",
+      "query": "phone restarts randomly",
+      "domain": "Performance",
+      "register": "casual",
+      "siis_id": "siis_p08",
+      "siis_ids": [
+        "siis_p08"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q067",
+      "query": "keyboard is laggy when typing",
+      "domain": "Performance",
+      "register": "casual",
+      "siis_id": "siis_p09",
+      "siis_ids": [
+        "siis_p09"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q068",
+      "query": "home screen lags",
+      "domain": "Performance",
+      "register": "keyword",
+      "siis_id": "siis_p10",
+      "siis_ids": [
+        "siis_p10"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q069",
+      "query": "My Wi-Fi keeps dropping",
+      "domain": "Connectivity",
+      "register": "casual",
+      "siis_id": "siis_n01",
+      "siis_ids": [
+        "siis_n01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q070",
+      "query": "wifi disconnects every few minutes",
+      "domain": "Connectivity",
+      "register": "casual",
+      "siis_id": "siis_n01",
+      "siis_ids": [
+        "siis_n01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q071",
+      "query": "bluetooth wont pair with my earbuds",
+      "domain": "Connectivity",
+      "register": "typo",
+      "siis_id": "siis_n02",
+      "siis_ids": [
+        "siis_n02"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q072",
+      "query": "mobile data not working",
+      "domain": "Connectivity",
+      "register": "keyword",
+      "siis_id": "siis_n03",
+      "siis_ids": [
+        "siis_n03"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q073",
+      "query": "no signal on my phone",
+      "domain": "Connectivity",
+      "register": "casual",
+      "siis_id": "siis_n04",
+      "siis_ids": [
+        "siis_n04"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q074",
+      "query": "hotspot not working laptop cant connect",
+      "domain": "Connectivity",
+      "register": "casual",
+      "siis_id": "siis_n05",
+      "siis_ids": [
+        "siis_n05"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q075",
+      "query": "bluetooth audio keeps cutting out",
+      "domain": "Connectivity",
+      "register": "casual",
+      "siis_id": "siis_n06",
+      "siis_ids": [
+        "siis_n06"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q076",
+      "query": "wifi calling not working",
+      "domain": "Connectivity",
+      "register": "keyword",
+      "siis_id": "siis_n07",
+      "siis_ids": [
+        "siis_n07"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q077",
+      "query": "gps location is inaccurate",
+      "domain": "Connectivity",
+      "register": "casual",
+      "siis_id": "siis_n08",
+      "siis_ids": [
+        "siis_n08"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q078",
+      "query": "cant hear anything during calls",
+      "domain": "Sound",
+      "register": "casual",
+      "siis_id": "siis_s01",
+      "siis_ids": [
+        "siis_s01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q079",
+      "query": "not getting notifications from whatsapp",
+      "domain": "Notifications",
+      "register": "casual",
+      "siis_id": "siis_s02",
+      "siis_ids": [
+        "siis_s02"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q080",
+      "query": "calls are silenced",
+      "domain": "Notifications",
+      "register": "keyword",
+      "siis_id": "siis_s03",
+      "siis_ids": [
+        "siis_s03"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q081",
+      "query": "phone not vibrating",
+      "domain": "Sound",
+      "register": "keyword",
+      "siis_id": "siis_s04",
+      "siis_ids": [
+        "siis_s04"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q082",
+      "query": "ringtone too quiet",
+      "domain": "Sound",
+      "register": "keyword",
+      "siis_id": "siis_s05",
+      "siis_ids": [
+        "siis_s05"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q083",
+      "query": "software update keeps failing",
+      "domain": "Software",
+      "register": "casual",
+      "siis_id": "siis_r01",
+      "siis_ids": [
+        "siis_r01"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q084",
+      "query": "how do I factory reset my phone",
+      "domain": "Software",
+      "register": "casual",
+      "siis_id": "siis_r02",
+      "siis_ids": [
+        "siis_r02"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q085",
+      "query": "time on my phone is wrong",
+      "domain": "Software",
+      "register": "casual",
+      "siis_id": "siis_r04",
+      "siis_ids": [
+        "siis_r04"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q086",
+      "query": "lift to wake stopped working",
+      "domain": "Software",
+      "register": "casual",
+      "siis_id": "siis_r05",
+      "siis_ids": [
+        "siis_r05"
+      ],
+      "type": "single"
+    },
+    {
+      "id": "q087",
+      "query": "my screen flickers and the battery dies fast",
+      "domain": "Display",
+      "register": "casual",
+      "siis_id": "siis_d02",
+      "siis_ids": [
+        "siis_d02",
+        "siis_b01"
+      ],
+      "type": "multi"
+    },
+    {
+      "id": "q088",
+      "query": "phone is slow and the battery drains quickly",
+      "domain": "Performance",
+      "register": "casual",
+      "siis_id": "siis_p01",
+      "siis_ids": [
+        "siis_p01",
+        "siis_b01"
+      ],
+      "type": "multi"
+    },
+    {
+      "id": "q089",
+      "query": "camera photos are blurry and the flash does not work",
+      "domain": "Camera",
+      "register": "casual",
+      "siis_id": "siis_c01",
+      "siis_ids": [
+        "siis_c01",
+        "siis_c04"
+      ],
+      "type": "multi"
+    },
+    {
+      "id": "q090",
+      "query": "wifi keeps disconnecting and bluetooth wont pair",
+      "domain": "Connectivity",
+      "register": "casual",
+      "siis_id": "siis_n01",
+      "siis_ids": [
+        "siis_n01",
+        "siis_n02"
+      ],
+      "type": "multi"
+    },
+    {
+      "id": "q091",
+      "query": "phone overheats while charging and apps keep crashing",
+      "domain": "Battery",
+      "register": "casual",
+      "siis_id": "siis_b03",
+      "siis_ids": [
+        "siis_b03",
+        "siis_p03"
+      ],
+      "type": "multi"
+    },
+    {
+      "id": "q092",
+      "query": "screen too dim and it turns off too fast",
+      "domain": "Display",
+      "register": "casual",
+      "siis_id": "siis_d03",
+      "siis_ids": [
+        "siis_d03",
+        "siis_d04"
+      ],
+      "type": "multi"
+    },
+    {
+      "id": "q093",
+      "query": "storage is full and the camera stops recording video",
+      "domain": "Performance",
+      "register": "casual",
+      "siis_id": "siis_p04",
+      "siis_ids": [
+        "siis_p04",
+        "siis_c07"
+      ],
+      "type": "multi"
+    },
+    {
+      "id": "q094",
+      "query": "phone keeps freezing and the touchscreen does not respond",
+      "domain": "Performance",
+      "register": "frustrated",
+      "siis_id": "siis_p05",
+      "siis_ids": [
+        "siis_p05",
+        "siis_d05"
+      ],
+      "type": "multi"
+    },
+    {
+      "id": "q095",
+      "query": "no notifications and the phone does not vibrate",
+      "domain": "Notifications",
+      "register": "casual",
+      "siis_id": "siis_s02",
+      "siis_ids": [
+        "siis_s02",
+        "siis_s04"
+      ],
+      "type": "multi"
+    },
+    {
+      "id": "q096",
+      "query": "charging is slow and phone restarts randomly",
+      "domain": "Battery",
+      "register": "casual",
+      "siis_id": "siis_b02",
+      "siis_ids": [
+        "siis_b02",
+        "siis_p08"
+      ],
+      "type": "multi"
+    },
+    {
+      "id": "q097",
+      "query": "My Galaxy Watch won't sync my step count with the phone",
+      "domain": "Other",
+      "register": "casual",
+      "siis_id": null,
+      "siis_ids": [],
+      "type": "no_match"
+    },
+    {
+      "id": "q098",
+      "query": "how do i transfer whatsapp chats to an iphone",
+      "domain": "Other",
+      "register": "casual",
+      "siis_id": null,
+      "siis_ids": [],
+      "type": "no_match"
+    },
+    {
+      "id": "q099",
+      "query": "my screen cracked after I dropped it how much is the repair",
+      "domain": "Other",
+      "register": "casual",
+      "siis_id": null,
+      "siis_ids": [],
+      "type": "no_match"
+    },
+    {
+      "id": "q100",
+      "query": "cant sign in to my samsung account",
+      "domain": "Other",
+      "register": "casual",
+      "siis_id": null,
+      "siis_ids": [],
+      "type": "no_match"
+    },
+    {
+      "id": "q101",
+      "query": "s pen not writing on the screen",
+      "domain": "Other",
+      "register": "keyword",
+      "siis_id": null,
+      "siis_ids": [],
+      "type": "no_match"
+    },
+    {
+      "id": "q102",
+      "query": "esim activation failed",
+      "domain": "Other",
+      "register": "keyword",
+      "siis_id": null,
+      "siis_ids": [],
+      "type": "no_match"
+    },
+    {
+      "id": "q103",
+      "query": "samsung dex wont connect to my monitor",
+      "domain": "Other",
+      "register": "casual",
+      "siis_id": null,
+      "siis_ids": [],
+      "type": "no_match"
+    },
+    {
+      "id": "q104",
+      "query": "card declined in samsung wallet",
+      "domain": "Other",
+      "register": "casual",
+      "siis_id": null,
+      "siis_ids": [],
+      "type": "no_match"
+    },
+    {
+      "id": "q105",
+      "query": "how to unlock the bootloader",
+      "domain": "Other",
+      "register": "keyword",
+      "siis_id": null,
+      "siis_ids": [],
+      "type": "no_match"
+    },
+    {
+      "id": "q106",
+      "query": "phone fell in the pool and wont turn on",
+      "domain": "Other",
+      "register": "frustrated",
+      "siis_id": null,
+      "siis_ids": [],
+      "type": "no_match"
+    }
+  ]
+}

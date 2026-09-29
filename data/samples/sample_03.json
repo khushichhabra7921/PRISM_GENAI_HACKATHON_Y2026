@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "synthetic": true,
+    "generator": "scripts/make_synthetic_kit.py",
+    "seed": 2026,
+    "note": "Synthetic data written from general One UI knowledge; not official Samsung content."
+  },
+  "input": {
+    "query": "My camera photos come out blurry",
+    "siis_response": "Blurry photos are usually caused by a dirty lens, camera shake or focus problems. Clean the camera lens with a soft microfiber cloth. Remove any case or lens protector that covers the camera. Tap the subject on the preview screen to focus before taking the picture. Open Camera > Camera settings > Scene optimizer and turn it on. Open Camera > Camera settings > Reset settings and tap Reset if photos are still blurry.",
+    "siis_id": "siis_c01"
+  },
+  "output": {
+    "query": "My camera photos come out blurry",
+    "query_variations": [
+      "My camera photos come out blurry.",
+      "pictures are blurry",
+      "blurry camera photos",
+      "Why are all my photos out of focus?",
+      "The camera on my device produces unfocused images.",
+      "seriously every pic I take is blurry",
+      "camra blurry pics",
+      "How do I fix blurry pictures on my Galaxy camera?",
+      "Photos look fuzzy and not sharp."
+    ],
+    "response": {
+      "contexts": [
+        {
+          "goal": "Follow these steps to perform this Blurry Photos Troubleshooting",
+          "title": "Blurry photos fix",
+          "score": 0.88,
+          "actions": [
+            {
+              "actionName": "Turn On Scene Optimizer",
+              "description": "It will improve colour and exposure",
+              "category": "auto",
+              "stepGroups": [
+                {
+                  "steps": [
+                    "Open the Camera app.",
+                    "Tap on Camera settings.",
+                    "Tap on Scene optimizer.",
+                    "Turn it on."
+                  ],
+                  "validationDeeplink": null,
+                  "actionableDeeplink": {
+                    "deeplink": "bixby://masked/act/c73isp",
+                    "description": "Turn scene optimizer on or off in Camera settings",
+                    "message": "Toggle scene optimizer"
+                  }
+                }
+              ]
+            },
+            {
+              "actionName": "Clean the Camera Lens",
+              "description": "It will remove smudges from lens",
+              "category": "manual",
+              "stepGroups": [
+                {
+                  "steps": [
+                    "Clean the camera lens with a soft microfiber cloth."
+                  ],
+                  "validationDeeplink": null,
+                  "actionableDeeplink": null
+                }
+              ]
+            },
+            {
+              "actionName": "Remove the Case",
+              "description": "It will uncover the camera lens",
+              "category": "manual",
+              "stepGroups": [
+                {
+                  "steps": [
+                    "Remove any case or lens protector that covers the camera."
+                  ],
+                  "validationDeeplink": null,
+                  "actionableDeeplink": null
+                }
+              ]
+            },
+            {
+              "actionName": "Tap to Focus",
+              "description": "It will sharpen focus on subject",
+              "category": "manual",
+              "stepGroups": [
+                {
+                  "steps": [
+                    "Tap the subject on the preview screen to focus before taking the picture."
+                  ],
+                  "validationDeeplink": null,
+                  "actionableDeeplink": null
+                }
+              ]
+            },
+            {
+              "actionName": "Reset Camera Settings",
+              "description": "It will restore default camera settings",
+              "category": "critical",
+              "stepGroups": [
+                {
+                  "steps": [
+                    "Open the Camera app.",
+                    "Tap on Camera settings.",
+                    "Tap on Reset settings.",
+                    "Tap Reset if photos are still blurry."
+                  ],
+                  "validationDeeplink": null,
+                  "actionableDeeplink": {
+                    "deeplink": "bixby://masked/act/d8wo8z",
+                    "description": "Open reset settings under Camera settings",
+                    "message": "Go to reset settings in Camera settings"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "meta": {
+      "latency_ms": null,
+      "cache_hit": false,
+      "model": "gold",
+      "cost_usd": 0.0,
+      "fallback": null
+    }
+  }
+}

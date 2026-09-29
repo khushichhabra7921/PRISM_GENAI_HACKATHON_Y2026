@@ -1,0 +1,14 @@
+.venv
+.git
+cache
+cache_test
+logs
+bench/.cache*
+bench/quick_*
+**/__pycache__
+.pytest_cache
+*.pyc
+.env
+.env.*
+logs_*.txt
+bench/rules_run

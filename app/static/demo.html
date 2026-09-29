@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SGTE Demo</title>
+<style>
+  :root {
+    --bg: #f5f3fb; --panel: #ffffff; --ink: #17152b; --muted: #6b6883; --line: #e4e0f2;
+    --brand: #6d28d9; --brand-soft: #efe9fd; --auto: #1d4ed8; --auto-soft: #e3ebfd;
+    --manual: #0f766e; --manual-soft: #dcf3ef; --crit: #b45309; --crit-soft: #fdf0dc;
+    --code: #1c1a2e; --code-ink: #d8d4f5;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 15px/1.45 "Segoe UI", system-ui, -apple-system, sans-serif; }
+  header { padding: 18px 28px 6px; }
+  header h1 { margin: 0; font-size: 22px; }
+  header p { margin: 2px 0 0; color: var(--muted); }
+  main { display: grid; grid-template-columns: 420px 1fr; gap: 22px; padding: 16px 28px 28px; }
+  @media (max-width: 980px) { main { grid-template-columns: 1fr; } }
+  .phone { background: var(--panel); border: 10px solid #1e1b2e; border-radius: 38px; min-height: 720px;
+           padding: 18px 16px; box-shadow: 0 18px 40px rgba(40, 20, 90, .15); }
+  .phone h2 { margin: 6px 4px 0; font-size: 22px; }
+  .phone .sub { margin: 0 4px 12px; color: var(--muted); font-size: 13px; }
+  form { display: flex; gap: 8px; }
+  input[type=text] { flex: 1; padding: 11px 13px; border: 1px solid var(--line); border-radius: 14px; font: inherit; }
+  button { font: inherit; cursor: pointer; border: 0; border-radius: 14px; padding: 10px 14px; }
+  .send { background: var(--brand); color: #fff; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 12px; }
+  .chip { background: var(--brand-soft); color: var(--brand); font-size: 12.5px; padding: 6px 10px; border-radius: 999px; }
+  .bubble { margin: 10px 0 10px auto; max-width: 85%; background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            color: #fff; padding: 10px 13px; border-radius: 16px 16px 4px 16px; }
+  .status { font-size: 12.5px; color: var(--muted); margin: 4px 2px 10px; }
+  .status b { color: var(--ink); }
+  .goal { border: 1px solid var(--line); border-radius: 16px; padding: 12px; margin-bottom: 12px; }
+  .goal .gt { font-size: 11px; letter-spacing: .08em; color: var(--brand); font-weight: 700; text-transform: uppercase; }
+  .goal h3 { margin: 2px 0 2px; font-size: 17px; }
+  .goal .gs { color: var(--muted); font-size: 12.5px; margin-bottom: 8px; }
+  .action { border-top: 1px dashed var(--line); padding: 9px 0 4px; }
+  .arow { display: flex; align-items: center; gap: 8px; }
+  .badge { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; letter-spacing: .05em; }
+  .auto { background: var(--auto-soft); color: var(--auto); }
+  .manual { background: var(--manual-soft); color: var(--manual); }
+  .critical { background: var(--crit-soft); color: var(--crit); }
+  .aname { font-weight: 600; }
+  .adesc { color: var(--muted); font-size: 12.5px; margin: 1px 0 4px; }
+  ol { margin: 4px 0 6px 0; padding-left: 20px; font-size: 13.5px; }
+  .open { background: var(--brand); color: #fff; font-size: 13px; padding: 7px 12px; margin: 2px 0 4px; }
+  .open.last { background: #fff; color: var(--crit); border: 1px solid var(--crit); }
+  .dl { font: 12px ui-monospace, Consolas, monospace; color: var(--muted); display: none; margin-top: 2px; }
+  .empty { border: 1px dashed var(--crit); background: var(--crit-soft); border-radius: 14px; padding: 12px; font-size: 13.5px; }
+  .why { background: none; color: var(--brand); padding: 4px 0; font-size: 13px; text-decoration: underline; }
+  .side { display: grid; gap: 16px; align-content: start; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; }
+  .card h4 { margin: 0 0 8px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); }
+  .kv { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .kv div { background: var(--bg); border-radius: 12px; padding: 8px 10px; }
+  .kv span { display: block; font-size: 11.5px; color: var(--muted); }
+  .kv strong { font-size: 18px; }
+  pre { margin: 0; background: var(--code); color: var(--code-ink); border-radius: 12px; padding: 12px;
+        max-height: 460px; overflow: auto; font: 12px/1.4 ui-monospace, Consolas, monospace; white-space: pre-wrap; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th, td { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Smart Guided Troubleshooting Engine</h1>
+  <p>Samsung PRISM GenAI Hackathon 2026 · Theme 2 · vague complaint → grounded, ordered, deeplinked plan</p>
+</header>
+<main>
+  <section class="phone">
+    <h2>Troubleshoot</h2>
+    <p class="sub">Describe it in your own words</p>
+    <form id="f">
+      <input id="q" type="text" autocomplete="off" placeholder="e.g. my screen flickers and the battery dies fast">
+      <button class="send" type="submit">Send</button>
+    </form>
+    <div class="chips" id="chips"></div>
+    <div id="chat"></div>
+  </section>
+  <section class="side">
+    <div class="card">
+      <h4>Request metadata</h4>
+      <div class="kv">
+        <div><span>Latency</span><strong id="m-lat">–</strong></div>
+        <div><span>Cache hit</span><strong id="m-hit">–</strong></div>
+        <div><span>LLM calls</span><strong id="m-llm">–</strong></div>
+        <div><span>Cost</span><strong id="m-cost">–</strong></div>
+      </div>
+      <p class="status" id="m-more"></p>
+    </div>
+    <div class="card hidden" id="why-card">
+      <h4>Why these steps? Evidence trail</h4>
+      <div id="why"></div>
+    </div>
+    <div class="card">
+      <h4>Raw API response (POST /v1/troubleshoot)</h4>
+      <pre id="raw">Send a complaint to see the pure JSON response.</pre>
+    </div>
+  </section>
+</main>
+<script>
+const EXAMPLES = [
+  "swipe gestures go the wrong way after installing an app",
+  "my screen flickers and the battery dies fast",
+  "display keeps blinking on and off",
+  "phone got slow after the update",
+  "my galaxy watch wont sync my steps",
+];
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+
+for (const ex of EXAMPLES) {
+  const b = document.createElement("button");
+  b.className = "chip"; b.type = "button"; b.textContent = ex;
+  b.onclick = () => { $("q").value = ex; send(ex); };
+  $("chips").appendChild(b);
+}
+$("f").onsubmit = (e) => { e.preventDefault(); const v = $("q").value.trim(); if (v) send(v); };
+
+async function send(query) {
+  $("chat").innerHTML = `<div class="bubble">${esc(query)}</div><p class="status">Thinking…</p>`;
+  let r;
+  try {
+    const res = await fetch("/v1/troubleshoot", {method: "POST", headers: {"Content-Type": "application/json"},
+                                                 body: JSON.stringify({query})});
+    r = await res.json();
+    if (!res.ok) throw new Error(r.error || res.status);
+  } catch (err) {
+    $("chat").innerHTML += `<div class="empty">Request failed: ${esc(err.message)}</div>`;
+    return;
+  }
+  render(query, r);
+}
+
+function render(query, r) {
+  const m = r.meta || {};
+  const goals = (r.response && r.response.contexts) || [];
+  $("m-lat").textContent = `${Math.round(m.latency_ms)} ms`;
+  $("m-hit").textContent = m.cache_hit ? "yes" : "no";
+  $("m-llm").textContent = m.llm_calls ?? 0;
+  $("m-cost").textContent = `$${(m.cost_usd || 0).toFixed(2)}`;
+  const ev = m.evidence || {};
+  const lookup = ev.lookup ? `lookup: ${ev.lookup}${ev.cache_score != null ? ` (score ${ev.cache_score})` : ""}` : "full pipeline";
+  $("m-more").innerHTML = `model <b>${esc(m.model)}</b> · ${esc(lookup)}` + (m.fallback ? ` · fallback <b>${esc(m.fallback)}</b>` : "");
+  $("raw").textContent = JSON.stringify(r, null, 2);
+
+  let html = `<div class="bubble">${esc(query)}</div>`;
+  if (!goals.length) {
+    html += `<div class="empty"><b>No grounded fix found</b> (${esc(m.fallback)}). Nothing is invented: the query is
+             logged so the SIIS content team can see the gap.</div>`;
+  } else {
+    html += `<p class="status">${goals.length} issue${goals.length > 1 ? "s" : ""} found · grounded in Samsung support content
+             · ${m.cache_hit ? "cache hit" : "new plan"} · ${Math.round(m.latency_ms)} ms</p>`;
+  }
+  goals.forEach((g, gi) => {
+    html += `<div class="goal"><div class="gt">Goal · ${g.score.toFixed(2)}</div><h3>${esc(g.title)}</h3>
+             <div class="gs">${esc(g.goal)}</div>`;
+    g.actions.forEach((a, ai) => {
+      const dl = a.stepGroups[0] && a.stepGroups[0].actionableDeeplink;
+      const steps = a.stepGroups.flatMap((sg) => sg.steps).map((s) => `<li>${esc(s)}</li>`).join("");
+      const id = `dl-${gi}-${ai}`;
+      html += `<div class="action"><div class="arow"><span class="badge ${a.category}">${a.category.toUpperCase()}</span>
+               <span class="aname">${esc(a.actionName)}</span></div><div class="adesc">${esc(a.description)}</div>
+               <ol>${steps}</ol>`;
+      if (dl) {
+        html += `<button class="open ${a.category === "critical" ? "last" : ""}" type="button"
+                 onclick="document.getElementById('${id}').style.display='block'">
+                 ${a.category === "critical" ? "Last step" : "Open"} ›</button>
+                 <div class="dl" id="${id}">${esc(dl.deeplink)} · ${esc(dl.description)}</div>`;
+      }
+      html += `</div>`;
+    });
+    html += `</div>`;
+  });
+  if (goals.length) html += `<button class="why" type="button" onclick="document.getElementById('why-card').scrollIntoView({behavior:'smooth'})">ⓘ Why these steps?</button>`;
+  $("chat").innerHTML = html;
+  renderWhy(ev);
+}
+
+function renderWhy(ev) {
+  const plan = ev.plan_evidence || ev;
+  const goals = plan.goals || [];
+  if (!goals.length) { $("why-card").classList.add("hidden"); return; }
+  let html = "";
+  if (ev.from_cache) {
+    html += `<p class="status">Served from the semantic cache (${esc(ev.lookup)} tier${ev.anchor_article ? `, article ${esc(ev.anchor_article)}` : ""});
+             evidence recorded when the plan was built for “${esc(ev.cached_query)}”.</p>`;
+  }
+  for (const g of goals) {
+    const s = g.siis || {};
+    html += `<p class="status">SIIS article <b>${esc(s.title || s.source || "")}</b>
+             ${s.dense != null ? `· dense ${s.dense} · bm25 ${s.bm25} · rerank ${s.rerank}` : ""}</p>
+             <table><tr><th>Action</th><th>Source sentence(s)</th><th>Deeplink decision</th></tr>`;
+    for (const a of g.actions || []) {
+      const d = a.deeplink;
+      const dtxt = d ? `${esc(d.matched || d.decision || "")}<br><span class="status">tier ${esc(d.tier)} · rerank ${esc(d.rerank)}
+                   · margin ${esc(d.margin ?? "–")} · runner-up: ${esc(d.runner_up)}</span>` : "no deeplink (manual / no screen)";
+      html += `<tr><td>${esc(a.actionName)}</td><td>${(a.source_sentences || []).map(esc).join("<br>")}</td><td>${dtxt}</td></tr>`;
+    }
+    html += `</table>`;
+  }
+  $("why").innerHTML = html;
+  $("why-card").classList.remove("hidden");
+}
+</script>
+</body>
+</html>

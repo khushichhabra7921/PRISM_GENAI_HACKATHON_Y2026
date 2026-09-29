@@ -1,0 +1,402 @@
+{
+  "generated": "2026-09-30T01:12:20",
+  "env": {
+    "os": "Windows 11",
+    "python": "3.12.10",
+    "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+    "logical_cpus": 12,
+    "torch_threads": 4,
+    "ram_gb": 16.8,
+    "power": "plugged in"
+  },
+  "synthetic_kit": true,
+  "llm": "ollama/qwen2.5:1.5b-instruct",
+  "embed_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "cache_embed_model": "BAAI/bge-small-en-v1.5",
+  "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+  "extract_mode": "rules",
+  "enrich_mode": "background",
+  "tau": 0.85,
+  "background_upgrade": {
+    "mode": "background",
+    "queued_at_end_of_run": 67,
+    "wait_s": 2150.0,
+    "plans_with_llm_variations": 70
+  },
+  "results_cold_latency": {
+    "p50": 504.6,
+    "p95": 1040.3
+  },
+  "routing": {
+    "single_correct": 79,
+    "single_no_match": 1,
+    "single_wrong": 6,
+    "multi_both": 9,
+    "multi_partial": 1,
+    "no_match_correct": 10
+  },
+  "compliance": {
+    "lines": 106,
+    "schema_valid_pct": 100.0,
+    "rule_compliance_pct": 100.0,
+    "violations_by_check": {
+      "schema": 0,
+      "goal_format": 0,
+      "title_format": 0,
+      "score_range": 0,
+      "action_name_case": 0,
+      "description_format": 0,
+      "manual_no_deeplink": 0,
+      "category_order": 0,
+      "catalog_deeplinks": 0,
+      "zero_urls": 0,
+      "query_variations": 0
+    },
+    "url_leaks": 0,
+    "deeplinks": 233,
+    "catalog_validity_pct": 100.0,
+    "dummy_positive": 5,
+    "auto_actions": 203,
+    "auto_with_deeplink_pct": 100.0
+  },
+  "accuracy": {
+    "rows": [
+      {
+        "sample": "sample_01",
+        "grounded": true,
+        "step_accuracy": 3.0,
+        "completeness": 1.0,
+        "correctness": 1.0,
+        "ordering": 1.0,
+        "deeplink_relevance": 2.0,
+        "note": "all deeplinks exact",
+        "latency_ms": 181.7,
+        "cost_usd": 0,
+        "model": "rules-v1 (deterministic, no LLM)"
+      },
+      {
+        "sample": "sample_01",
+        "grounded": false,
+        "step_accuracy": 3.0,
+        "completeness": 1.0,
+        "correctness": 1.0,
+        "ordering": 1.0,
+        "deeplink_relevance": 2.0,
+        "note": "all deeplinks exact",
+        "latency_ms": 175.8,
+        "cost_usd": 0,
+        "model": "rules-v1 (deterministic, no LLM)"
+      },
+      {
+        "sample": "sample_02",
+        "grounded": true,
+        "step_accuracy": 3.0,
+        "completeness": 1.0,
+        "correctness": 1.0,
+        "ordering": 1.0,
+        "deeplink_relevance": 2.0,
+        "note": "all deeplinks exact",
+        "latency_ms": 411.2,
+        "cost_usd": 0,
+        "model": "rules-v1 (deterministic, no LLM)"
+      },
+      {
+        "sample": "sample_02",
+        "grounded": false,
+        "step_accuracy": 3.0,
+        "completeness": 1.0,
+        "correctness": 1.0,
+        "ordering": 1.0,
+        "deeplink_relevance": 2.0,
+        "note": "all deeplinks exact",
+        "latency_ms": 410.8,
+        "cost_usd": 0,
+        "model": "rules-v1 (deterministic, no LLM)"
+      },
+      {
+        "sample": "sample_03",
+        "grounded": true,
+        "step_accuracy": 3.0,
+        "completeness": 1.0,
+        "correctness": 1.0,
+        "ordering": 1.0,
+        "deeplink_relevance": 2.0,
+        "note": "all deeplinks exact",
+        "latency_ms": 217.4,
+        "cost_usd": 0,
+        "model": "rules-v1 (deterministic, no LLM)"
+      },
+      {
+        "sample": "sample_03",
+        "grounded": false,
+        "step_accuracy": 3.0,
+        "completeness": 1.0,
+        "correctness": 1.0,
+        "ordering": 1.0,
+        "deeplink_relevance": 2.0,
+        "note": "all deeplinks exact",
+        "latency_ms": 244.7,
+        "cost_usd": 0,
+        "model": "rules-v1 (deterministic, no LLM)"
+      },
+      {
+        "sample": "sample_04",
+        "grounded": true,
+        "step_accuracy": 3.0,
+        "completeness": 1.0,
+        "correctness": 1.0,
+        "ordering": 1.0,
+        "deeplink_relevance": 2.0,
+        "note": "all deeplinks exact",
+        "latency_ms": 345.1,
+        "cost_usd": 0,
+        "model": "rules-v1 (deterministic, no LLM)"
+      },
+      {
+        "sample": "sample_04",
+        "grounded": false,
+        "step_accuracy": 3.0,
+        "completeness": 1.0,
+        "correctness": 1.0,
+        "ordering": 1.0,
+        "deeplink_relevance": 2.0,
+        "note": "all deeplinks exact",
+        "latency_ms": 377.6,
+        "cost_usd": 0,
+        "model": "rules-v1 (deterministic, no LLM)"
+      },
+      {
+        "sample": "sample_05",
+        "grounded": true,
+        "step_accuracy": 3.0,
+        "deeplink_relevance": 2.0,
+        "note": "fallback=no_match",
+        "latency_ms": 84.9,
+        "cost_usd": 0
+      },
+      {
+        "sample": "sample_05",
+        "grounded": false,
+        "step_accuracy": 3.0,
+        "deeplink_relevance": 2.0,
+        "note": "fallback=no_match",
+        "latency_ms": 83.9,
+        "cost_usd": 0
+      }
+    ],
+    "mean_step_accuracy": 3.0,
+    "mean_deeplink_relevance": 2.0
+  },
+  "cache": {
+    "primary": {
+      "embed_model": "BAAI/bge-small-en-v1.5",
+      "paraphrases": 101,
+      "negatives": 12,
+      "keys": 1456,
+      "plans": 70,
+      "by_tau": {
+        "0.80": {
+          "hit_rate_pct": 80.2,
+          "any_hit_pct": 88.1,
+          "false_hits": 8,
+          "false_hit_rate_pct": 9.0,
+          "negatives_hit": 0
+        },
+        "0.85": {
+          "hit_rate_pct": 59.4,
+          "any_hit_pct": 63.4,
+          "false_hits": 4,
+          "false_hit_rate_pct": 6.2,
+          "negatives_hit": 0
+        },
+        "0.90": {
+          "hit_rate_pct": 35.6,
+          "any_hit_pct": 36.6,
+          "false_hits": 1,
+          "false_hit_rate_pct": 2.7,
+          "negatives_hit": 0
+        }
+      }
+    },
+    "compare": {
+      "embed_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "paraphrases": 101,
+      "negatives": 12,
+      "keys": 1456,
+      "plans": 70,
+      "by_tau": {
+        "0.80": {
+          "hit_rate_pct": 44.6,
+          "any_hit_pct": 47.5,
+          "false_hits": 3,
+          "false_hit_rate_pct": 6.2,
+          "negatives_hit": 0
+        },
+        "0.85": {
+          "hit_rate_pct": 31.7,
+          "any_hit_pct": 33.7,
+          "false_hits": 2,
+          "false_hit_rate_pct": 5.9,
+          "negatives_hit": 0
+        },
+        "0.90": {
+          "hit_rate_pct": 12.9,
+          "any_hit_pct": 12.9,
+          "false_hits": 0,
+          "false_hit_rate_pct": 0.0,
+          "negatives_hit": 0
+        }
+      }
+    },
+    "dual_lookup": {
+      "tau": 0.85,
+      "n": 101,
+      "raw_hit_pct": 54.5,
+      "zero_llm_hit_pct": 84.2,
+      "dual_hit_pct": 86.1,
+      "correct_by_tier": {
+        "article": 30,
+        "canonical": 2,
+        "raw": 55
+      },
+      "wrong_by_tier": {
+        "raw": 3,
+        "article": 2,
+        "canonical": 1
+      },
+      "wrong_hits": 6,
+      "negatives": 12,
+      "negatives_hit": 0,
+      "false_hit_rate_pct": 6.5
+    }
+  },
+  "latency": {
+    "exact_hit": {
+      "n": 95,
+      "p50": 14.4,
+      "p95": 22.2
+    },
+    "paraphrase_hit_raw": {
+      "n": 90,
+      "p50": 15.9,
+      "p95": 22.7,
+      "key_tier": {
+        "n": 58,
+        "p95": 18.9
+      },
+      "article_tier": {
+        "n": 32,
+        "p95": 24.8
+      }
+    },
+    "paraphrase_hit_canonical": {
+      "n": 2,
+      "tried": 11,
+      "p50": 39.8,
+      "p95": 46.4
+    },
+    "cold": {
+      "n": 30,
+      "p50": 255.2,
+      "p95": 423.8,
+      "llm_calls_mean": 0,
+      "cost_usd_mean": 0,
+      "tokens_in_mean": 0,
+      "tokens_out_mean": 0,
+      "models": [
+        "rules-v1 (deterministic, no LLM)"
+      ],
+      "stage_p50_ms": {
+        "embed_ms": 13.3,
+        "enrich_ms": 0.2,
+        "retrieve_ms": 65.3,
+        "extract_ms": 0.4,
+        "deeplink_ms": 173.8
+      }
+    },
+    "cache_hit_llm_calls": 0
+  },
+  "ablation_deeplink": {
+    "hybrid": {
+      "n": 123,
+      "exact_screen_pct": 100.0,
+      "parent_or_dummy_pct": 0.0,
+      "mean_relevance": 2.0,
+      "p95_ms_per_action": 102.0,
+      "cost_usd_per_action": 0.0
+    },
+    "bm25": {
+      "n": 123,
+      "exact_screen_pct": 91.1,
+      "parent_or_dummy_pct": 4.1,
+      "mean_relevance": 1.862,
+      "p95_ms_per_action": 12.8,
+      "cost_usd_per_action": 0.0
+    },
+    "dense": {
+      "n": 123,
+      "exact_screen_pct": 65.0,
+      "parent_or_dummy_pct": 19.5,
+      "mean_relevance": 1.496,
+      "p95_ms_per_action": 12.1,
+      "cost_usd_per_action": 0.0
+    },
+    "llm": {
+      "n": 10,
+      "exact_screen_pct": 10.0,
+      "parent_or_dummy_pct": 90.0,
+      "mean_relevance": 1.1,
+      "p95_ms_per_action": 55043.8,
+      "cost_usd_per_action": 0.0
+    }
+  },
+  "ablation_extraction": {
+    "rules": {
+      "mean_step_accuracy": 3.0,
+      "mean_deeplink_relevance": 2.0,
+      "p95_latency_ms": 360.6,
+      "mean_cost_usd": 0
+    },
+    "pointer": {
+      "mean_step_accuracy": 2.701,
+      "mean_deeplink_relevance": 1.84,
+      "p95_latency_ms": 19930.5,
+      "mean_cost_usd": 0.0
+    },
+    "generative": {
+      "mean_step_accuracy": 1.636,
+      "mean_deeplink_relevance": 1.36,
+      "p95_latency_ms": 31203.8,
+      "mean_cost_usd": 0.0
+    }
+  },
+  "providers": {
+    "ollama": {
+      "measured": true,
+      "model": "ollama/qwen2.5:1.5b-instruct",
+      "n": 10,
+      "p50_ms": 17170.2,
+      "p95_ms": 19186.9,
+      "mean_cost_usd": 0.0,
+      "llm_ok_pct": 100.0,
+      "fallback_rate_pct": 10.0,
+      "step_accuracy": null
+    },
+    "anthropic": {
+      "measured": false,
+      "reason": "provider not reachable / no API key"
+    },
+    "openai": {
+      "measured": false,
+      "reason": "account has no API credits (RuntimeError: HTTP 429 insufficient_quota credit_balance_exhausted); re-run bench/run.py after adding credits"
+    }
+  },
+  "reused_llm_sections_from": {
+    "file": "bench/report_llm_run.json",
+    "generated": "2026-09-29T23:33:50"
+  },
+  "bench_seconds": 2287.2,
+  "limitations": [
+    "**No-match log (bench/cluster_nomatch.py).** 14 distinct no-match queries were logged during the run: the 10 `queries.json` complaints with no SIIS coverage (Galaxy Watch sync, WhatsApp transfer, repair price, account sign-in, S Pen, eSIM, DeX, Wallet, bootloader, water damage), each its own theme, plus 4 complaints whose topic IS covered but that the conservative gate rejected ('phone is tapping things on its own', and three held-out paraphrases seen on the cold path). With this few distinct gaps the clustering yields singleton themes; it is meant for production-volume logs."
+  ]
+}

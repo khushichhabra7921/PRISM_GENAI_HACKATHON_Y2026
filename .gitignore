@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+cache/
+logs/
+models/
+.env
+logs_*.txt
+bench/.cache*
+bench/quick_*
+bench/rules_run/
+cache_test/

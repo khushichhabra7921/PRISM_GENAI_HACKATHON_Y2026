@@ -1,0 +1,342 @@
+"""Synthetic SIIS-style troubleshooting articles (written from general One UI knowledge).
+
+(id, topic, title, text). Menu paths use the "Settings > A > B" style customer-care
+articles use; every path either exists in kit_catalog.CATALOG or is listed in
+INTENTIONALLY_MISSING.
+"""
+
+SAFE_MODE = ("To start Safe mode, press and hold the Side key, touch and hold Power off, "
+             "and then tap Safe mode.")
+RESTART = "If the problem continues, restart the phone."
+
+SIIS = [
+    # ---------------------------------------------------------------- Display / Navigation
+    ("siis_d01", "Display", "Swipe navigation",
+     "Some apps, especially third-party launchers, can change how navigation gestures behave after they are installed. "
+     "Open Settings > Display > Navigation bar. "
+     "Select your preferred navigation type between Buttons and Swipe gestures. "
+     "Optionally toggle on Gesture hint to display guidance lines at the bottom of the screen."),
+    ("siis_d02", "Display", "Screen flickering",
+     "Screen flicker is often caused by automatic brightness changes or the refresh rate switching between modes. "
+     "Open Settings > Display > Adaptive brightness and turn it off. "
+     "Go to Settings > Display > Motion smoothness and select Standard. "
+     "Remove any magnetic case or thick screen protector and check whether the flicker stops. "
+     "If the flicker continues, visit an authorised service centre to have the display checked. "
+     + SAFE_MODE + " If the screen does not flicker in Safe mode, uninstall recently downloaded apps."),
+    ("siis_d03", "Display", "Dim screen",
+     "A screen that looks too dark is usually caused by brightness or power saving settings. "
+     "Open Settings > Display > Brightness and drag the slider to the right. "
+     "Go to Settings > Display > Adaptive brightness and turn it off if the brightness keeps dropping. "
+     "Open Settings > Battery > Power saving and turn it off, because power saving lowers brightness. "
+     "Move the phone out of direct heat, because the screen dims automatically when the phone is hot."),
+    ("siis_d04", "Display", "Screen timeout",
+     "If the screen turns off too quickly, the screen timeout is set to a short value. "
+     "Open Settings > Display > Screen timeout. "
+     "Select a longer timeout such as 1 minute or 2 minutes. "
+     "Open Settings > Battery > Power saving and turn it off, because power saving can shorten the timeout."),
+    ("siis_d05", "Display", "Touchscreen not responding",
+     "An unresponsive touchscreen can be caused by a dirty screen, a thick screen protector or a stuck app. "
+     "Clean the screen with a soft, dry cloth and dry your fingers. "
+     "Remove the screen protector and test the screen again. "
+     "Open Settings > Display > Touch sensitivity and turn it on if you use a screen protector. "
+     "Open Settings > Display > Accidental touch protection and turn it off if touches are ignored in low light. "
+     "If the screen still does not respond, restart the phone by pressing and holding the Side key and Volume down key for more than 7 seconds."),
+    ("siis_d06", "Display", "Screen colour tint",
+     "Colours can look yellow, washed out or too saturated because of the screen mode or blue light filter. "
+     "Open Settings > Display > Eye comfort shield and turn it off. "
+     "Go to Settings > Display > Screen mode and select Vivid or Natural. "
+     "Use the white balance slider on the Screen mode screen to make colours cooler or warmer."),
+    ("siis_d07", "Display", "Always On Display",
+     "Always On Display may not appear when it is turned off, set to show only after tapping, or blocked by power saving. "
+     "Open Settings > Lock screen > Always On Display and turn it on. "
+     "Open Settings > Lock screen > Always On Display > When to show and select Show always. "
+     "Open Settings > Battery > Power saving and turn it off, because power saving can turn off Always On Display."),
+    ("siis_d08", "Display", "Screen rotation",
+     "If the screen does not rotate, auto rotate is probably turned off. "
+     "Open Quick panel > Auto rotate and turn it on. "
+     "Make sure the app you are using supports landscape mode, because some apps only work in portrait. "
+     "If rotation still does not work, restart the phone to reset the motion sensors."),
+    ("siis_d09", "Display", "Small text and icons",
+     "Text and icons that are hard to read can be made bigger. "
+     "Open Settings > Display > Font size and style and drag the font size slider to the right. "
+     "Turn on Bold font on the same screen to make text easier to read. "
+     "Go to Settings > Display > Screen zoom and drag the slider to the right to enlarge icons."),
+    ("siis_d10", "Display", "Dark mode",
+     "Dark mode can switch back to light mode because of a schedule. "
+     "Open Settings > Display > Dark mode and turn it on. "
+     "Open Settings > Display > Dark mode settings and turn off Turn on as scheduled if the theme keeps changing."),
+    ("siis_d11", "Display", "Ghost touches",
+     "Ghost touches happen when the screen registers taps you did not make. "
+     "Remove the phone case and screen protector, and clean the screen with a dry microfiber cloth. "
+     "Unplug the charger and test again, because faulty chargers can cause false touches. "
+     "Open Settings > Device care > Diagnostics and run the Touch screen test. "
+     + SAFE_MODE + " If ghost touches continue in Safe mode, visit an authorised service centre."),
+    ("siis_d12", "Display", "Refresh rate",
+     "Scrolling that looks choppy is often caused by a standard refresh rate. "
+     "Open Settings > Display > Motion smoothness and select Adaptive. "
+     "Open Settings > Battery > Power saving and turn it off, because power saving limits the refresh rate to 60 Hz."),
+    # ---------------------------------------------------------------- Battery
+    ("siis_b01", "Battery", "Fast battery drain",
+     "Battery drain is usually caused by apps running in the background, high screen brightness or weak signal. "
+     "Open Settings > Battery > Battery usage and check which apps use the most battery. "
+     "Go to Settings > Battery > Background usage limits and turn on Put unused apps to sleep. "
+     "Open Settings > Battery > Power saving and turn it on to extend battery life. "
+     "Open Settings > Display > Motion smoothness and select Standard to lower power use. "
+     "If the battery still drains quickly, restart the phone."),
+    ("siis_b02", "Battery", "Slow charging",
+     "Slow or interrupted charging is often caused by the cable, the charger or a dirty charging port. "
+     "Clean the charging port gently with a soft, dry brush to remove lint and dust. "
+     "Try a different Samsung charger and USB cable. "
+     "Open Settings > Battery > Charging settings > Fast charging and turn it on. "
+     "Close apps you are not using while the phone charges. "
+     "If the phone still charges slowly, visit an authorised service centre to check the battery and port."),
+    ("siis_b03", "Battery", "Phone heating while charging",
+     "A phone can get warm while charging, especially with fast charging or while gaming. "
+     "Remove the phone case while charging to let heat escape. "
+     "Avoid using the phone for games or video calls while it charges. "
+     "Open Settings > Battery > Charging settings > Fast charging and turn it off to reduce heat. "
+     "Open Settings > Device care and tap Optimize now to close background apps. "
+     "If the phone becomes too hot to hold, unplug the charger and visit an authorised service centre."),
+    ("siis_b04", "Battery", "Overnight battery drain",
+     "Battery loss while the phone is idle is usually caused by apps that keep running in the background. "
+     "Open Settings > Battery > Background usage limits > Deep sleeping apps and add apps you rarely use. "
+     "Go to Settings > Battery > More battery settings > Adaptive battery and turn it on. "
+     "Open Settings > Connections > More connection settings > Nearby device scanning and turn it off. "
+     "Open Settings > Modes and Routines and turn on Sleep mode for the night."),
+    ("siis_b05", "Battery", "Battery drain after update",
+     "Right after a software update, the phone optimises apps in the background, which can drain the battery for a few days. "
+     "Open Settings > Device care and tap Optimize now. "
+     "Open Settings > Battery > Battery usage and check whether one app uses much more battery than usual. "
+     "Update all apps from the Galaxy Store and Play Store. "
+     "Restart the phone after the apps finish updating. "
+     "If the drain continues after a week, back up your data and perform a factory data reset from Settings > General management > Reset > Factory data reset."),
+    ("siis_b06", "Battery", "Wireless charging",
+     "Wireless charging stops when the phone is not aligned with the charging pad or a case blocks the coil. "
+     "Remove thick cases, metal plates, or cards from the back of the phone. "
+     "Place the phone in the centre of the charging pad. "
+     "Open Settings > Battery > Charging settings > Fast wireless charging and turn it on. "
+     "Open Settings > Battery > Wireless power sharing and turn it off if it is on."),
+    ("siis_b07", "Battery", "Battery stops charging",
+     "If charging stops at 80 or 85 percent, battery protection is limiting the charge to extend battery lifespan. "
+     "Open Settings > Battery > Charging settings > Protect battery. "
+     "Turn off Protect battery if you need a full charge."),
+    ("siis_b08", "Battery", "Location battery drain",
+     "Apps that use location all the time can drain the battery quickly. "
+     "Open Settings > Location > App permissions and set rarely used apps to Allow only while using the app. "
+     "Go to Settings > Location > Location services and turn off Wi-Fi scanning and Bluetooth scanning. "
+     "Turn off Location from the Settings > Location screen when you do not need it."),
+    ("siis_b09", "Battery", "Unexpected shutdown",
+     "A phone that shuts down with charge left may have an old battery or a software fault. "
+     "Open Settings > Device care > Diagnostics and run the Battery status test. "
+     "Open Settings > Software update > Download and install to install the latest software. "
+     "If the phone keeps shutting down, visit an authorised service centre to have the battery checked."),
+    ("siis_b10", "Battery", "Battery percentage",
+     "The battery percentage may be hidden in the status bar. "
+     "Open Settings > Battery > More battery settings > Show battery percentage and turn it on."),
+    # ---------------------------------------------------------------- Camera
+    ("siis_c01", "Camera", "Blurry photos",
+     "Blurry photos are usually caused by a dirty lens, camera shake or focus problems. "
+     "Clean the camera lens with a soft microfiber cloth. "
+     "Remove any case or lens protector that covers the camera. "
+     "Tap the subject on the preview screen to focus before taking the picture. "
+     "Open Camera > Camera settings > Scene optimizer and turn it on. "
+     "Open Camera > Camera settings > Reset settings and tap Reset if photos are still blurry."),
+    ("siis_c02", "Camera", "Camera failed error",
+     "A Camera failed message can appear when the camera app data is corrupted or another app is using the camera. "
+     "Close all apps that might use the camera, such as video call apps. "
+     "Open Settings > Apps > Camera > Storage and tap Clear cache. "
+     "Open Settings > Apps > Camera and tap Force stop, then open the camera again. "
+     "If the error continues, restart the phone. "
+     + SAFE_MODE + " If the camera works in Safe mode, uninstall recently installed apps that use the camera."),
+    ("siis_c03", "Camera", "Black camera screen",
+     "A black camera preview can be caused by a blocked lens, a permission problem or an app conflict. "
+     "Check that the lens is not covered by a case, sticker or finger. "
+     "Open Settings > Security and privacy > Permission manager and make sure the Camera app is allowed to use the camera. "
+     "Open Settings > Apps > Camera > Storage and tap Clear cache. "
+     "Restart the phone if the preview stays black."),
+    ("siis_c04", "Camera", "Camera flash",
+     "The flash may be disabled when the battery is low or the phone is hot. "
+     "Charge the phone above 15 percent and let it cool down. "
+     "Open Quick panel > Flashlight and turn it on to test the flash. "
+     "Open Settings > Battery > Power saving and turn it off, because power saving can disable the flash."),
+    ("siis_c05", "Camera", "Photo quality",
+     "Photos can look low quality when a small picture size or high efficiency format is selected. "
+     "Open Camera > Camera settings > Picture formats and turn off High efficiency pictures. "
+     "Select the highest resolution from the aspect ratio button in the Camera preview. "
+     "Open Camera > Camera settings > Auto HDR and turn it on for better detail."),
+    ("siis_c06", "Camera", "Shutter sound",
+     "The shutter sound plays every time you take a picture unless it is turned off. "
+     "Open Camera > Camera settings > Shutter sound and turn it off. "
+     "Open Settings > Sounds and vibration > Sound mode and select Vibrate or Mute if the option is not shown in your region."),
+    ("siis_c07", "Camera", "Video recording stops",
+     "Video recording can stop when storage is full or the phone overheats. "
+     "Open Settings > Device care > Storage and delete large files you no longer need. "
+     "Open Camera > Camera settings > Storage location and select SD card if one is inserted. "
+     "Let the phone cool down before recording long videos."),
+    ("siis_c08", "Camera", "Mirrored selfies",
+     "Selfies can be saved flipped compared to the preview. "
+     "Open Camera > Camera settings > Save selfies as previewed and turn it on."),
+    ("siis_c09", "Camera", "Shaky videos",
+     "Shaky videos are common when recording while walking. "
+     "Open Camera > Camera settings > Video stabilization and turn it on. "
+     "Hold the phone with both hands and keep your elbows close to your body."),
+    # ---------------------------------------------------------------- Performance
+    ("siis_p01", "Performance", "Slow phone",
+     "A phone can slow down when storage is full, memory is low or too many apps run in the background. "
+     "Open Settings > Device care and tap Optimize now. "
+     "Open Settings > Device care > Storage and delete unnecessary files and unused apps. "
+     "Open Settings > Device care > Memory and tap Clean now. "
+     "Open Settings > Accessibility > Vision enhancements > Reduce animations and turn it on. "
+     "Restart the phone at least once a week."),
+    ("siis_p02", "Performance", "Slow after update",
+     "After a software update the phone may feel slow for a few days while it optimises apps. "
+     "Open Settings > Device care and tap Optimize now. "
+     "Update all apps from the Galaxy Store and Play Store. "
+     "Open Settings > Software update > Download and install to check for a newer update that fixes known issues. "
+     "Restart the phone after installing updates. "
+     "If the phone is still slow, back up your data and perform a factory data reset from Settings > General management > Reset > Factory data reset."),
+    ("siis_p03", "Performance", "Apps crashing",
+     "Apps that keep closing are often out of date or have corrupted temporary data. "
+     "Update the app from the Galaxy Store or Play Store. "
+     "Open Settings > Apps, select the app, and tap Force stop. "
+     "Open Settings > Apps, select the app, tap Storage, and then tap Clear cache. "
+     "Open Settings > Software update > Download and install to install the latest system software. "
+     "If the app still crashes, uninstall and reinstall it."),
+    ("siis_p04", "Performance", "Storage full",
+     "A full storage slows the phone and stops apps from saving data. "
+     "Open Settings > Device care > Storage and review large files, duplicate files and unused apps. "
+     "Delete files you no longer need or move photos and videos to cloud storage. "
+     "Open Settings > Accounts and backup > Back up data to back up files before deleting them."),
+    ("siis_p05", "Performance", "Phone freezing",
+     "A frozen phone usually recovers after a forced restart. "
+     "Press and hold the Side key and Volume down key at the same time for more than 7 seconds to force restart the phone. "
+     "Open Settings > Device care and tap Optimize now after the phone starts. "
+     + SAFE_MODE + " If the phone does not freeze in Safe mode, uninstall recently downloaded apps. "
+     "If the phone keeps freezing, back up your data and perform a factory data reset from Settings > General management > Reset > Factory data reset."),
+    ("siis_p06", "Performance", "Low memory",
+     "Apps reload often when the phone runs out of memory. "
+     "Open Settings > Device care > Memory and tap Clean now. "
+     "Open Settings > Device care > Memory > RAM Plus and choose a larger size. "
+     "Restart the phone to apply the RAM Plus change."),
+    ("siis_p07", "Performance", "Overheating during games",
+     "Phones get hot during long gaming sessions or when charging while playing. "
+     "Open Game Launcher > Game Booster and set Game performance to Focus on power saving. "
+     "Open Settings > Device care > Performance profile and select Light. "
+     "Remove the phone case and stop charging while playing. "
+     "Close the game and let the phone cool down for a few minutes."),
+    ("siis_p08", "Performance", "Random restarts",
+     "Random restarts can be caused by an automatic restart schedule, a faulty app or outdated software. "
+     "Open Settings > Device care > Auto optimization > Restart when needed and turn it off. "
+     "Open Settings > Software update > Download and install to install the latest software. "
+     + SAFE_MODE + " If restarts stop in Safe mode, uninstall recently installed apps. "
+     "If the phone keeps restarting, visit an authorised service centre."),
+    ("siis_p09", "Performance", "Keyboard lag",
+     "Keyboard lag is often caused by keyboard learning data or a third-party keyboard. "
+     "Open Settings > General management > Keyboard list and default and select Samsung Keyboard. "
+     "Open Settings > General management > Samsung Keyboard settings > Reset to default settings and tap Reset keyboard settings. "
+     "Restart the phone after resetting the keyboard."),
+    ("siis_p10", "Performance", "Home screen lag",
+     "A laggy Home screen can be caused by a third-party launcher or heavy animations. "
+     "Open Settings > Apps > Default apps > Home app and select One UI Home. "
+     "Open Settings > Accessibility > Vision enhancements > Reduce animations and turn it on."),
+    # ---------------------------------------------------------------- Connectivity
+    ("siis_n01", "Connectivity", "Wi-Fi disconnecting",
+     "Wi-Fi can drop when the router is far away, the saved network is corrupted or power saving limits Wi-Fi. "
+     "Open Settings > Connections > Wi-Fi, tap the settings icon next to your network, and then tap Forget. "
+     "Reconnect to the network and enter the password again. "
+     "Open Settings > Connections > Wi-Fi > Intelligent Wi-Fi and turn off Switch to mobile data. "
+     "Restart your router by unplugging it for 30 seconds. "
+     "If the problem continues, reset the network settings from Settings > General management > Reset > Reset network settings."),
+    ("siis_n02", "Connectivity", "Bluetooth pairing",
+     "Bluetooth devices may fail to pair when the device is not in pairing mode or an old pairing is stored. "
+     "Put the Bluetooth device into pairing mode by following its manual. "
+     "Open Settings > Connections > Bluetooth, tap the settings icon next to the device, and then tap Unpair. "
+     "Turn Bluetooth off and on again, and then pair the device. "
+     "If pairing still fails, reset the network settings from Settings > General management > Reset > Reset network settings."),
+    ("siis_n03", "Connectivity", "Mobile data not working",
+     "Mobile data may stop when it is switched off, the data limit is reached or the APN is wrong. "
+     "Open Settings > Connections > Data usage > Mobile data and turn it on. "
+     "Open Settings > Connections > Airplane mode and make sure it is off. "
+     "Open Settings > Connections > Mobile networks > Access Point Names, tap More options, and then tap Reset to default. "
+     "Remove the SIM card and insert it again. "
+     "If data still does not work, restart the phone."),
+    ("siis_n04", "Connectivity", "No signal",
+     "Weak or no signal can be caused by network mode, the SIM card or the carrier. "
+     "Open Settings > Connections > Mobile networks > Network mode and select the automatic 5G or LTE option. "
+     "Open Settings > Connections > Mobile networks > Network operators and tap Select automatically. "
+     "Remove the SIM card, check it for damage, and insert it again. "
+     "Restart the phone. "
+     "If there is still no signal, contact your mobile carrier."),
+    ("siis_n05", "Connectivity", "Mobile hotspot",
+     "Other devices may not connect to the hotspot because of the band or password. "
+     "Open Settings > Connections > Mobile Hotspot and Tethering > Mobile Hotspot and turn it on. "
+     "Tap Configure on the Mobile Hotspot screen and set the band to 2.4 GHz. "
+     "Open Settings > Connections > Data usage > Data saver and turn it off."),
+    ("siis_n06", "Connectivity", "Bluetooth audio stuttering",
+     "Bluetooth audio can cut out because of distance, interference or sound effects. "
+     "Keep the phone and the headphones close together and away from microwaves or routers. "
+     "Open Settings > Sounds and vibration > Sound quality and effects > Dolby Atmos and turn it off. "
+     "Open Settings > Connections > Bluetooth, unpair the headphones, and pair them again."),
+    ("siis_n07", "Connectivity", "Wi-Fi calling",
+     "Wi-Fi calling must be supported by your carrier and turned on. "
+     "Open Settings > Connections > Wi-Fi Calling and turn it on. "
+     "Open Settings > Connections > Wi-Fi and make sure you are connected to a network. "
+     "Contact your carrier to confirm Wi-Fi calling is active on your plan."),
+    ("siis_n08", "Connectivity", "GPS accuracy",
+     "GPS accuracy improves when location services can use Wi-Fi and Bluetooth. "
+     "Open Settings > Location and turn it on. "
+     "Open Settings > Location > Location services and turn on Google Location Accuracy. "
+     "Go outside or near a window to get a clearer view of the sky."),
+    # ---------------------------------------------------------------- Sound / Notifications
+    ("siis_s01", "Sound", "No sound on calls",
+     "No sound during calls can be caused by low volume, a Bluetooth device or a blocked speaker. "
+     "Press the Volume up key during a call to raise the call volume. "
+     "Open Settings > Connections > Bluetooth and turn it off to stop audio going to another device. "
+     "Clean the earpiece and speaker grille gently with a soft, dry brush. "
+     "Open Settings > Device care > Diagnostics and run the Speaker test."),
+    ("siis_s02", "Notifications", "Missing notifications",
+     "Notifications may not appear when they are blocked for the app or the app is put to sleep. "
+     "Open Settings > Notifications > App notifications and turn on notifications for the app. "
+     "Open Settings > Battery > Background usage limits > Never sleeping apps and add the app. "
+     "Open Settings > Notifications > Do not disturb and turn it off."),
+    ("siis_s03", "Notifications", "Do not disturb",
+     "Calls can be silenced when Do not disturb is on or scheduled. "
+     "Open Settings > Notifications > Do not disturb and turn it off. "
+     "Open Settings > Notifications > Do not disturb > Calls and messages and allow calls from your contacts."),
+    ("siis_s04", "Sound", "Vibration not working",
+     "The phone may not vibrate when vibration intensity is set to zero or the sound mode is Mute. "
+     "Open Settings > Sounds and vibration > Sound mode and select Vibrate or Sound. "
+     "Open Settings > Sounds and vibration > Vibration intensity and drag the sliders to the right. "
+     "Open Settings > Device care > Diagnostics and run the Vibration test."),
+    ("siis_s05", "Sound", "Low ringtone volume",
+     "A quiet ringtone is usually caused by a low volume level. "
+     "Open Settings > Sounds and vibration > Volume and drag the Ringtone slider to the right. "
+     "Remove the phone case if it covers the speaker."),
+    ("siis_s06", "Sound", "Earbuds sound in one ear",
+     "Sound that plays in only one earbud can be caused by mono audio or balance settings. "
+     "Open Settings > Accessibility > Hearing enhancements > Mono audio and turn it off. "
+     "Clean the earbud mesh gently with a dry cotton swab."),
+    # ---------------------------------------------------------------- Software / Reset
+    ("siis_r01", "Software", "Software update fails",
+     "A software update can fail when storage is low, the battery is low or the connection is unstable. "
+     "Open Settings > Device care > Storage and free up at least 5 GB. "
+     "Charge the battery above 50 percent before updating. "
+     "Open Settings > Connections > Wi-Fi and connect to a stable network. "
+     "Open Settings > Software update > Download and install and try the update again."),
+    ("siis_r02", "Software", "Factory reset",
+     "A factory data reset erases all data and returns the phone to its original settings. "
+     "Open Settings > Accounts and backup > Back up data and back up your photos, contacts and messages. "
+     "Open Settings > General management > Reset > Factory data reset and tap Reset."),
+    ("siis_r03", "Software", "App permissions",
+     "An app may not work correctly when it does not have the permissions it needs. "
+     "Open Settings > Security and privacy > Permission manager and select the permission the app needs. "
+     "Select the app and choose Allow only while using the app."),
+    ("siis_r04", "Software", "Wrong date and time",
+     "The clock can be wrong when automatic date and time is turned off. "
+     "Open Settings > General management > Date and time > Automatic date and time and turn it on. "
+     "Restart the phone if the time does not update."),
+    ("siis_r05", "Software", "Motion gestures",
+     "Gestures such as lift to wake or double tap to turn on the screen can be turned off by accident. "
+     "Open Settings > Advanced features > Motions and gestures. "
+     "Turn on Lift to wake and Double tap to turn on screen."),
+]

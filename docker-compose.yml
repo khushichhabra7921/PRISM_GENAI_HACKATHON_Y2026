@@ -1,0 +1,58 @@
+name: sgte
+
+services:
+  ollama:
+    image: ollama/ollama:0.12.6
+    volumes:
+      - ollama:/root/.ollama
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+    environment:
+      OLLAMA_KEEP_ALIVE: 60m
+      OLLAMA_NUM_PARALLEL: "2"
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  # one-shot: downloads the local SLM into the shared volume (cached across restarts)
+  ollama-pull:
+    image: ollama/ollama:0.12.6
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    entrypoint: ["/bin/sh", "-c", "ollama pull ${SGTE_OLLAMA_MODEL:-qwen2.5:1.5b-instruct}"]
+    restart: "no"
+
+  api:
+    build: .
+    ports:
+      - "${SGTE_API_PORT:-8000}:8000"
+    environment:
+      OLLAMA_URL: http://ollama:11434
+      SGTE_LLM_PROVIDER: ${SGTE_LLM_PROVIDER:-ollama}
+      SGTE_LLM_FALLBACK: ${SGTE_LLM_FALLBACK:-}
+      SGTE_OLLAMA_MODEL: ${SGTE_OLLAMA_MODEL:-qwen2.5:1.5b-instruct}
+      SGTE_CACHE_TAU: ${SGTE_CACHE_TAU:-0.85}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    volumes:
+      - cache:/app/cache
+      - logs:/app/logs
+    depends_on:
+      ollama-pull:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)"]
+      interval: 10s
+      timeout: 5s
+      retries: 60
+      start_period: 30s
+
+volumes:
+  ollama:
+  cache:
+  logs:

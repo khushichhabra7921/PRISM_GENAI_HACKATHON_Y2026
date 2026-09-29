@@ -1,0 +1,2162 @@
+{
+  "metadata": {
+    "synthetic": true,
+    "generator": "scripts/make_synthetic_kit.py",
+    "seed": 2026,
+    "note": "Synthetic data written from general One UI knowledge; not official Samsung content."
+  },
+  "deeplinks": [
+    {
+      "deeplink": "bixby://masked/act/hu66go",
+      "description": "Open the main Settings screen",
+      "message": "Open the Settings app",
+      "cna_description": "Main settings menu listing connections, display, battery, apps and every other settings category",
+      "controlType": "screen",
+      "path": [
+        "Settings"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/90952p",
+      "description": "Open connections settings",
+      "message": "Go to connections",
+      "cna_description": "Connections menu with Wi-Fi, Bluetooth, mobile networks, data usage, hotspot and airplane mode",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Connections"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/afhsg2",
+      "description": "Turn Wi-Fi on or off in Connections",
+      "message": "Manage Wi-Fi networks",
+      "cna_description": "Turn Wi-Fi on or off, see available networks, connect to or forget a wireless network",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Connections",
+        "Wi-Fi"
+      ],
+      "validation": {
+        "key": "wifi_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/a5unzq",
+      "description": "Open advanced settings under Wi-Fi",
+      "message": "Go to advanced settings in Wi-Fi",
+      "cna_description": "Advanced Wi-Fi options such as switching to mobile data, network notifications and Wi-Fi power saving",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Connections",
+        "Wi-Fi",
+        "Advanced settings"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/wwy6ev",
+      "description": "Open Intelligent Wi-Fi settings under Wi-Fi",
+      "message": "Go to Intelligent Wi-Fi in Wi-Fi",
+      "cna_description": "Intelligent Wi-Fi features that switch networks automatically and prioritise stable connections",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Connections",
+        "Wi-Fi",
+        "Intelligent Wi-Fi"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/f98ss3",
+      "description": "Turn Bluetooth on or off in Connections",
+      "message": "Manage Bluetooth devices",
+      "cna_description": "Turn Bluetooth on or off, pair new devices, unpair or reconnect earbuds, speakers and car kits",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Connections",
+        "Bluetooth"
+      ],
+      "validation": {
+        "key": "bluetooth_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/jtbxx3",
+      "description": "Open data usage settings under Connections",
+      "message": "Go to data usage in Connections",
+      "cna_description": "See how much mobile and Wi-Fi data each app uses and set data warnings",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Connections",
+        "Data usage"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/1fz95h",
+      "description": "Turn data saver on or off in Data usage",
+      "message": "Toggle data saver",
+      "cna_description": "Data saver stops apps from using mobile data in the background",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Connections",
+        "Data usage",
+        "Data saver"
+      ],
+      "validation": {
+        "key": "data_saver_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/165z7q",
+      "description": "Turn mobile data on or off in Data usage",
+      "message": "Toggle mobile data",
+      "cna_description": "Mobile data switch that allows or blocks internet over the cellular network",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Connections",
+        "Data usage",
+        "Mobile data"
+      ],
+      "validation": {
+        "key": "mobile_data_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/0467bo",
+      "description": "Open mobile networks settings under Connections",
+      "message": "Go to mobile networks in Connections",
+      "cna_description": "Mobile network options including network mode, access point names, roaming and network operators",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Connections",
+        "Mobile networks"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/id7g14",
+      "description": "Open network mode settings under Mobile networks",
+      "message": "Choose preferred network type",
+      "cna_description": "Choose preferred network type such as 5G, LTE, 3G or 2G auto connect",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Connections",
+        "Mobile networks",
+        "Network mode"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/j4oh34",
+      "description": "Open Access Point Names settings under Mobile networks",
+      "message": "Go to Access Point Names in Mobile networks",
+      "cna_description": "APN settings used by the carrier for mobile data and MMS; reset APN to default",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Connections",
+        "Mobile networks",
+        "Access Point Names"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/8q9zt9",
+      "description": "Turn data roaming on or off in Mobile networks",
+      "message": "Toggle data roaming",
+      "cna_description": "Allow or block mobile data while roaming on other networks abroad",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Connections",
+        "Mobile networks",
+        "Data roaming"
+      ],
+      "validation": {
+        "key": "data_roaming_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/64z1ms",
+      "description": "Open network operators settings under Mobile networks",
+      "message": "Go to network operators in Mobile networks",
+      "cna_description": "Select the network operator automatically or manually search for carriers",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Connections",
+        "Mobile networks",
+        "Network operators"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/racj37",
+      "description": "Open Mobile Hotspot and Tethering settings under Connections",
+      "message": "Go to Mobile Hotspot and Tethering in Connections",
+      "cna_description": "Share the phone's internet through mobile hotspot, Bluetooth tethering or USB tethering",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Connections",
+        "Mobile Hotspot and Tethering"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/5xmq53",
+      "description": "Turn Mobile Hotspot on or off in Mobile Hotspot and Tethering",
+      "message": "Toggle Mobile Hotspot",
+      "cna_description": "Turn the mobile hotspot on or off, change hotspot name, password and band",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Connections",
+        "Mobile Hotspot and Tethering",
+        "Mobile Hotspot"
+      ],
+      "validation": {
+        "key": "hotspot_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/6519cs",
+      "description": "Turn airplane mode on or off in Connections",
+      "message": "Toggle airplane mode",
+      "cna_description": "Airplane mode turns off calls, mobile data, Wi-Fi and Bluetooth radios",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Connections",
+        "Airplane mode"
+      ],
+      "validation": {
+        "key": "airplane_mode_on",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/u3g26q",
+      "description": "Turn Wi-Fi Calling on or off in Connections",
+      "message": "Toggle Wi-Fi Calling",
+      "cna_description": "Make and receive calls over Wi-Fi when mobile signal is weak",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Connections",
+        "Wi-Fi Calling"
+      ],
+      "validation": {
+        "key": "wifi_calling_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/2l14er",
+      "description": "Turn NFC and contactless payments on or off in Connections",
+      "message": "Toggle NFC and contactless payments",
+      "cna_description": "NFC for tap to pay and sharing; choose the default payment app",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Connections",
+        "NFC and contactless payments"
+      ],
+      "validation": {
+        "key": "nfc_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/5xgm0j",
+      "description": "Open more connection settings under Connections",
+      "message": "Go to more connection settings in Connections",
+      "cna_description": "More connection options such as nearby device scanning, printing, VPN and private DNS",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Connections",
+        "More connection settings"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/2afa28",
+      "description": "Turn nearby device scanning on or off in More connection settings",
+      "message": "Toggle nearby device scanning",
+      "cna_description": "Let the phone scan for nearby devices to connect to in the background",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Connections",
+        "More connection settings",
+        "Nearby device scanning"
+      ],
+      "validation": {
+        "key": "nearby_scanning_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/fmphc8",
+      "description": "Open Private DNS settings under More connection settings",
+      "message": "Go to Private DNS in More connection settings",
+      "cna_description": "Private DNS provider settings for encrypted domain name lookups",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Connections",
+        "More connection settings",
+        "Private DNS"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/rwjau5",
+      "description": "Turn location on or off",
+      "message": "Manage location access",
+      "cna_description": "Location switch for GPS and location access by apps",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Location"
+      ],
+      "validation": {
+        "key": "location_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/i8o4i6",
+      "description": "Open location services settings under Location",
+      "message": "Go to location services in Location",
+      "cna_description": "Location services such as Google location accuracy, Wi-Fi scanning and Bluetooth scanning",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Location",
+        "Location services"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/sf0kit",
+      "description": "Open app permissions settings under Location",
+      "message": "Go to app permissions in Location",
+      "cna_description": "Which apps can use location all the time, only while in use, or never",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Location",
+        "App permissions"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/60yj7m",
+      "description": "Open connected devices settings",
+      "message": "Go to connected devices",
+      "cna_description": "Connected devices menu with Quick Share, Android Auto, Samsung DeX and multi control",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Connected devices"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/yagyed",
+      "description": "Open Quick Share settings under Connected devices",
+      "message": "Go to Quick Share in Connected devices",
+      "cna_description": "Quick Share lets you send files to nearby devices and choose who can share with you",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Connected devices",
+        "Quick Share"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/wwbb64",
+      "description": "Open sounds and vibration settings",
+      "message": "Go to sounds and vibration",
+      "cna_description": "Sounds and vibration menu with sound mode, ringtone, volume, vibration and sound quality",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Sounds and vibration"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/ut2uh5",
+      "description": "Open sound mode settings under Sounds and vibration",
+      "message": "Choose Sound, Vibrate or Mute",
+      "cna_description": "Switch between Sound, Vibrate and Mute modes for calls and notifications",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Sounds and vibration",
+        "Sound mode"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/3kj7n1",
+      "description": "Adjust volume under Sounds and vibration",
+      "message": "Set the volume level",
+      "cna_description": "Volume sliders for ringtone, media, notifications and system sounds",
+      "controlType": "slider",
+      "path": [
+        "Settings",
+        "Sounds and vibration",
+        "Volume"
+      ],
+      "validation": {
+        "key": "volume_media",
+        "resultType": "integer"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/v3oe9z",
+      "description": "Open ringtone settings under Sounds and vibration",
+      "message": "Go to ringtone in Sounds and vibration",
+      "cna_description": "Choose the ringtone for incoming calls",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Sounds and vibration",
+        "Ringtone"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/cmlc8d",
+      "description": "Adjust vibration intensity under Sounds and vibration",
+      "message": "Set the vibration intensity level",
+      "cna_description": "Vibration strength for calls, notifications and touch interactions",
+      "controlType": "slider",
+      "path": [
+        "Settings",
+        "Sounds and vibration",
+        "Vibration intensity"
+      ],
+      "validation": {
+        "key": "vibration_intensity",
+        "resultType": "integer"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/2m4bi7",
+      "description": "Open system sound and vibration control settings under Sounds and vibration",
+      "message": "Go to system sound and vibration control in Sounds and vibration",
+      "cna_description": "Touch sounds, keyboard sounds, dialling keypad tones and haptic feedback",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Sounds and vibration",
+        "System sound and vibration control"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/n7ikly",
+      "description": "Open sound quality and effects settings under Sounds and vibration",
+      "message": "Go to sound quality and effects in Sounds and vibration",
+      "cna_description": "Sound quality options including Dolby Atmos, equaliser and UHQ upscaler",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Sounds and vibration",
+        "Sound quality and effects"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/r180fy",
+      "description": "Turn Dolby Atmos on or off in Sound quality and effects",
+      "message": "Toggle Dolby Atmos",
+      "cna_description": "Dolby Atmos surround sound effect for media playback",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Sounds and vibration",
+        "Sound quality and effects",
+        "Dolby Atmos"
+      ],
+      "validation": {
+        "key": "dolby_atmos_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/tlwlq3",
+      "description": "Open separate app sound settings under Sounds and vibration",
+      "message": "Go to separate app sound in Sounds and vibration",
+      "cna_description": "Play sound from one app on a different audio device such as a Bluetooth speaker",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Sounds and vibration",
+        "Separate app sound"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/50s3lu",
+      "description": "Open notifications settings",
+      "message": "Go to notifications",
+      "cna_description": "Notifications menu with app notifications, lock screen notifications, pop-up style and Do not disturb",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Notifications"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/742h77",
+      "description": "Open app notifications settings under Notifications",
+      "message": "Choose which apps can notify you",
+      "cna_description": "Allow or block notifications for each app individually",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Notifications",
+        "App notifications"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/rgnoaf",
+      "description": "Open lock screen notifications settings under Notifications",
+      "message": "Go to lock screen notifications in Notifications",
+      "cna_description": "Show or hide notification content on the lock screen",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Notifications",
+        "Lock screen notifications"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/3v08lb",
+      "description": "Open notification pop-up style settings under Notifications",
+      "message": "Go to notification pop-up style in Notifications",
+      "cna_description": "Choose brief or detailed pop-up notifications and edge lighting",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Notifications",
+        "Notification pop-up style"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/wkw98n",
+      "description": "Turn do not disturb on or off in Notifications",
+      "message": "Toggle do not disturb",
+      "cna_description": "Do not disturb mutes calls and alerts; set schedules and exceptions",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Notifications",
+        "Do not disturb"
+      ],
+      "validation": {
+        "key": "dnd_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/hr9nsr",
+      "description": "Open calls and messages settings under Do not disturb",
+      "message": "Go to calls and messages in Do not disturb",
+      "cna_description": "Choose which callers and messages can reach you while Do not disturb is on",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Notifications",
+        "Do not disturb",
+        "Calls and messages"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/9igqg1",
+      "description": "Open advanced settings under Notifications",
+      "message": "Go to advanced settings in Notifications",
+      "cna_description": "Advanced notification options such as notification history, badges and snooze",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Notifications",
+        "Advanced settings"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/kgdwlg",
+      "description": "Turn notification history on or off in Advanced settings",
+      "message": "Toggle notification history",
+      "cna_description": "Keep a history of recent and dismissed notifications",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Notifications",
+        "Advanced settings",
+        "Notification history"
+      ],
+      "validation": {
+        "key": "notification_history_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/6uresu",
+      "description": "Open display settings",
+      "message": "Go to display",
+      "cna_description": "Display menu with brightness, dark mode, refresh rate, screen mode, font size, screen timeout and navigation bar",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Display"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/kqqea0",
+      "description": "Turn dark mode on or off in Display",
+      "message": "Toggle dark mode",
+      "cna_description": "Dark mode applies a dark theme to reduce eye strain and save battery",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Display",
+        "Dark mode"
+      ],
+      "validation": {
+        "key": "dark_mode_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/q0adgp",
+      "description": "Open dark mode settings under Display",
+      "message": "Go to dark mode settings in Display",
+      "cna_description": "Schedule dark mode from sunset to sunrise or at a custom time",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Display",
+        "Dark mode settings"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/bthg9w",
+      "description": "Adjust brightness under Display",
+      "message": "Set the brightness level",
+      "cna_description": "Screen brightness level slider",
+      "controlType": "slider",
+      "path": [
+        "Settings",
+        "Display",
+        "Brightness"
+      ],
+      "validation": {
+        "key": "screen_brightness",
+        "resultType": "integer"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/u3czun",
+      "description": "Turn adaptive brightness on or off in Display",
+      "message": "Toggle adaptive brightness",
+      "cna_description": "Adaptive brightness changes the screen brightness automatically based on surrounding light",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Display",
+        "Adaptive brightness"
+      ],
+      "validation": {
+        "key": "adaptive_brightness_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/31hx6q",
+      "description": "Turn extra brightness on or off in Display",
+      "message": "Toggle extra brightness",
+      "cna_description": "Extra brightness raises the maximum brightness beyond the normal limit",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Display",
+        "Extra brightness"
+      ],
+      "validation": {
+        "key": "extra_brightness_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/yswd1b",
+      "description": "Open motion smoothness settings under Display",
+      "message": "Choose screen refresh rate",
+      "cna_description": "Refresh rate setting: Adaptive up to 120 Hz for smoother motion or Standard 60 Hz to save battery",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Display",
+        "Motion smoothness"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/svsht0",
+      "description": "Turn eye comfort shield on or off in Display",
+      "message": "Toggle eye comfort shield",
+      "cna_description": "Eye comfort shield filters blue light and warms screen colours",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Display",
+        "Eye comfort shield"
+      ],
+      "validation": {
+        "key": "eye_comfort_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/ub8vm9",
+      "description": "Open screen mode settings under Display",
+      "message": "Choose Vivid or Natural colours",
+      "cna_description": "Screen colour mode Vivid or Natural and white balance adjustment",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Display",
+        "Screen mode"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/dhkhhc",
+      "description": "Open font size and style settings under Display",
+      "message": "Go to font size and style in Display",
+      "cna_description": "Change font size, font style and bold text",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Display",
+        "Font size and style"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/i7wtb1",
+      "description": "Open screen zoom settings under Display",
+      "message": "Go to screen zoom in Display",
+      "cna_description": "Make on-screen items such as icons and text bigger or smaller",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Display",
+        "Screen zoom"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/iw0yyp",
+      "description": "Open screen resolution settings under Display",
+      "message": "Go to screen resolution in Display",
+      "cna_description": "Choose HD+, FHD+ or WQHD+ screen resolution",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Display",
+        "Screen resolution"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/0oil8b",
+      "description": "Open full screen apps settings under Display",
+      "message": "Go to full screen apps in Display",
+      "cna_description": "Choose which apps use the full screen aspect ratio or hide the camera cutout",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Display",
+        "Full screen apps"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/89zqjo",
+      "description": "Open screen timeout settings under Display",
+      "message": "Choose screen timeout length",
+      "cna_description": "How long the screen stays on before it turns off automatically",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Display",
+        "Screen timeout"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/bbr840",
+      "description": "Open navigation bar settings under Display",
+      "message": "Choose navigation type in Display settings",
+      "cna_description": "Switch between navigation buttons and swipe gestures, button order and gesture hint",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Display",
+        "Navigation bar"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/quifl9",
+      "description": "Open more options settings under Navigation bar",
+      "message": "Go to more options in Navigation bar",
+      "cna_description": "Swipe gesture sensitivity and gesture type options for navigation",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Display",
+        "Navigation bar",
+        "More options"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/c6qv7u",
+      "description": "Turn accidental touch protection on or off in Display",
+      "message": "Toggle accidental touch protection",
+      "cna_description": "Protect the screen from accidental touches in dark places such as a pocket or bag",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Display",
+        "Accidental touch protection"
+      ],
+      "validation": {
+        "key": "accidental_touch_protection",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/dap4do",
+      "description": "Turn show charging information on or off in Display",
+      "message": "Toggle show charging information",
+      "cna_description": "Show battery level and estimated charging time while charging",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Display",
+        "Show charging information"
+      ],
+      "validation": {
+        "key": "charging_info_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/6jzxo9",
+      "description": "Open screen saver settings under Display",
+      "message": "Go to screen saver in Display",
+      "cna_description": "Screen saver shown while the phone is charging",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Display",
+        "Screen saver"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/rvmxw3",
+      "description": "Turn edge panels on or off in Display",
+      "message": "Toggle edge panels",
+      "cna_description": "Edge panels shortcut handle on the side of the screen",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Display",
+        "Edge panels"
+      ],
+      "validation": {
+        "key": "edge_panels_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/394tmk",
+      "description": "Turn auto rotate on or off in Quick panel",
+      "message": "Turn screen rotation on or off",
+      "cna_description": "Auto rotate switch in the Quick panel that lets the screen turn between portrait and landscape",
+      "controlType": "toggle",
+      "path": [
+        "Quick panel",
+        "Auto rotate"
+      ],
+      "validation": {
+        "key": "auto_rotate_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/0j5aw7",
+      "description": "Turn flashlight on or off in Quick panel",
+      "message": "Toggle flashlight",
+      "cna_description": "Flashlight switch in the Quick panel",
+      "controlType": "toggle",
+      "path": [
+        "Quick panel",
+        "Flashlight"
+      ],
+      "validation": {
+        "key": "flashlight_on",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/0clftx",
+      "description": "Open wallpaper and style settings",
+      "message": "Go to wallpaper and style",
+      "cna_description": "Change wallpapers, colour palette and theme",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Wallpaper and style"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/8qigb8",
+      "description": "Open lock screen settings",
+      "message": "Go to lock screen",
+      "cna_description": "Lock screen menu with screen lock type, Always On Display and lock screen widgets",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Lock screen"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/ntczy8",
+      "description": "Open screen lock type settings under Lock screen",
+      "message": "Go to screen lock type in Lock screen",
+      "cna_description": "Choose swipe, pattern, PIN or password to unlock the phone",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Lock screen",
+        "Screen lock type"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/7k6gfj",
+      "description": "Turn Always On Display on or off in Lock screen",
+      "message": "Toggle Always On Display",
+      "cna_description": "Always On Display shows the clock and notifications while the screen is off",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Lock screen",
+        "Always On Display"
+      ],
+      "validation": {
+        "key": "aod_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/yv9qtc",
+      "description": "Open when to show settings under Always On Display",
+      "message": "Go to when to show in Always On Display",
+      "cna_description": "Choose whether Always On Display shows always, as scheduled or only after tapping the screen",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Lock screen",
+        "Always On Display",
+        "When to show"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/mkss8s",
+      "description": "Open battery settings",
+      "message": "Check battery usage by app",
+      "cna_description": "Battery menu with battery usage, power saving, background usage limits and charging settings",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Battery"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/wiyma4",
+      "description": "Open battery usage settings under Battery",
+      "message": "Go to battery usage in Battery",
+      "cna_description": "Battery usage graph and which apps used the most battery since the last full charge",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Battery",
+        "Battery usage"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/1w8k7b",
+      "description": "Turn power saving on or off in Battery",
+      "message": "Toggle power saving",
+      "cna_description": "Power saving mode limits background activity, lowers brightness and speed to extend battery life",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Battery",
+        "Power saving"
+      ],
+      "validation": {
+        "key": "power_saving_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/lu8jkb",
+      "description": "Open background usage limits settings under Battery",
+      "message": "Go to background usage limits in Battery",
+      "cna_description": "Put unused apps to sleep and manage sleeping, deep sleeping and never sleeping apps",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Battery",
+        "Background usage limits"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/h6axex",
+      "description": "Turn put unused apps to sleep on or off in Background usage limits",
+      "message": "Toggle put unused apps to sleep",
+      "cna_description": "Automatically put apps you have not used recently to sleep",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Battery",
+        "Background usage limits",
+        "Put unused apps to sleep"
+      ],
+      "validation": {
+        "key": "put_unused_apps_to_sleep",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/tn8jpi",
+      "description": "Open sleeping apps settings under Background usage limits",
+      "message": "Go to sleeping apps in Background usage limits",
+      "cna_description": "Apps that run in the background only occasionally",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Battery",
+        "Background usage limits",
+        "Sleeping apps"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/gu5gey",
+      "description": "Open deep sleeping apps settings under Background usage limits",
+      "message": "Go to deep sleeping apps in Background usage limits",
+      "cna_description": "Apps that never run in the background and only work when opened",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Battery",
+        "Background usage limits",
+        "Deep sleeping apps"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/qthw45",
+      "description": "Open never sleeping apps settings under Background usage limits",
+      "message": "Go to never sleeping apps in Background usage limits",
+      "cna_description": "Apps that are always allowed to run in the background",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Battery",
+        "Background usage limits",
+        "Never sleeping apps"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/h97pw3",
+      "description": "Open charging settings under Battery",
+      "message": "Go to charging settings in Battery",
+      "cna_description": "Charging options such as fast charging, fast wireless charging and battery protection",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Battery",
+        "Charging settings"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/wfef5t",
+      "description": "Turn fast charging on or off in Charging settings",
+      "message": "Toggle fast charging",
+      "cna_description": "Fast charging for wired chargers",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Battery",
+        "Charging settings",
+        "Fast charging"
+      ],
+      "validation": {
+        "key": "fast_charging_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/qoku16",
+      "description": "Turn fast wireless charging on or off in Charging settings",
+      "message": "Toggle fast wireless charging",
+      "cna_description": "Fast charging on compatible wireless chargers",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Battery",
+        "Charging settings",
+        "Fast wireless charging"
+      ],
+      "validation": {
+        "key": "fast_wireless_charging_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/9vu5zu",
+      "description": "Turn protect battery on or off in Charging settings",
+      "message": "Toggle protect battery",
+      "cna_description": "Protect battery stops charging at 80 or 85 percent to extend battery lifespan",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Battery",
+        "Charging settings",
+        "Protect battery"
+      ],
+      "validation": {
+        "key": "protect_battery_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/lm3oww",
+      "description": "Open more battery settings under Battery",
+      "message": "Go to more battery settings in Battery",
+      "cna_description": "More battery options including adaptive battery and battery percentage",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Battery",
+        "More battery settings"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/0ynj2i",
+      "description": "Turn adaptive battery on or off in More battery settings",
+      "message": "Toggle adaptive battery",
+      "cna_description": "Adaptive battery learns app usage and limits battery for apps you rarely use",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Battery",
+        "More battery settings",
+        "Adaptive battery"
+      ],
+      "validation": {
+        "key": "adaptive_battery_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/1rvhur",
+      "description": "Turn show battery percentage on or off in More battery settings",
+      "message": "Toggle show battery percentage",
+      "cna_description": "Show the battery percentage in the status bar",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Battery",
+        "More battery settings",
+        "Show battery percentage"
+      ],
+      "validation": {
+        "key": "show_battery_percent",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/2qj8ro",
+      "description": "Turn wireless power sharing on or off in Battery",
+      "message": "Toggle wireless power sharing",
+      "cna_description": "Wirelessly charge another device such as earbuds or a watch from the back of the phone",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Battery",
+        "Wireless power sharing"
+      ],
+      "validation": {
+        "key": "wireless_powershare_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/vj9hrs",
+      "description": "Open device care settings",
+      "message": "Optimise your phone",
+      "cna_description": "Device care checks battery, storage, memory and device protection and offers Optimize now",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Device care"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/3zzb9v",
+      "description": "Open storage settings under Device care",
+      "message": "Go to storage in Device care",
+      "cna_description": "Storage usage by files, apps and system; delete unnecessary files, duplicates and large files",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Device care",
+        "Storage"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/0vg587",
+      "description": "Open memory settings under Device care",
+      "message": "Go to memory in Device care",
+      "cna_description": "RAM usage; close background apps to free up memory",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Device care",
+        "Memory"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/n1wvdz",
+      "description": "Open RAM Plus settings under Memory",
+      "message": "Go to RAM Plus in Memory",
+      "cna_description": "RAM Plus uses storage as virtual memory; choose its size or turn it off",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Device care",
+        "Memory",
+        "RAM Plus"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/lar9qi",
+      "description": "Open performance profile settings under Device care",
+      "message": "Go to performance profile in Device care",
+      "cna_description": "Performance profile Standard or Light to balance speed, heat and battery",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Device care",
+        "Performance profile"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/v044va",
+      "description": "Open auto optimization settings under Device care",
+      "message": "Go to auto optimization in Device care",
+      "cna_description": "Automatically optimise the phone daily and restart when needed",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Device care",
+        "Auto optimization"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/cohrub",
+      "description": "Turn restart when needed on or off in Auto optimization",
+      "message": "Toggle restart when needed",
+      "cna_description": "Allow the phone to restart automatically at night to keep it running smoothly",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Device care",
+        "Auto optimization",
+        "Restart when needed"
+      ],
+      "validation": {
+        "key": "auto_restart_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/n36rxf",
+      "description": "Open device protection settings under Device care",
+      "message": "Go to device protection in Device care",
+      "cna_description": "Scan the phone for malware and harmful apps",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Device care",
+        "Device protection"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/9m8agj",
+      "description": "Open diagnostics settings under Device care",
+      "message": "Go to diagnostics in Device care",
+      "cna_description": "Run hardware tests for the screen, sensors, battery, speakers and cameras",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Device care",
+        "Diagnostics"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/vo3nkt",
+      "description": "Open battery settings under Device care",
+      "message": "Go to battery in Device care",
+      "cna_description": "Device care battery overview shortcut with usage and power saving",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Device care",
+        "Battery"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/f079ig",
+      "description": "Open apps settings",
+      "message": "Go to apps",
+      "cna_description": "List of installed apps; open app info to force stop, clear cache, change permissions or uninstall",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Apps"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/br0cl9",
+      "description": "Open default apps settings under Apps",
+      "message": "Go to default apps in Apps",
+      "cna_description": "Choose default apps for browser, calls, messages and Home screen launcher",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Apps",
+        "Default apps"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/6o4vvw",
+      "description": "Open home app settings under Default apps",
+      "message": "Go to home app in Default apps",
+      "cna_description": "Choose which launcher is used as the Home screen app",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Apps",
+        "Default apps",
+        "Home app"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/u4q5uq",
+      "description": "Open Camera settings under Apps",
+      "message": "Go to Camera in Apps",
+      "cna_description": "App info for the Camera app: force stop, storage, permissions and notifications",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Apps",
+        "Camera"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/c5ib4x",
+      "description": "Open storage settings under Camera",
+      "message": "Go to storage in Camera",
+      "cna_description": "Clear cache or clear data for the Camera app",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Apps",
+        "Camera",
+        "Storage"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/q3mxr6",
+      "description": "Open permissions settings under Camera",
+      "message": "Go to permissions in Camera",
+      "cna_description": "Camera app permissions such as microphone, location and storage",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Apps",
+        "Camera",
+        "Permissions"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/ztnd0e",
+      "description": "Open Google Play Store settings under Apps",
+      "message": "Go to Google Play Store in Apps",
+      "cna_description": "App info for Google Play Store: storage, cache and updates",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Apps",
+        "Google Play Store"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/68t4f6",
+      "description": "Open Google Play services settings under Apps",
+      "message": "Go to Google Play services in Apps",
+      "cna_description": "App info for Google Play services: storage, battery and permissions",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Apps",
+        "Google Play services"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/7u5uvx",
+      "description": "Open security and privacy settings",
+      "message": "Go to security and privacy",
+      "cna_description": "Security and privacy menu with biometrics, permission manager, app security and updates",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Security and privacy"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/le9lq7",
+      "description": "Open permission manager settings under Security and privacy",
+      "message": "Go to permission manager in Security and privacy",
+      "cna_description": "Review which apps can access camera, microphone, location, contacts and files",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Security and privacy",
+        "Permission manager"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/7ygnb3",
+      "description": "Open biometrics settings under Security and privacy",
+      "message": "Go to biometrics in Security and privacy",
+      "cna_description": "Face recognition and fingerprint unlock settings",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Security and privacy",
+        "Biometrics"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/pn167i",
+      "description": "Open fingerprints settings under Biometrics",
+      "message": "Go to fingerprints in Biometrics",
+      "cna_description": "Register, delete or rename fingerprints used to unlock the phone",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Security and privacy",
+        "Biometrics",
+        "Fingerprints"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/6nr5i9",
+      "description": "Open accessibility settings",
+      "message": "Go to accessibility",
+      "cna_description": "Accessibility menu with vision, hearing and interaction options",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Accessibility"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/uxz88m",
+      "description": "Open vision enhancements settings under Accessibility",
+      "message": "Go to vision enhancements in Accessibility",
+      "cna_description": "Vision options such as high contrast fonts, colour correction and reduce animations",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Accessibility",
+        "Vision enhancements"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/j9jjid",
+      "description": "Turn reduce animations on or off in Vision enhancements",
+      "message": "Toggle reduce animations",
+      "cna_description": "Reduce or remove screen animations such as transitions and zoom effects",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Accessibility",
+        "Vision enhancements",
+        "Reduce animations"
+      ],
+      "validation": {
+        "key": "reduce_animations_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/crtlir",
+      "description": "Turn high contrast fonts on or off in Vision enhancements",
+      "message": "Toggle high contrast fonts",
+      "cna_description": "Outline text to make it stand out against the background",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Accessibility",
+        "Vision enhancements",
+        "High contrast fonts"
+      ],
+      "validation": {
+        "key": "high_contrast_fonts",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/8wi3kl",
+      "description": "Open hearing enhancements settings under Accessibility",
+      "message": "Go to hearing enhancements in Accessibility",
+      "cna_description": "Hearing options such as mono audio, sound balance and live caption",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Accessibility",
+        "Hearing enhancements"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/dlj058",
+      "description": "Turn mono audio on or off in Hearing enhancements",
+      "message": "Toggle mono audio",
+      "cna_description": "Combine stereo channels into one so both earbuds play the same sound",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Accessibility",
+        "Hearing enhancements",
+        "Mono audio"
+      ],
+      "validation": {
+        "key": "mono_audio_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/bto6x8",
+      "description": "Open advanced features settings",
+      "message": "Go to advanced features",
+      "cna_description": "Advanced features menu with side button, video brightness, labs and one-handed mode",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Advanced features"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/f30juj",
+      "description": "Open side button settings under Advanced features",
+      "message": "Go to side button in Advanced features",
+      "cna_description": "Choose what happens when you double press or press and hold the side button",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Advanced features",
+        "Side button"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/6c4adg",
+      "description": "Open video brightness settings under Advanced features",
+      "message": "Go to video brightness in Advanced features",
+      "cna_description": "Make videos brighter and more vivid in supported apps",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Advanced features",
+        "Video brightness"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/wqvbk6",
+      "description": "Turn one-handed mode on or off in Advanced features",
+      "message": "Toggle one-handed mode",
+      "cna_description": "Shrink the screen for one-handed use with a gesture or button",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Advanced features",
+        "One-handed mode"
+      ],
+      "validation": {
+        "key": "one_handed_mode",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/mf11mk",
+      "description": "Open Game Booster settings under Game Launcher",
+      "message": "Optimise games",
+      "cna_description": "Game Booster options to prioritise performance, limit alerts and control heat during games",
+      "controlType": "screen",
+      "path": [
+        "Game Launcher",
+        "Game Booster"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/po5nxk",
+      "description": "Open general management settings",
+      "message": "Go to general management",
+      "cna_description": "General management menu with language, keyboard, date and time and reset options",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "General management"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/8113xn",
+      "description": "Open date and time settings under General management",
+      "message": "Go to date and time in General management",
+      "cna_description": "Set date and time manually or automatically and choose time zone",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "General management",
+        "Date and time"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/t294fn",
+      "description": "Turn automatic date and time on or off in Date and time",
+      "message": "Toggle automatic date and time",
+      "cna_description": "Use the network provided date and time",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "General management",
+        "Date and time",
+        "Automatic date and time"
+      ],
+      "validation": {
+        "key": "auto_time_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/mhfwkh",
+      "description": "Open language settings under General management",
+      "message": "Go to language in General management",
+      "cna_description": "Add or change the phone's display language",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "General management",
+        "Language"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/ln1m1b",
+      "description": "Open keyboard list and default settings under General management",
+      "message": "Go to keyboard list and default in General management",
+      "cna_description": "Choose the default keyboard and manage installed keyboards",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "General management",
+        "Keyboard list and default"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/9jrsxz",
+      "description": "Open Samsung Keyboard settings under General management",
+      "message": "Go to Samsung Keyboard settings in General management",
+      "cna_description": "Samsung Keyboard options such as predictive text, auto replace and keyboard layout",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "General management",
+        "Samsung Keyboard settings"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/a473rw",
+      "description": "Open reset to default settings under Samsung Keyboard settings",
+      "message": "Go to reset to default settings in Samsung Keyboard settings",
+      "cna_description": "Reset Samsung Keyboard settings and clear personalised predictions",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "General management",
+        "Samsung Keyboard settings",
+        "Reset to default settings"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/5igj9o",
+      "description": "Open reset settings under General management",
+      "message": "Go to reset in General management",
+      "cna_description": "Reset options: reset all settings, reset network settings, reset accessibility settings and factory data reset",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "General management",
+        "Reset"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/w3yd9u",
+      "description": "Open reset network settings under Reset",
+      "message": "Go to reset network settings in Reset",
+      "cna_description": "Reset Wi-Fi, mobile data and Bluetooth settings to default; saved networks and pairings are removed",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "General management",
+        "Reset",
+        "Reset network settings"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/qf33w8",
+      "description": "Open reset all settings under Reset",
+      "message": "Go to reset all settings in Reset",
+      "cna_description": "Reset all settings to default except security, language and account settings; data is kept",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "General management",
+        "Reset",
+        "Reset all settings"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/77grsc",
+      "description": "Open factory data reset settings under Reset",
+      "message": "Go to factory data reset in Reset",
+      "cna_description": "Erase all data and restore the phone to factory settings",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "General management",
+        "Reset",
+        "Factory data reset"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/fce72g",
+      "description": "Open software update settings",
+      "message": "Check for software updates",
+      "cna_description": "Check for and install One UI and Android software updates",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Software update"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/y348bj",
+      "description": "Open download and install settings under Software update",
+      "message": "Go to download and install in Software update",
+      "cna_description": "Download and install the latest available software update",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Software update",
+        "Download and install"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/uibgzf",
+      "description": "Turn Auto download over Wi-Fi on or off in Software update",
+      "message": "Toggle Auto download over Wi-Fi",
+      "cna_description": "Download software updates automatically when connected to Wi-Fi",
+      "controlType": "toggle",
+      "path": [
+        "Settings",
+        "Software update",
+        "Auto download over Wi-Fi"
+      ],
+      "validation": {
+        "key": "auto_update_wifi",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/k8qbce",
+      "description": "Open accounts and backup settings",
+      "message": "Go to accounts and backup",
+      "cna_description": "Manage accounts and back up or restore data with Samsung Cloud or Google",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Accounts and backup"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/7hvjt4",
+      "description": "Open back up data settings under Accounts and backup",
+      "message": "Go to back up data in Accounts and backup",
+      "cna_description": "Back up photos, contacts, messages and settings before a reset",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Accounts and backup",
+        "Back up data"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/pu3pzp",
+      "description": "Open Digital Wellbeing and parental controls settings",
+      "message": "Go to Digital Wellbeing and parental controls",
+      "cna_description": "Screen time dashboard, app timers and bedtime mode",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Digital Wellbeing and parental controls"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/6u0c5p",
+      "description": "Open Modes and Routines settings",
+      "message": "Go to Modes and Routines",
+      "cna_description": "Modes such as sleep, driving and work, and automated routines",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Modes and Routines"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/l2mh4y",
+      "description": "Open developer options settings",
+      "message": "Go to developer options",
+      "cna_description": "Developer options including USB debugging and animation scales",
+      "controlType": "screen",
+      "path": [
+        "Settings",
+        "Developer options"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/47b5ny",
+      "description": "Open Camera settings under Camera",
+      "message": "Open camera settings",
+      "cna_description": "Camera app settings menu with picture formats, video options, shutter sound, grid lines and reset settings",
+      "controlType": "screen",
+      "path": [
+        "Camera",
+        "Camera settings"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/c73isp",
+      "description": "Turn scene optimizer on or off in Camera settings",
+      "message": "Toggle scene optimizer",
+      "cna_description": "Scene optimizer adjusts colour and exposure automatically for food, landscapes and night scenes",
+      "controlType": "toggle",
+      "path": [
+        "Camera",
+        "Camera settings",
+        "Scene optimizer"
+      ],
+      "validation": {
+        "key": "scene_optimizer_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/7ur1bw",
+      "description": "Open picture formats settings under Camera settings",
+      "message": "Go to picture formats in Camera settings",
+      "cna_description": "Photo formats such as high efficiency pictures, RAW copies and picture size",
+      "controlType": "screen",
+      "path": [
+        "Camera",
+        "Camera settings",
+        "Picture formats"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/7k7hxn",
+      "description": "Open advanced video options settings under Camera settings",
+      "message": "Go to advanced video options in Camera settings",
+      "cna_description": "Video options such as high efficiency video, HDR10+ and zoom-in mic",
+      "controlType": "screen",
+      "path": [
+        "Camera",
+        "Camera settings",
+        "Advanced video options"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/e9k3zh",
+      "description": "Turn video stabilization on or off in Camera settings",
+      "message": "Toggle video stabilization",
+      "cna_description": "Video stabilization reduces shaking in videos",
+      "controlType": "toggle",
+      "path": [
+        "Camera",
+        "Camera settings",
+        "Video stabilization"
+      ],
+      "validation": {
+        "key": "video_stabilization_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/g0zapm",
+      "description": "Turn tracking auto-focus on or off in Camera settings",
+      "message": "Toggle tracking auto-focus",
+      "cna_description": "Keep focus on a moving subject",
+      "controlType": "toggle",
+      "path": [
+        "Camera",
+        "Camera settings",
+        "Tracking auto-focus"
+      ],
+      "validation": {
+        "key": "tracking_af_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/dqk7rx",
+      "description": "Turn Auto HDR on or off in Camera settings",
+      "message": "Toggle Auto HDR",
+      "cna_description": "Capture more detail in bright and dark areas of photos",
+      "controlType": "toggle",
+      "path": [
+        "Camera",
+        "Camera settings",
+        "Auto HDR"
+      ],
+      "validation": {
+        "key": "auto_hdr_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/fqkcn9",
+      "description": "Turn shutter sound on or off in Camera settings",
+      "message": "Toggle shutter sound",
+      "cna_description": "Play a sound when taking a picture",
+      "controlType": "toggle",
+      "path": [
+        "Camera",
+        "Camera settings",
+        "Shutter sound"
+      ],
+      "validation": {
+        "key": "shutter_sound_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/h29cw3",
+      "description": "Turn save selfies as previewed on or off in Camera settings",
+      "message": "Toggle save selfies as previewed",
+      "cna_description": "Save selfies as they appear in the preview without flipping them",
+      "controlType": "toggle",
+      "path": [
+        "Camera",
+        "Camera settings",
+        "Save selfies as previewed"
+      ],
+      "validation": {
+        "key": "selfie_mirror_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/6cm4ds",
+      "description": "Turn grid lines on or off in Camera settings",
+      "message": "Toggle grid lines",
+      "cna_description": "Show grid lines in the viewfinder to help compose shots",
+      "controlType": "toggle",
+      "path": [
+        "Camera",
+        "Camera settings",
+        "Grid lines"
+      ],
+      "validation": {
+        "key": "grid_lines_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/fkerna",
+      "description": "Turn location tags on or off in Camera settings",
+      "message": "Toggle location tags",
+      "cna_description": "Add GPS location tags to photos and videos",
+      "controlType": "toggle",
+      "path": [
+        "Camera",
+        "Camera settings",
+        "Location tags"
+      ],
+      "validation": {
+        "key": "location_tags_enabled",
+        "resultType": "boolean"
+      }
+    },
+    {
+      "deeplink": "bixby://masked/act/sc4qe8",
+      "description": "Open storage location settings under Camera settings",
+      "message": "Go to storage location in Camera settings",
+      "cna_description": "Save pictures and videos to internal storage or an SD card",
+      "controlType": "screen",
+      "path": [
+        "Camera",
+        "Camera settings",
+        "Storage location"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/k978p5",
+      "description": "Open shooting methods settings under Camera settings",
+      "message": "Go to shooting methods in Camera settings",
+      "cna_description": "Ways to take pictures such as voice commands, floating shutter button and palm gesture",
+      "controlType": "screen",
+      "path": [
+        "Camera",
+        "Camera settings",
+        "Shooting methods"
+      ],
+      "validation": null
+    },
+    {
+      "deeplink": "bixby://masked/act/d8wo8z",
+      "description": "Open reset settings under Camera settings",
+      "message": "Go to reset settings in Camera settings",
+      "cna_description": "Reset all camera settings to their defaults",
+      "controlType": "screen",
+      "path": [
+        "Camera",
+        "Camera settings",
+        "Reset settings"
+      ],
+      "validation": null
+    }
+  ]
+}

@@ -1,0 +1,350 @@
+{
+  "metadata": {
+    "synthetic": true,
+    "generator": "scripts/make_synthetic_kit.py",
+    "seed": 2026,
+    "note": "Synthetic data written from general One UI knowledge; not official Samsung content.",
+    "use": "cache benchmarking only; never pre-warm"
+  },
+  "items": [
+    {
+      "query_id": "q002",
+      "query": "swipe gestures go the wrong way after installing an app",
+      "siis_id": "siis_d01",
+      "paraphrases": [
+        "since I installed a new launcher my swipe gestures are messed up",
+        "gesture navigation reversed after new app",
+        "swiping to go home stopped working properly after an app install",
+        "nav gestures acting weird after downloading something"
+      ]
+    },
+    {
+      "query_id": "q005",
+      "query": "My screen keeps flickering",
+      "siis_id": "siis_d02",
+      "paraphrases": [
+        "display keeps blinking on and off",
+        "my phone screen flashes and flickers constantly",
+        "screen flickring non stop",
+        "there is a weird flicker on my display"
+      ]
+    },
+    {
+      "query_id": "q008",
+      "query": "My screen is too dark even at full brightness",
+      "siis_id": "siis_d03",
+      "paraphrases": [
+        "display is really dim even with brightness at max",
+        "cant see the screen its so dark",
+        "screen brightness is too low"
+      ]
+    },
+    {
+      "query_id": "q010",
+      "query": "The display turns off after a few seconds",
+      "siis_id": "siis_d04",
+      "paraphrases": [
+        "screen goes black too quickly",
+        "my display sleeps way too fast",
+        "screen timeout is too short"
+      ]
+    },
+    {
+      "query_id": "q012",
+      "query": "touch screen not responding to my taps",
+      "siis_id": "siis_d05",
+      "paraphrases": [
+        "touchscreen is unresponsive",
+        "screen doesnt register my touches",
+        "tapping the display does nothing"
+      ]
+    },
+    {
+      "query_id": "q014",
+      "query": "the screen looks yellow",
+      "siis_id": "siis_d06",
+      "paraphrases": [
+        "display has a yellowish tint",
+        "why is my screen so warm and orange",
+        "screen colours look off and yellow"
+      ]
+    },
+    {
+      "query_id": "q017",
+      "query": "screen wont rotate",
+      "siis_id": "siis_d08",
+      "paraphrases": [
+        "display stuck in portrait mode",
+        "screen does not turn when I rotate the phone",
+        "landscape mode not working"
+      ]
+    },
+    {
+      "query_id": "q019",
+      "query": "text is too small to read",
+      "siis_id": "siis_d09",
+      "paraphrases": [
+        "font is tiny how do I make it bigger",
+        "increase text size",
+        "letters on screen too small"
+      ]
+    },
+    {
+      "query_id": "q024",
+      "query": "My battery is draining really fast",
+      "siis_id": "siis_b01",
+      "paraphrases": [
+        "battery goes down super quick",
+        "my phone battery doesnt last long anymore",
+        "battery runs out very fast",
+        "battry dying quickly"
+      ]
+    },
+    {
+      "query_id": "q029",
+      "query": "phone charging very slowly",
+      "siis_id": "siis_b02",
+      "paraphrases": [
+        "takes forever to charge my phone",
+        "charging speed is really slow",
+        "phone charges slowly with the original charger"
+      ]
+    },
+    {
+      "query_id": "q032",
+      "query": "phone gets very hot while charging",
+      "siis_id": "siis_b03",
+      "paraphrases": [
+        "device heats up when plugged in",
+        "phone is burning hot on the charger",
+        "overheating during charging"
+      ]
+    },
+    {
+      "query_id": "q033",
+      "query": "battery drops overnight while I sleep",
+      "siis_id": "siis_b04",
+      "paraphrases": [
+        "battery drains at night when not in use",
+        "lost a lot of battery overnight on idle",
+        "standby battery drain is bad"
+      ]
+    },
+    {
+      "query_id": "q037",
+      "query": "phone stops charging at 85 percent",
+      "siis_id": "siis_b07",
+      "paraphrases": [
+        "battery wont go above 85",
+        "charging stops before full",
+        "my phone never charges to 100 percent"
+      ]
+    },
+    {
+      "query_id": "q042",
+      "query": "My camera photos come out blurry",
+      "siis_id": "siis_c01",
+      "paraphrases": [
+        "pictures are out of focus",
+        "my photos look fuzzy",
+        "camera takes blurry shots",
+        "pics r blurry"
+      ]
+    },
+    {
+      "query_id": "q045",
+      "query": "Camera failed error message",
+      "siis_id": "siis_c02",
+      "paraphrases": [
+        "camera says camera failed",
+        "getting a camera failed warning",
+        "camera error when opening"
+      ]
+    },
+    {
+      "query_id": "q047",
+      "query": "camera shows a black screen",
+      "siis_id": "siis_c03",
+      "paraphrases": [
+        "camera preview is black",
+        "black screen when I open the camera app",
+        "camera not showing anything just black"
+      ]
+    },
+    {
+      "query_id": "q048",
+      "query": "flash not working on camera",
+      "siis_id": "siis_c04",
+      "paraphrases": [
+        "camera flash wont fire",
+        "flashlight on camera doesnt turn on",
+        "no flash when taking photos"
+      ]
+    },
+    {
+      "query_id": "q050",
+      "query": "how to turn off camera shutter sound",
+      "siis_id": "siis_c06",
+      "paraphrases": [
+        "mute camera click sound",
+        "disable the shutter noise",
+        "camera makes a sound when I take pictures how to stop"
+      ]
+    },
+    {
+      "query_id": "q054",
+      "query": "My phone is very slow",
+      "siis_id": "siis_p01",
+      "paraphrases": [
+        "phone is sluggish",
+        "my device became really slow",
+        "everything takes ages to open on my phone",
+        "fone is super slow"
+      ]
+    },
+    {
+      "query_id": "q057",
+      "query": "my phone got slow after the update",
+      "siis_id": "siis_p02",
+      "paraphrases": [
+        "phone lags since the latest software update",
+        "after updating my phone became slow",
+        "performance dropped after update"
+      ]
+    },
+    {
+      "query_id": "q059",
+      "query": "apps keep crashing",
+      "siis_id": "siis_p03",
+      "paraphrases": [
+        "applications keep force closing",
+        "apps crash when I open them",
+        "my apps keep shutting down"
+      ]
+    },
+    {
+      "query_id": "q062",
+      "query": "phone keeps freezing",
+      "siis_id": "siis_p05",
+      "paraphrases": [
+        "phone freezes all the time",
+        "screen freezes and gets stuck",
+        "device keeps hanging up"
+      ]
+    },
+    {
+      "query_id": "q066",
+      "query": "phone restarts randomly",
+      "siis_id": "siis_p08",
+      "paraphrases": [
+        "phone reboots by itself",
+        "my phone keeps restarting on its own",
+        "random reboots"
+      ]
+    },
+    {
+      "query_id": "q069",
+      "query": "My Wi-Fi keeps dropping",
+      "siis_id": "siis_n01",
+      "paraphrases": [
+        "wifi keeps disconnecting",
+        "internet connection on wifi drops out",
+        "wi fi connection is unstable"
+      ]
+    },
+    {
+      "query_id": "q071",
+      "query": "bluetooth wont pair with my earbuds",
+      "siis_id": "siis_n02",
+      "paraphrases": [
+        "bluetooth pairing fails",
+        "cant connect my headphones over bluetooth",
+        "earbuds not pairing"
+      ]
+    },
+    {
+      "query_id": "q072",
+      "query": "mobile data not working",
+      "siis_id": "siis_n03",
+      "paraphrases": [
+        "4g internet not working",
+        "no internet on mobile data",
+        "cellular data stopped working"
+      ]
+    },
+    {
+      "query_id": "q079",
+      "query": "not getting notifications from whatsapp",
+      "siis_id": "siis_s02",
+      "paraphrases": [
+        "notifications not showing up",
+        "app notifications are missing",
+        "I dont receive any alerts from apps"
+      ]
+    },
+    {
+      "query_id": "q081",
+      "query": "phone not vibrating",
+      "siis_id": "siis_s04",
+      "paraphrases": [
+        "vibration stopped working",
+        "no vibration on calls",
+        "phone wont vibrate"
+      ]
+    },
+    {
+      "query_id": "q084",
+      "query": "how do I factory reset my phone",
+      "siis_id": "siis_r02",
+      "paraphrases": [
+        "reset phone to factory settings",
+        "wipe my phone completely",
+        "how to erase everything and reset"
+      ]
+    },
+    {
+      "query_id": "q065",
+      "query": "phone overheats when gaming",
+      "siis_id": "siis_p07",
+      "paraphrases": [
+        "phone gets hot while playing games",
+        "overheating during gaming sessions",
+        "device too hot when I play pubg"
+      ]
+    },
+    {
+      "query_id": "q067",
+      "query": "keyboard is laggy when typing",
+      "siis_id": "siis_p09",
+      "paraphrases": [
+        "typing is slow and delayed",
+        "keyboard lag",
+        "samsung keyboard is slow to respond"
+      ]
+    },
+    {
+      "query_id": "q083",
+      "query": "software update keeps failing",
+      "siis_id": "siis_r01",
+      "paraphrases": [
+        "update fails to install",
+        "cant update my phone software",
+        "system update error"
+      ]
+    }
+  ],
+  "negatives": [
+    "my galaxy buds case wont open",
+    "how to change my samsung account password",
+    "where is the nearest samsung store",
+    "phone screen cracked need a replacement",
+    "how to enable 5g carrier aggregation on my router",
+    "can I use my phone underwater for photos",
+    "my smartwatch strap broke",
+    "how to record the screen with internal audio on a tablet",
+    "tv remote app not connecting",
+    "refund for a galaxy store purchase",
+    "transfer photos to my laptop over usb",
+    "my phone was stolen how do I track it"
+  ]
+}
