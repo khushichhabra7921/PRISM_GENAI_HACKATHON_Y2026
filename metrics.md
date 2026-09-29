@@ -5,7 +5,7 @@
 **Model(s):** ollama/qwen2.5:1.5b-instruct · request-path modes: enrichment `background`, extraction `rules` (auto routing: a CPU-local SLM runs off the request path; deterministic fallback when no LLM is reachable)  
 **Embeddings:** retrieval sentence-transformers/all-MiniLM-L6-v2 · semantic cache BAAI/bge-small-en-v1.5 · reranker cross-encoder/ms-marco-MiniLM-L-6-v2  
 **Environment:** Intel64 Family 6 Model 154 Stepping 3, GenuineIntel · 12 logical CPUs (torch threads 4) · 16.8 GB RAM · Windows 11 · Python 3.12.10 · power: plugged in  
-**Generated:** 2026-09-30T01:12:20 by `bench/run.py` in 2287.2 s
+**Generated:** 2026-09-30T02:54:14 by `bench/run.py` in 743.5 s
 
 **Note:** the cache-independent LLM sections (LLM deeplink baseline, LLM extraction modes, provider profiles) are copied from the full run of 2026-09-29T23:33:50 (`bench/report_llm_run.json`); everything else is from this run.
 
@@ -58,14 +58,14 @@ In-process timings through `Engine.troubleshoot` (the same code the API calls; H
 
 | Execution Path | Target (P95) | N | P50 (ms) | P95 (ms) | |
 | :--- | :--- | :-: | :-: | :-: | :-: |
-| Cache hit - exact query match | <= 300 ms | 95 | 14.4 | 22.2 | ✅ |
-| Cache hit - unseen semantic paraphrase (key + article tiers, 0 LLM calls) | <= 300 ms | 90 | 15.9 | 22.7 | ✅ |
-| &nbsp;&nbsp;of which key tier / article-anchored tier | <= 300 ms | 58 / 32 | | 18.9 / 24.8 | |
-| Cache hit - paraphrase via canonical lookup (after SLM enrichment) | - | 2 of 11 tried | 39.8 | 46.4 | |
-| Cold query - full pipeline extraction & mapping | <= 8000 ms | 30 | 255.2 | 423.8 | ✅ |
+| Cache hit - exact query match | <= 300 ms | 95 | 14.6 | 22.8 | ✅ |
+| Cache hit - unseen semantic paraphrase (key + article tiers, 0 LLM calls) | <= 300 ms | 90 | 14.4 | 24.1 | ✅ |
+| &nbsp;&nbsp;of which key tier / article-anchored tier | <= 300 ms | 58 / 32 | | 15.7 / 25.5 | |
+| Cache hit - paraphrase via canonical lookup (after SLM enrichment) | - | 2 of 11 tried | 34.9 | 35.1 | |
+| Cold query - full pipeline extraction & mapping | <= 8000 ms | 30 | 253.8 | 428.5 | ✅ |
 
-Cold path: models rules-v1 (deterministic, no LLM); mean 0 LLM calls, 0 prompt / 0 completion tokens per query. Stage P50 (ms): embed 13.3, enrich 0.2, retrieve 65.3, extract 0.4, deeplink 173.8.
-LLM calls made on cache hits: 0. `results.jsonl` replay (mix of cold and cached): P50 504.6 ms, P95 1040.3 ms.
+Cold path: models rules-v1 (deterministic, no LLM); mean 0 LLM calls, 0 prompt / 0 completion tokens per query. Stage P50 (ms): embed 13.9, enrich 0.2, retrieve 62.0, extract 0.4, deeplink 179.6.
+LLM calls made on cache hits: 0. `results.jsonl` replay (mix of cold and cached): P50 470.1 ms, P95 1052.7 ms.
 
 ---
 
@@ -102,19 +102,19 @@ Deeplink mapping variants on the SIIS-derived screen set (step text is identical
 | Architecture Variant | Step Accuracy | Exact screen | Mean relevance (0-2) | Latency P95 / action | Cost / action | Key Observations |
 | :--- | :-: | :-: | :-: | :-: | :-: | :--- |
 | Baseline: Full LLM Deeplink Mapping | 3.0 | 10.0% | 1.1 | 55043.8 ms | $0.000000 | n=10 |
-| Variant A: Hybrid BM25 + Dense + RRF + CE (ours) | 3.0 | 100.0% | 2.0 | 102.0 ms | $0.000000 | n=123; specificity tie-break picks the deepest named screen over its parent |
-| Variant B: Pure Rules/Keyword (BM25 top-1) | 3.0 | 91.1% | 1.862 | 12.8 ms | $0.000000 | n=123 |
-| Variant C: Dense-only top-1 | 3.0 | 65.0% | 1.496 | 12.1 ms | $0.000000 | n=123 |
+| Variant A: Hybrid BM25 + Dense + RRF + CE (ours) | 3.0 | 100.0% | 2.0 | 100.9 ms | $0.000000 | n=123; specificity tie-break picks the deepest named screen over its parent |
+| Variant B: Pure Rules/Keyword (BM25 top-1) | 3.0 | 91.1% | 1.862 | 12.3 ms | $0.000000 | n=123 |
+| Variant C: Dense-only top-1 | 3.0 | 65.0% | 1.496 | 12.5 ms | $0.000000 | n=123 |
 
 Extraction variants on the 5 gold samples (SIIS supplied):
 
 | Extraction | Step Accuracy (0-3) | Deeplink relevance (0-2) | Latency P95 | Cost / query |
 | :--- | :-: | :-: | :-: | :-: |
-| rules | 3.0 | 2.0 | 360.6 ms | $0.000000 |
+| rules | 3.0 | 2.0 | 412.6 ms | $0.000000 |
 | pointer | 2.701 | 1.84 | 19930.5 ms | $0.000000 |
 | generative | 1.636 | 1.36 | 31203.8 ms | $0.000000 |
 
-Background SLM paraphrase upgrade (mode `background`): 70 cached plans received SLM-written variations as extra keys; the benchmark waited 2150.0 s for the queue to drain before measuring the cache.
+Background SLM paraphrase upgrade (mode `background`): 70 cached plans received SLM-written variations as extra keys; the benchmark waited 608.9 s for the queue to drain before measuring the cache.
 
 Local SLM vs hosted fallback, full-LLM profile inline (SLM enrichment + SLM pointer extraction), cold queries on held-out paraphrases:
 
@@ -122,7 +122,7 @@ Local SLM vs hosted fallback, full-LLM profile inline (SLM enrichment + SLM poin
 | :--- | :--- | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | ollama | ollama/qwen2.5:1.5b-instruct | 10 | 17170.2 ms | 19186.9 ms | $0.000000 | 100.0% | 10.0% | n/a |
 | anthropic | - | - | - | - | - | - | - | not measured: provider not reachable / no API key |
-| openai | - | - | - | - | - | - | - | not measured: account has no API credits (RuntimeError: HTTP 429 insufficient_quota credit_balance_exhausted); re-run bench/run.py after adding credits |
+| openai | - | - | - | - | - | - | - | not measured: account has no API credits (RuntimeError: HTTP 429 insufficient_quota credit_balance_exhausted); hosted providers are optional and unused in |
 
 The prototype is deliberately zero-cost: every number above comes from free, local components (open models on a CPU laptop). Hosted providers are optional plug-ins in `app/llm_client.py` and were not used for the results.
 

@@ -55,7 +55,8 @@ def title_case(text: str) -> str:
         if lw in PARTICLES and i > 0 and ws[i - 1].lower() in PHRASAL_VERBS:
             out.append(w[:1].upper() + w[1:])  # "Turn On", not "Turn on"
         elif 0 < i < len(ws) - 1 and lw in SMALL_WORDS:
-            out.append(lw)
+            inside_name = w[:1].isupper() and ws[i - 1][:1].isupper() and ws[i + 1][:1].isupper()
+            out.append(w if inside_name else lw)  # "Always On Display" stays a name
         elif w.isupper() and len(w) > 1:
             out.append(w)  # acronyms
         elif "-" in w:

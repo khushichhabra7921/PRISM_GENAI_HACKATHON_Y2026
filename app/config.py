@@ -55,7 +55,7 @@ class Settings:
     # LLM swap layer: "ollama" (default), "anthropic", "openai", or "none" (deterministic only)
     llm_provider: str = _env("SGTE_LLM_PROVIDER", "ollama")
     llm_fallback: str = _env("SGTE_LLM_FALLBACK", "")  # e.g. "anthropic"; used if primary fails
-    ollama_url: str = _env("OLLAMA_URL", "http://localhost:11434")
+    ollama_url: str = _env("OLLAMA_URL", "http://127.0.0.1:11434")
     ollama_model: str = _env("SGTE_OLLAMA_MODEL", "qwen2.5:1.5b-instruct")
     anthropic_model: str = _env("SGTE_ANTHROPIC_MODEL", "claude-haiku-4-5-20251001")
     openai_model: str = _env("SGTE_OPENAI_MODEL", "gpt-4o-mini")

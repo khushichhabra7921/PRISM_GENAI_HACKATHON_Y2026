@@ -388,7 +388,7 @@
     },
     "openai": {
       "measured": false,
-      "reason": "every call failed (HTTPStatusError: Client error '429 Too Many Requests' for url 'https://api.openai.com/v1/chat/completions'\nFor more info)"
+      "reason": "account has no API credits (RuntimeError: HTTP 429 insufficient_quota credit_balance_exhausted); hosted providers are optional and unused in this zero-cost prototype"
     }
   },
   "bench_seconds": 3555.3

@@ -51,9 +51,15 @@ def ground_score(step: str, source: str, sentences: list[str]) -> float:
     return max((fuzz.token_set_ratio(s, x.lower()) for x in sentences), default=0.0)
 
 
+_TRAILING_FILLER = {"in", "on", "of", "the", "a", "an", "to", "for", "with", "and", "or", "after", "while", "not",
+                    "at", "by", "from"}
+
+
 def _topic_title(doc_title: str, actions: list[DraftAction]) -> tuple[str, str]:
     base = doc_title or (actions[0].path[-1] if actions and actions[0].path else "Device")
     ws = base.split()[:3]
+    while len(ws) > 1 and ws[-1].lower() in _TRAILING_FILLER:  # "Earbuds sound in" -> "Earbuds sound"
+        ws = ws[:-1]
     topic = title_case(" ".join(ws))
     suffix = "settings" if actions and all(a.category == "auto" for a in actions) else "fix"
     title = sentence_case(" ".join(ws if len(ws) >= 3 else ws + [suffix]))

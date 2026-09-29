@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-30T01:12:20",
+  "generated": "2026-09-30T02:54:14",
   "env": {
     "os": "Windows 11",
     "python": "3.12.10",
@@ -20,12 +20,12 @@
   "background_upgrade": {
     "mode": "background",
     "queued_at_end_of_run": 67,
-    "wait_s": 2150.0,
+    "wait_s": 608.9,
     "plans_with_llm_variations": 70
   },
   "results_cold_latency": {
-    "p50": 504.6,
-    "p95": 1040.3
+    "p50": 470.1,
+    "p95": 1052.7
   },
   "routing": {
     "single_correct": 79,
@@ -70,7 +70,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 181.7,
+        "latency_ms": 174.9,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -83,7 +83,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 175.8,
+        "latency_ms": 192.5,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -96,7 +96,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 411.2,
+        "latency_ms": 446.4,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -109,7 +109,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 410.8,
+        "latency_ms": 395.7,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -122,7 +122,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 217.4,
+        "latency_ms": 218.5,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -135,7 +135,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 244.7,
+        "latency_ms": 241.6,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -148,7 +148,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 345.1,
+        "latency_ms": 331.2,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -161,7 +161,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 377.6,
+        "latency_ms": 368.4,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -171,7 +171,7 @@
         "step_accuracy": 3.0,
         "deeplink_relevance": 2.0,
         "note": "fallback=no_match",
-        "latency_ms": 84.9,
+        "latency_ms": 84.3,
         "cost_usd": 0
       },
       {
@@ -180,7 +180,7 @@
         "step_accuracy": 3.0,
         "deeplink_relevance": 2.0,
         "note": "fallback=no_match",
-        "latency_ms": 83.9,
+        "latency_ms": 79.4,
         "cost_usd": 0
       }
     ],
@@ -273,32 +273,32 @@
   "latency": {
     "exact_hit": {
       "n": 95,
-      "p50": 14.4,
-      "p95": 22.2
+      "p50": 14.6,
+      "p95": 22.8
     },
     "paraphrase_hit_raw": {
       "n": 90,
-      "p50": 15.9,
-      "p95": 22.7,
+      "p50": 14.4,
+      "p95": 24.1,
       "key_tier": {
         "n": 58,
-        "p95": 18.9
+        "p95": 15.7
       },
       "article_tier": {
         "n": 32,
-        "p95": 24.8
+        "p95": 25.5
       }
     },
     "paraphrase_hit_canonical": {
       "n": 2,
       "tried": 11,
-      "p50": 39.8,
-      "p95": 46.4
+      "p50": 34.9,
+      "p95": 35.1
     },
     "cold": {
       "n": 30,
-      "p50": 255.2,
-      "p95": 423.8,
+      "p50": 253.8,
+      "p95": 428.5,
       "llm_calls_mean": 0,
       "cost_usd_mean": 0,
       "tokens_in_mean": 0,
@@ -307,11 +307,11 @@
         "rules-v1 (deterministic, no LLM)"
       ],
       "stage_p50_ms": {
-        "embed_ms": 13.3,
+        "embed_ms": 13.9,
         "enrich_ms": 0.2,
-        "retrieve_ms": 65.3,
+        "retrieve_ms": 62.0,
         "extract_ms": 0.4,
-        "deeplink_ms": 173.8
+        "deeplink_ms": 179.6
       }
     },
     "cache_hit_llm_calls": 0
@@ -322,7 +322,7 @@
       "exact_screen_pct": 100.0,
       "parent_or_dummy_pct": 0.0,
       "mean_relevance": 2.0,
-      "p95_ms_per_action": 102.0,
+      "p95_ms_per_action": 100.9,
       "cost_usd_per_action": 0.0
     },
     "bm25": {
@@ -330,7 +330,7 @@
       "exact_screen_pct": 91.1,
       "parent_or_dummy_pct": 4.1,
       "mean_relevance": 1.862,
-      "p95_ms_per_action": 12.8,
+      "p95_ms_per_action": 12.3,
       "cost_usd_per_action": 0.0
     },
     "dense": {
@@ -338,7 +338,7 @@
       "exact_screen_pct": 65.0,
       "parent_or_dummy_pct": 19.5,
       "mean_relevance": 1.496,
-      "p95_ms_per_action": 12.1,
+      "p95_ms_per_action": 12.5,
       "cost_usd_per_action": 0.0
     },
     "llm": {
@@ -354,7 +354,7 @@
     "rules": {
       "mean_step_accuracy": 3.0,
       "mean_deeplink_relevance": 2.0,
-      "p95_latency_ms": 360.6,
+      "p95_latency_ms": 412.6,
       "mean_cost_usd": 0
     },
     "pointer": {
@@ -388,14 +388,14 @@
     },
     "openai": {
       "measured": false,
-      "reason": "account has no API credits (RuntimeError: HTTP 429 insufficient_quota credit_balance_exhausted); re-run bench/run.py after adding credits"
+      "reason": "account has no API credits (RuntimeError: HTTP 429 insufficient_quota credit_balance_exhausted); hosted providers are optional and unused in this zero-cost prototype"
     }
   },
   "reused_llm_sections_from": {
     "file": "bench/report_llm_run.json",
     "generated": "2026-09-29T23:33:50"
   },
-  "bench_seconds": 2287.2,
+  "bench_seconds": 743.5,
   "limitations": [
     "**No-match log (bench/cluster_nomatch.py).** 14 distinct no-match queries were logged during the run: the 10 `queries.json` complaints with no SIIS coverage (Galaxy Watch sync, WhatsApp transfer, repair price, account sign-in, S Pen, eSIM, DeX, Wallet, bootloader, water damage), each its own theme, plus 4 complaints whose topic IS covered but that the conservative gate rejected ('phone is tapping things on its own', and three held-out paraphrases seen on the cold path). With this few distinct gaps the clustering yields singleton themes; it is meant for production-volume logs."
   ]

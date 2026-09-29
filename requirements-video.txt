@@ -1,0 +1,6 @@
+# Dev-only tools for scripts/make_demo_video.py (not needed to run the engine).
+# Uses the Microsoft Edge already installed on Windows and Windows' built-in offline speech voice.
+playwright==1.63.0
+imageio-ffmpeg==0.6.0
+pypdfium2==5.13.0
+pillow==12.3.0

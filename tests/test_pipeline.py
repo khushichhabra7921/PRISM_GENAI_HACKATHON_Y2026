@@ -118,3 +118,13 @@ def test_multi_symptom_not_answered_by_single_plan(engine):
     engine.troubleshoot("my screen keeps flickering")  # caches a single-goal plan
     rec = engine.troubleshoot("my screen keeps flickering and the battery drains fast", write_cache=False)
     assert len(rec["response"]["contexts"]) == 2, rec["meta"]["evidence"]
+
+
+def test_goal_titles_do_not_end_on_filler_words(engine):
+    """SIIS titles such as 'Earbuds sound in one ear' must not be cut to 'Earbuds sound in'."""
+    for q in ["sound only comes out of one earbud", "text is too small to read", "mobile data not working"]:
+        rec = engine.troubleshoot(q, write_cache=False)
+        for g in rec["response"]["contexts"]:
+            last = g["title"].split()[-1].lower()
+            assert last not in {"in", "on", "and", "not", "after", "while", "of"}, g["title"]
+            assert not g["goal"].split()[-2].lower() in {"in", "on", "and", "not"}, g["goal"]

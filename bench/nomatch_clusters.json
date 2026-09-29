@@ -3,10 +3,10 @@
     "cluster": 0,
     "size": 1,
     "keywords": [
-      "4g",
-      "internet",
       "not",
-      "working"
+      "working",
+      "internet",
+      "4g"
     ],
     "representative": "4g internet not working",
     "topics": {
@@ -20,10 +20,10 @@
     "cluster": 1,
     "size": 1,
     "keywords": [
-      "up",
-      "keeps",
       "hanging",
-      "device"
+      "keeps",
+      "device",
+      "up"
     ],
     "representative": "device keeps hanging up",
     "topics": {
@@ -37,10 +37,10 @@
     "cluster": 2,
     "size": 1,
     "keywords": [
-      "after",
-      "swiping",
       "app",
-      "working"
+      "stopped",
+      "install",
+      "properly"
     ],
     "representative": "swiping to go home stopped working properly after an app install",
     "topics": {
@@ -54,10 +54,10 @@
     "cluster": 3,
     "size": 1,
     "keywords": [
-      "won",
-      "pool",
+      "fell",
       "t",
-      "fell"
+      "pool",
+      "won"
     ],
     "representative": "phone fell in the pool and won't turn on",
     "topics": {
@@ -73,8 +73,8 @@
     "keywords": [
       "won",
       "monitor",
-      "t",
-      "connect"
+      "samsung",
+      "t"
     ],
     "representative": "samsung dex won't connect to my monitor",
     "topics": {
@@ -88,10 +88,10 @@
     "cluster": 5,
     "size": 1,
     "keywords": [
-      "do",
       "transfer",
-      "chats",
-      "whatsapp"
+      "do",
+      "how",
+      "chats"
     ],
     "representative": "how do i transfer whatsapp chats to an phone",
     "topics": {
@@ -105,9 +105,9 @@
     "cluster": 6,
     "size": 1,
     "keywords": [
-      "esim",
+      "failed",
       "activation",
-      "failed"
+      "esim"
     ],
     "representative": "esim activation failed",
     "topics": {
@@ -121,9 +121,9 @@
     "cluster": 7,
     "size": 1,
     "keywords": [
-      "bootloader",
+      "unlock",
       "how",
-      "unlock"
+      "bootloader"
     ],
     "representative": "how to unlock the bootloader",
     "topics": {
@@ -137,10 +137,10 @@
     "cluster": 8,
     "size": 1,
     "keywords": [
+      "declined",
       "card",
       "wallet",
-      "samsung",
-      "declined"
+      "samsung"
     ],
     "representative": "card declined in samsung wallet",
     "topics": {
@@ -154,8 +154,8 @@
     "cluster": 9,
     "size": 1,
     "keywords": [
-      "screen",
       "s",
+      "screen",
       "not",
       "writing"
     ],
@@ -171,10 +171,10 @@
     "cluster": 10,
     "size": 1,
     "keywords": [
-      "screen",
-      "repair",
+      "cracked",
       "much",
-      "after"
+      "screen",
+      "how"
     ],
     "representative": "my screen cracked after I dropped it how much is the repair",
     "topics": {
@@ -188,9 +188,9 @@
     "cluster": 11,
     "size": 1,
     "keywords": [
+      "watch",
       "won",
-      "step",
-      "galaxy",
+      "sync",
       "count"
     ],
     "representative": "My Galaxy Watch won't sync my step count with the phone",
@@ -205,8 +205,8 @@
     "cluster": 12,
     "size": 1,
     "keywords": [
-      "own",
       "things",
+      "own",
       "tapping"
     ],
     "representative": "phone is tapping things on its own",
@@ -223,7 +223,7 @@
     "keywords": [
       "can",
       "sign",
-      "accounts",
+      "samsung",
       "t"
     ],
     "representative": "can't sign in to my samsung accounts",

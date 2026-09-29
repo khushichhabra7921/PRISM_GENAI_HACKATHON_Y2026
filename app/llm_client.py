@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import threading
 import time
 from dataclasses import dataclass, field
 from typing import Any, Optional
@@ -107,19 +108,34 @@ class OllamaProvider(_Provider):
     def model(self) -> str:
         return self.s.ollama_model
 
-    def available(self) -> bool:
-        now = time.time()
-        if self._up and now - self._up[0] < 30:
-            return self._up[1]
+    def __init__(self, s: Settings):
+        super().__init__(s)
+        self._refreshing = False
+        self._probe()  # once, at startup
+
+    def _probe(self) -> None:
         try:
-            r = httpx.get(f"{self.s.ollama_url}/api/tags", timeout=1.5)
+            r = httpx.get(f"{self.s.ollama_url}/api/tags", timeout=1.0)
             names = {m.get("name", "") for m in r.json().get("models", [])}
             ok = r.status_code == 200 and any(n.split(":")[0] == self.model.split(":")[0] and
                                               (n == self.model or n.startswith(self.model)) for n in names)
         except Exception:
             ok = False
-        self._up = (now, ok)
-        return ok
+        self._up = (time.time(), ok)
+
+    def _refresh(self) -> None:
+        try:
+            self._probe()
+        finally:
+            self._refreshing = False
+
+    def available(self) -> bool:
+        """Never blocks the request path: a stale answer is refreshed in the background (a refused connection
+        to localhost can take seconds on Windows)."""
+        if time.time() - self._up[0] >= 30 and not self._refreshing:
+            self._refreshing = True
+            threading.Thread(target=self._refresh, daemon=True).start()
+        return self._up[1]
 
     def call(self, prompt, schema, system, max_tokens, num_ctx=4096):
         body = {"model": self.model, "stream": False, "format": schema, "keep_alive": "60m",
@@ -225,6 +241,11 @@ class LLMClient:
                     last = LLMResult(ok=False, model=p.model, provider=p.name, latency_ms=res.latency_ms,
                                      in_tokens=res.in_tokens, out_tokens=res.out_tokens, cost_usd=res.cost_usd,
                                      error="unparseable JSON")
-                except Exception as e:  # timeout, HTTP error, connection refused
+                except httpx.TransportError as e:  # connection refused / timeout: provider is down
+                    if hasattr(p, "_up"):
+                        p._up = (time.time(), False)
+                    last = LLMResult(ok=False, model=p.model, provider=p.name, error=f"{type(e).__name__}: {e}"[:200])
+                    break
+                except Exception as e:  # HTTP error, bad payload
                     last = LLMResult(ok=False, model=p.model, provider=p.name, error=f"{type(e).__name__}: {e}"[:200])
         return last
