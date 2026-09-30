@@ -15,6 +15,7 @@ deeplinked troubleshooting plan, returned as pure JSON in the `schema.py` contra
 | Demo video (≤ 5 min) | [docs/demo/SGTE_demo.mp4](docs/demo/SGTE_demo.mp4) (4:32, 1080p, narrated; subtitles [SGTE_demo.srt](docs/demo/SGTE_demo.srt)) |
 | Release tag | `PRISM_GENAI_HACKATHON_Y2026` (the tagged commit is the submission) |
 | Measured results | [metrics.md](metrics.md) · raw outputs [results.jsonl](results.jsonl) · [bench/report.json](bench/report.json) |
+| References | [docs/REFERENCES.md](docs/REFERENCES.md) |
 
 ## Contributors
 
