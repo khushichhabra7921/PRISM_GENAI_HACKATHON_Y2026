@@ -17,11 +17,6 @@ deeplinked troubleshooting plan, returned as pure JSON in the `schema.py` contra
 | Measured results | [metrics.md](metrics.md) · raw outputs [results.jsonl](results.jsonl) · [bench/report.json](bench/report.json) |
 | References | [docs/REFERENCES.md](docs/REFERENCES.md) |
 
-## Contributors
-
-* [@khushichhabra7921](https://github.com/khushichhabra7921)
-* [@chintansood](https://github.com/chintansood)
-* [@SHRESHTH121](https://github.com/SHRESHTH121)
 
 **Zero cost.** Nothing in this prototype needs a paid service or a GPU. It runs on a CPU laptop with open models:
 Ollama (MIT) serving Qwen2.5-1.5B-Instruct (Apache-2.0), all-MiniLM-L6-v2 and ms-marco-MiniLM-L-6-v2
