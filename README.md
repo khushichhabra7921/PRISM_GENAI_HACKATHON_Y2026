@@ -10,7 +10,8 @@ deeplinked troubleshooting plan, returned as pure JSON in the `schema.py` contra
 | | |
 |---|---|
 | Theme | Theme 2 · Smart Guided Troubleshooting Engine |
-| Team | team name, college and members: slide 1 of the presentation |
+| Team | NEXORA, college and members: Thapar Institute of Engineering and Technology , Patiala 
+                                        Chintan Sood , Avi Garg , Shreshth Garg , Khushi|
 | Presentation | [docs/SGTE_Submission_Deck.pdf](docs/SGTE_Submission_Deck.pdf) |
 | Demo video (≤ 5 min) | https://youtu.be/UWmbvZDs3Ao?si=QjdoR6tNjP7mBOxH |
 | Release tag | `PRISM_GENAI_HACKATHON_Y2026` (the tagged commit is the submission) |
