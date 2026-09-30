@@ -12,7 +12,7 @@ deeplinked troubleshooting plan, returned as pure JSON in the `schema.py` contra
 | Theme | Theme 2 · Smart Guided Troubleshooting Engine |
 | Team | NEXORA, college : Thapar Institute of Engineering and Technology , Patiala 
 | Members     |                                Chintan Sood , Avi Garg , Shreshth Garg , Khushi|
-| Presentation | [docs/Thapar_Nexora_2.pdf](docs/Thapar_Nexora_2.pdf) |
+| Presentation | [Thapar_Nexora_Theme 2](https://drive.google.com/file/d/11qC8zRcrpT89mylcfaU-OOCJCy7ac_wA/view?usp=sharing) |
 | Demo video (≤ 5 min) | https://youtu.be/UWmbvZDs3Ao?si=QjdoR6tNjP7mBOxH |
 | Release tag | `PRISM_GENAI_HACKATHON_Y2026` (the tagged commit is the submission) |
 | Measured results | [metrics.md](metrics.md) · raw outputs [results.jsonl](results.jsonl) · [bench/report.json](bench/report.json) |
