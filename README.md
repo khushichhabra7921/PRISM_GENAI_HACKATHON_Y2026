@@ -13,7 +13,7 @@ pure JSON in the official `data/schema.py` contract (the shape of `data/sample_o
 | Theme | Theme 2 · Smart Guided Troubleshooting Engine |
 | Team | NEXORA, college : Thapar Institute of Engineering and Technology , Patiala 
 | Members     |                                Chintan Sood , Avi Garg , Shreshth Garg , Khushi|
-| Presentation | [Thapar_Nexora_Theme 2](https://drive.google.com/file/d/11qC8zRcrpT89mylcfaU-OOCJCy7ac_wA/view?usp=sharing) |
+| Presentation | [Thapar_Nexora_Theme 2](https://drive.google.com/file/d/1lrZ_x5-y__4H2dkmnwDxnqj3zN7uxhXa/view?usp=sharing) |
 | Demo video (≤ 5 min) | https://youtu.be/UWmbvZDs3Ao?si=QjdoR6tNjP7mBOxH |
 | Release tag | `PRISM_GENAI_HACKATHON_Y2026` (the tagged commit is the submission) |
 | Official-kit outputs | [outputs/](outputs/README.md): one response per `data/input.txt` complaint, sample-output shape · [outputs/report.json](outputs/report.json) |
