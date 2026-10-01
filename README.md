@@ -11,19 +11,15 @@ pure JSON in the official `data/schema.py` contract (the shape of `data/sample_o
 | | |
 |---|---|
 | Theme | Theme 2 · Smart Guided Troubleshooting Engine |
-| Team | team name, college and members: slide 1 of the presentation |
-| Presentation | [docs/SGTE_Submission_Deck.pdf](docs/SGTE_Submission_Deck.pdf) |
+| Team | NEXORA, college : Thapar Institute of Engineering and Technology , Patiala 
+| Members     |                                Chintan Sood , Avi Garg , Shreshth Garg , Khushi|
+| Presentation | [Thapar_Nexora_Theme 2](https://drive.google.com/file/d/11qC8zRcrpT89mylcfaU-OOCJCy7ac_wA/view?usp=sharing) |
 | Demo video (≤ 5 min) | https://youtu.be/UWmbvZDs3Ao?si=QjdoR6tNjP7mBOxH |
 | Release tag | `PRISM_GENAI_HACKATHON_Y2026` (the tagged commit is the submission) |
 | Official-kit outputs | [outputs/](outputs/README.md): one response per `data/input.txt` complaint, sample-output shape · [outputs/report.json](outputs/report.json) |
 | Measured results | [metrics.md](metrics.md) (synthetic regression kit) · raw outputs [results.jsonl](results.jsonl) · [bench/report.json](bench/report.json) |
 | References | [docs/REFERENCES.md](docs/REFERENCES.md) |
 
-## Contributors
-
-* [@khushichhabra7921](https://github.com/khushichhabra7921)
-* [@chintansood](https://github.com/chintansood)
-* [@SHRESHTH121](https://github.com/SHRESHTH121)
 
 **Zero cost.** Nothing in this prototype needs a paid service or a GPU. It runs on a CPU laptop with open models:
 Ollama (MIT) serving Qwen2.5-1.5B-Instruct (Apache-2.0), all-MiniLM-L6-v2 and ms-marco-MiniLM-L-6-v2
