@@ -1,123 +1,119 @@
 1
-00:00:00,066 --> 00:00:07,844
-This is the Smart Guided Troubleshooting Engine, our prototype for Theme 2 of the Samsung PRISM Generative AI Hackathon.
+00:00:00,066 --> 00:00:08,469
+This is the Smart Guided Troubleshooting Engine, team Nexora's prototype for Theme 2 of the Samsung PRISM Generative AI Hackathon.
 
 2
-00:00:08,200 --> 00:00:19,037
-It turns a vague Galaxy complaint into a validated, ordered troubleshooting plan, where every step comes from trusted support content, and every fix is one tap away.
+00:00:08,800 --> 00:00:23,301
+It takes a TechCorp Nexa complaint, together with the support article retrieved for it, and returns a validated, ordered troubleshooting plan. Every step comes from that article, and every Settings fix is one tap away.
 
 3
-00:00:19,466 --> 00:00:23,690
+00:00:23,733 --> 00:00:27,957
 People describe symptoms, but Settings speak in menus.
 
 4
-00:00:24,066 --> 00:00:36,813
-Today, an agent reads the knowledge base, picks the steps, and orders them by hand. That takes about fifteen minutes per scenario, and the user still has to hunt through nested menus.
+00:00:28,333 --> 00:00:39,960
+The official kit has 20 complaints. Each one arrives with its SIIS article, as a title and markdown content, and the answer must match the official sample output.
 
 5
-00:00:37,133 --> 00:00:47,595
+00:00:40,333 --> 00:00:50,795
 Our targets: under three hundred milliseconds for known issues, under eight seconds for new ones, zero invented steps, and zero invalid deeplinks.
 
 6
-00:00:48,000 --> 00:00:55,917
-The design principle is simple. Language models reason, retrieval grounds, and deterministic code validates.
+00:00:51,200 --> 00:00:56,643
+Language models reason, retrieval grounds, and deterministic code validates.
 
 7
-00:00:56,266 --> 00:01:08,608
-A complaint first goes to a semantic cache. On a miss, it is enriched, grounded in support articles with hybrid retrieval, and turned into steps that are copied from the source text.
+00:00:57,000 --> 00:01:08,992
+The article sent with the complaint is the only source of steps. We split it into sections, keep the blocks that answer the complaint, and turn TechCorp's phrasing into canonical steps.
 
 8
-00:01:08,933 --> 00:01:18,720
-The steps are ordered from safe settings to critical actions, mapped to the exact Settings screen, and checked by eleven validators before the plan is cached.
+00:01:09,333 --> 00:01:19,900
+Steps are ordered from safe settings to critical actions, each Settings navigation gets its exact deeplink, and eleven validators check the plan before it is cached.
 
 9
-00:01:19,133 --> 00:01:28,011
-Here is the demo interface. It runs entirely on a laptop CPU, using free, local, open models.
+00:01:20,333 --> 00:01:35,770
+Here is the demo. It runs on a laptop CPU, with free, local models, and an empty cache. The picker sends each official complaint together with its SIIS article, exactly like the API contract.
 
 10
-00:01:28,333 --> 00:01:33,731
-First complaint: swipe gestures go the wrong way after installing an app.
+00:01:36,133 --> 00:01:41,271
+Row twenty-one: the screen inputs are delayed, and the touch is laggy.
 
 11
-00:01:34,066 --> 00:01:38,575
-The engine returns one automatic action with five grounded steps.
+00:01:41,600 --> 00:01:55,702
+This is a new request, so the full pipeline ran, in 1.9 seconds. The article is a numbered touchscreen procedure, so it is kept whole: 11 actions, all copied from the article.
 
 12
-00:01:38,933 --> 00:01:47,181
-The Open button carries the exact catalog deeplink, for Display, Navigation bar, not the parent Display menu.
+00:01:56,066 --> 00:02:03,659
+Automatic settings come first. Turn on touch sensitivity carries the catalog deeplink for the Display screen.
 
 13
-00:01:47,533 --> 00:01:54,551
-It came from the cache in a few dozen milliseconds, with zero language model calls, and zero cost.
+00:02:04,000 --> 00:02:11,698
+Manual checks come next, and the disruptive steps, safe mode and a factory data reset, come last.
 
 14
-00:01:55,866 --> 00:02:02,120
-Next, a paraphrase the system has never seen: there is a weird flicker on my display.
+00:02:13,000 --> 00:02:17,453
+Now the same complaint, with the same article, again.
 
 15
-00:02:02,466 --> 00:02:11,174
-The semantic cache still recognises it, so the validated screen flickering plan comes back instantly, again without any model call.
+00:02:17,800 --> 00:02:28,552
+This time the validated plan comes from the cache, in 34 milliseconds, with zero model calls. A plan built from a different article is never served.
 
 16
-00:02:12,466 --> 00:02:18,965
-Now, two problems in one sentence: my screen flickers, and the battery dies fast.
+00:02:28,933 --> 00:02:37,556
+And the response is pure JSON. With view equals contract, it has exactly the shape of the official sample output.
 
 17
-00:02:19,333 --> 00:02:26,251
-The engine splits the complaint, grounds each half in its own support article, and returns two goals.
+00:02:38,866 --> 00:02:44,980
+Row eight is harder: the main screen stays small, sent with a long screen mirroring guide.
 
 18
-00:02:26,600 --> 00:02:36,972
-Within each goal, safe settings come first, physical checks next, and disruptive steps, such as safe mode or a restart, come last.
+00:02:45,333 --> 00:02:52,736
+Only one tip in that guide answers the complaint, changing the aspect ratio, so the plan has one action.
 
 19
-00:02:37,333 --> 00:02:40,247
-Every action carries an evidence trail.
+00:02:53,066 --> 00:03:02,904
+The evidence trail shows why: 1 of 20 instruction blocks were kept, with the relevance score of every block, and the source sentence behind every step.
 
 20
-00:02:40,600 --> 00:02:53,332
-It shows the source sentence each step was copied from, the retrieval and rerank scores, the runner-up screen, and the confidence tier, so a support team can see exactly why each step was chosen.
+00:03:03,266 --> 00:03:08,170
+A support team can see exactly what was used, and what was left out.
 
 21
-00:02:54,600 --> 00:02:59,288
-When the knowledge base has no answer, the engine refuses to guess.
+00:03:09,466 --> 00:03:14,685
+Row one, an email screen that goes blank, shows step groups.
 
 22
-00:02:59,666 --> 00:03:09,304
-My Galaxy Watch won't sync my steps returns an empty plan with a no match flag, and the query is logged, so the content team can find the gaps.
+00:03:15,066 --> 00:03:23,614
+Clearing the cache and clearing the data are two separate navigations, so the action has two step groups, each with its own deeplink.
 
 23
-00:03:10,600 --> 00:03:16,643
-A brand new complaint goes through the full pipeline: sound only comes out of one earbud.
+00:03:24,866 --> 00:03:31,779
+Without an article, the engine retrieves one itself: the screen does not rotate when I turn the tablet.
 
 24
-00:03:17,000 --> 00:03:26,297
-Retrieval, grounded extraction, ordering, deeplink mapping, and validation finish in well under a second, on the CPU.
+00:03:32,133 --> 00:03:39,166
+It grounded the plan in the screen rotation article, in 943 milliseconds on the CPU.
 
 25
-00:03:26,666 --> 00:03:31,760
-And the response is pure JSON that follows the schema contract exactly.
+00:03:39,533 --> 00:03:50,900
+When nothing answers, it refuses to guess. My Nexa watch won't sync my steps returns an empty plan with a no match flag, and the query is logged for the content team.
 
 26
-00:03:32,200 --> 00:03:36,833
-We measured everything with our benchmark, on a synthetic starter kit.
+00:03:51,333 --> 00:04:01,730
+On all 20 official complaints, every output is schema valid and passes all eleven rule checks, and every one of the 308 steps is found in its article.
 
 27
-00:03:37,200 --> 00:03:46,737
-100 percent of outputs are schema valid and pass all eleven rule checks, with zero URL leaks, and every deeplink comes from the catalog.
+00:04:02,066 --> 00:04:12,409
+Repeats return from the cache in 28 milliseconds at the ninety-fifth percentile, and new requests in about 1.5 seconds, on a laptop CPU.
 
 28
-00:03:47,066 --> 00:04:01,588
-Cached answers return in 23 milliseconds at the ninety-fifth percentile, new queries in about 428 milliseconds, and 84 percent of unseen paraphrases are served from the cache, without any model call.
+00:04:12,733 --> 00:04:25,195
+On our synthetic regression kit, gold step accuracy stays at 3 out of 3, and 80 percent of unseen paraphrases are served without any model call. All 69 tests pass.
 
 29
-00:04:01,933 --> 00:04:06,747
-All 34 tests pass, including the five gold samples.
+00:04:25,600 --> 00:04:38,891
+The main limitations: the official kit has no deeplink catalog and no gold answers, so our catalog is synthetic and accuracy is measured on synthetic gold, and relevance inside long articles is a heuristic.
 
 30
-00:04:07,133 --> 00:04:22,879
-The main limitations: the results come from a synthetic kit, about 6 percent of paraphrase hits served a neighbouring plan, and the small local model is too slow on a CPU for the request path, so it writes cache paraphrases in the background instead.
-
-31
-00:04:23,200 --> 00:04:30,868
+00:04:39,266 --> 00:04:46,934
 Everything is open source, starts with docker compose up, and costs nothing to run. Thank you.

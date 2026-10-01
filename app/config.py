@@ -74,6 +74,8 @@ class Settings:
 
     # semantic cache
     cache_tau: float = _f("SGTE_CACHE_TAU", 0.85)
+    # pre-warm an empty cache from the kit at startup (off for demos that show the cold path first)
+    prewarm: bool = os.getenv("SGTE_PREWARM", "1") not in ("0", "false", "no")
     # article-anchored tier (zero LLM): on a key miss, a confident dense-only SIIS match whose article already
     # has a validated single-goal plan in the cache serves that plan. min dense / margin over the runner-up
     # article were chosen from a sweep on the held-out paraphrases (see metrics.md).

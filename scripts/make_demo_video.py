@@ -1,12 +1,15 @@
-"""Generate the demo video (≤ 5 min) with free, local tools only.
+"""Generate the demo video (≤ 5 min) with free, local tools only, on the official kit.
 
 * narration: Windows' built-in offline speech synthesiser (System.Speech, voice "Microsoft Zira Desktop")
 * picture:   headless Microsoft Edge driven by Playwright, performing the demo on the live /demo page
-* numbers:   read from bench/report.json and a live pytest run - nothing is typed in by hand
-* output:    docs/demo/SGTE_demo.mp4 (1920x1080, H.264 + AAC) and docs/demo/SGTE_demo.srt
+* engine:    started by this script on its own port with an EMPTY cache and no pre-warm, so the first request
+             for a complaint is genuinely cold and a repeat is a genuine cache hit
+* numbers:   read from outputs/report.json, bench/report.json, a live pytest run and the page itself
+             (latencies quoted in the narration are the ones on screen) - nothing is typed in by hand
+* slides:    rendered from docs/Thapar_Nexora_2.pdf (refresh it first with scripts/make_deck.py)
+* output:    docs/demo/SGTE_demo.mp4 (1920x1080, H.264 + AAC), docs/demo/SGTE_demo.srt, docs/demo/narration.txt
 
 Requirements (dev only):  pip install -r requirements-video.txt
-The API must be running:   docker compose up   (or uvicorn app.main:app --port 8000)
 
     python scripts/make_demo_video.py
 """
@@ -15,30 +18,67 @@ from __future__ import annotations
 import base64
 import io
 import json
+import os
 import re
 import subprocess
 import sys
 import tempfile
 import time
+import urllib.request
 import wave
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Callable, Optional
+from typing import Callable, Optional, Union
 
 import imageio_ffmpeg
 import numpy as np
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE = "http://localhost:8000"
+PORT = int(os.getenv("SGTE_VIDEO_PORT", "8010"))
+BASE = f"http://localhost:{PORT}"
 OUT_DIR = ROOT / "docs" / "demo"
+DECK = ROOT / "docs" / "Thapar_Nexora_2.pdf"
 CSS_W, CSS_H, SCALE = 1536, 864, 1.25  # -> 1920x1080 pixels
 FPS = 15
 VOICE, RATE = "Microsoft Zira Desktop", 0
 GAP_S = 0.35  # silence between sentences
 REPO = "github.com/khushichhabra7921/PRISM_GENAI_HACKATHON_Y2026"
-PARAPHRASE = "there is a weird flicker on my display"  # held-out paraphrase: never used to pre-warm the cache
-NEW_QUERY = "sound only comes out of one earbud"  # no queries.json entry maps to this article -> cold path
+FREE_TEXT = "the screen does not rotate when I turn the tablet"  # no payload: the engine retrieves the article
+NO_MATCH = "my Nexa watch wont sync my steps"  # nothing in the 11 official articles answers this
+
+
+# ------------------------------------------------------------------ engine for the recording
+class Server:
+    """uvicorn on its own port, empty cache, no pre-warm, deterministic (no LLM on the request path)."""
+
+    def __init__(self, tmp: Path):
+        env = {**os.environ, "SGTE_PREWARM": "0", "SGTE_CACHE_DIR": str(tmp / "cache"), "SGTE_LOG_DIR": str(tmp / "logs"),
+               "SGTE_LLM_PROVIDER": "none", "SGTE_LLM_FALLBACK": ""}
+        self.proc = subprocess.Popen([sys.executable, "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1",
+                                      "--port", str(PORT)], cwd=ROOT, env=env,
+                                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+    def wait(self, timeout_s: float = 600) -> None:
+        t0 = time.time()
+        while time.time() - t0 < timeout_s:
+            try:
+                with urllib.request.urlopen(f"{BASE}/health", timeout=3) as r:
+                    if r.status == 200:
+                        return
+            except Exception:  # noqa: BLE001  (503 while loading, or not listening yet)
+                pass
+            if self.proc.poll() is not None:
+                raise SystemExit("API process exited while starting")
+            time.sleep(2)
+        raise SystemExit("API did not become healthy")
+
+    def stop(self) -> None:
+        self.proc.terminate()
+        try:
+            self.proc.wait(timeout=20)
+        except subprocess.TimeoutExpired:
+            self.proc.kill()
 
 
 # ------------------------------------------------------------------ narration (offline TTS)
@@ -147,12 +187,37 @@ def type_query(rec: Recorder, text: str) -> None:
         rec.frame()
 
 
-def send(rec: Recorder) -> None:
+def wait_answer(rec: Recorder) -> None:
     page = rec.page
-    page.click("button.send")
-    page.wait_for_function("() => !document.getElementById('chat').innerText.includes('Thinking')", timeout=60000)
+    page.wait_for_function("() => !document.getElementById('chat').innerText.includes('Thinking')", timeout=120000)
     page.wait_for_timeout(150)
     rec.frame()
+
+
+def send(rec: Recorder) -> None:
+    rec.page.click("button.send")
+    wait_answer(rec)
+
+
+def send_case(rec: Recorder, row: str) -> None:
+    """Pick an official input.txt complaint and send it with its SIIS payload."""
+    page = rec.page
+    idx = page.evaluate("(r) => [...document.querySelectorAll('#case option')]"
+                        ".findIndex(o => o.textContent.startsWith(r + ' '))", row)
+    page.select_option("#case", str(idx))
+    rec.frame()
+    rec.hold(0.4)
+    page.click("#case-send")
+    wait_answer(rec)
+
+
+def latency_ms(page) -> str:
+    return page.evaluate("() => document.getElementById('m-lat').textContent").replace(" ms", "").strip()
+
+
+def spoken_ms(ms: str) -> str:
+    v = float(ms)
+    return f"{v / 1000:.1f} seconds" if v >= 1000 else f"{round(v)} milliseconds"
 
 
 # ------------------------------------------------------------------ static cards
@@ -160,7 +225,7 @@ def card_page(page, html: str) -> None:
     page.set_content(f"""<!doctype html><html><head><meta charset="utf-8"><style>
       body{{margin:0;width:{CSS_W}px;height:{CSS_H}px;overflow:hidden;font-family:'Segoe UI',sans-serif;color:#17152b;
            background:linear-gradient(135deg,#f5f1ff 0%,#eef3ff 55%,#e8f7f6 100%)}}
-      .wrap{{padding:70px 90px}} h1{{font-size:62px;margin:0 0 8px;letter-spacing:-.5px}}
+      .wrap{{padding:62px 90px}} h1{{font-size:62px;margin:0 0 8px;letter-spacing:-.5px}}
       h1 span{{color:#6d28d9}} .k{{font-size:15px;letter-spacing:.2em;color:#6d28d9;font-weight:700}}
       .sub{{font-size:26px;color:#4b4768;margin:6px 0 26px}} .pill{{display:inline-block;background:#fff;border:1px solid #e0daf5;
            border-radius:999px;padding:10px 20px;margin:6px 10px 6px 0;font-size:19px;font-weight:600}}
@@ -168,7 +233,7 @@ def card_page(page, html: str) -> None:
       .tile{{background:#fff;border:1px solid #e4dff4;border-radius:18px;padding:16px 18px}}
       .tile b{{display:block;font-size:34px;color:#6d28d9}} .tile span{{font-size:15px;color:#5b5873}}
       .tile i{{display:block;font-style:normal;font-size:13px;color:#8b88a3;margin-top:4px}}
-      pre{{background:#1c1a2e;color:#d8d4f5;border-radius:16px;padding:18px 22px;font:17px/1.5 Consolas,monospace;margin:18px 0 0}}
+      pre{{background:#1c1a2e;color:#d8d4f5;border-radius:16px;padding:16px 22px;font:16px/1.5 Consolas,monospace;margin:16px 0 0}}
       pre em{{color:#9ee6b2;font-style:normal}}
       ul{{font-size:22px;line-height:1.6;color:#2c2946}}
     </style></head><body>{html}</body></html>""")
@@ -185,7 +250,7 @@ def slide_page(page, png: bytes) -> None:
 
 def deck_slides(indices: list[int]) -> dict[int, bytes]:
     import pypdfium2 as pdfium
-    pdf = pdfium.PdfDocument(str(ROOT / "docs" / "SGTE_Submission_Deck.pdf"))
+    pdf = pdfium.PdfDocument(str(DECK))
     out = {}
     for i in indices:
         pg = pdf[i]
@@ -200,7 +265,7 @@ def deck_slides(indices: list[int]) -> dict[int, bytes]:
 # ------------------------------------------------------------------ script
 @dataclass
 class Beat:
-    text: str
+    text: Union[str, Callable[[], str]]  # a callable is evaluated when the beat starts (numbers read off the page)
     action: Optional[Callable[[Recorder], None]] = None
 
 
@@ -213,30 +278,29 @@ class Segment:
 
 def measured() -> dict:
     r = json.loads((ROOT / "bench" / "report.json").read_text(encoding="utf-8"))
+    o = json.loads((ROOT / "outputs" / "report.json").read_text(encoding="utf-8"))
     out = subprocess.run([sys.executable, "-m", "pytest", "-p", "no:warnings"], cwd=ROOT,  # pytest.ini adds -q
                          capture_output=True, text=True).stdout
     m = re.search(r"(\d+) passed[^\n]*", out)
-    health = subprocess.run(["curl", "-s", f"{BASE}/health"], capture_output=True, text=True).stdout.strip()
-    return {"r": r, "tests": int(m.group(1)) if m else 0, "pytest_line": m.group(0) if m else out[-200:],
-            "health": health}
+    return {"r": r, "o": o, "tests": int(m.group(1)) if m else 0, "pytest_line": m.group(0) if m else out[-200:]}
 
 
 def build_script(page, m: dict, slides: dict[int, bytes]) -> list[Segment]:
-    r = m["r"]
-    c, lat, du = r["compliance"], r["latency"], r["cache"]["dual_lookup"]
-    p95_exact = round(lat["exact_hit"]["p95"])
-    p95_para = round(lat["paraphrase_hit_raw"]["p95"])
-    p95_cold = round(lat["cold"]["p95"])
-    zero_llm = round(du["zero_llm_hit_pct"])
-    wrong = round(du["false_hit_rate_pct"])
+    r, o = m["r"], m["o"]
+    acc, du = r["accuracy"], r["cache"]["dual_lookup"]
+    lat = o["latency_ms"]
+    rows = {x["id"]: x for x in o["rows"]}
+    state: dict = {}
 
     def title(rec):
-        card_page(page, f"""<div class="wrap"><div class="k">SAMSUNG PRISM · GENERATIVE AI HACKATHON 2026 · THEME 2</div>
+        card_page(page, f"""<div class="wrap"><div class="k">SAMSUNG PRISM · GENERATIVE AI HACKATHON 2026 · THEME 2 · TEAM NEXORA</div>
           <h1 style="margin-top:26px">Smart Guided <span>Troubleshooting</span> Engine</h1>
-          <div class="sub">Vague Galaxy complaints → validated, ordered, one-tap troubleshooting plans</div>
+          <div class="sub">TechCorp Nexa complaint + its SIIS article → a validated, ordered, one-tap troubleshooting plan</div>
           <div><span class="pill">&lt; 300 ms on known issues</span><span class="pill">&lt; 8 s on new issues</span>
           <span class="pill">0 invented steps</span><span class="pill">0 invalid deeplinks</span></div>
-          <div class="sub" style="margin-top:70px;font-size:21px">Open source · runs on a laptop CPU · $0 · {REPO}</div></div>""")
+          <div class="sub" style="margin-top:56px;font-size:21px">Official kit · {o['cases']} complaints · {o['distinct_articles']} SIIS articles ·
+          answers in the sample_output.json shape</div>
+          <div class="sub" style="font-size:21px">Thapar Institute of Engineering and Technology, Patiala · open source · runs on a laptop CPU · $0 · {REPO}</div></div>""")
         rec.frame()
 
     def slide(i):
@@ -247,15 +311,29 @@ def build_script(page, m: dict, slides: dict[int, bytes]) -> list[Segment]:
 
     def demo(rec):
         page.goto(f"{BASE}/demo")
-        page.wait_for_selector("#chips .chip")
+        page.wait_for_function("() => document.querySelectorAll('#case option').length > 0", timeout=120000)
         prepare(page)
+        highlight(page, "#cases")
         rec.frame()
+
+    def top(rec):
+        highlight(page, None)
+        scroll_to(rec, y=0)
+
+    def act_case(row):
+        def f(rec):
+            highlight(page, None)
+            send_case(rec, row)
+            state[row] = latency_ms(page)
+        return f
 
     def act_type_send(q):
         def f(rec):
+            highlight(page, None)
             type_query(rec, q)
             rec.hold(0.3)
             send(rec)
+            state[q] = latency_ms(page)
         return f
 
     def act_hl(sel, scroll=True):
@@ -273,16 +351,18 @@ def build_script(page, m: dict, slides: dict[int, bytes]) -> list[Segment]:
         highlight(page, "#chat .action")
         rec.frame()
 
-    def act_top(rec):
-        highlight(page, None)
-        scroll_to(rec, y=0)
-
     def act_scroll_critical(rec):
         highlight(page, None)
-        sel = "#chat .badge.critical"
-        scroll_to(rec, sel)
-        page.evaluate("() => { const b = document.querySelector('#chat .goal .badge.critical');"
-                      " if (b) b.closest('.action').classList.add('hl'); }")
+        page.evaluate("() => { const b = [...document.querySelectorAll('#chat .badge.critical')].pop();"
+                      " if (b) { b.id = 'last-critical'; b.closest('.action').classList.add('hl'); } }")
+        scroll_to(rec, "#last-critical")
+        rec.frame()
+
+    def act_two_groups(rec):
+        highlight(page, None)
+        page.evaluate("() => { const a = [...document.querySelectorAll('#chat .action')]"
+                      ".find(x => x.querySelectorAll('.sg').length > 1); if (a) { a.id = 'two-groups'; a.classList.add('hl'); } }")
+        scroll_to(rec, "#two-groups")
         rec.frame()
 
     def act_why(rec):
@@ -292,125 +372,132 @@ def build_script(page, m: dict, slides: dict[int, bytes]) -> list[Segment]:
         rec.frame()
 
     def act_why_scroll(rec):
-        y = page.evaluate("() => window.scrollY + 380")
-        scroll_to(rec, y=y, steps=30)
+        y = page.evaluate("() => window.scrollY + 300")
+        scroll_to(rec, y=y, steps=24)
 
     def act_raw(rec):
         highlight(page, None)
         scroll_to(rec, "#raw")
         highlight(page, "#raw")
         rec.frame()
-        scroll_to(rec, y=520, steps=30, container="#raw")
+        scroll_to(rec, y=560, steps=30, container="#raw")
+
+    def act_no_match(rec):
+        act_type_send(NO_MATCH)(rec)
+        highlight(page, "#chat .empty")
+        rec.frame()
 
     def results(rec):
         tiles = [
-            (f"{c['schema_valid_pct']:.0f}%", "schema-valid outputs", f"{c['lines']} queries · target ≥ 99%"),
-            (f"{c['rule_compliance_pct']:.0f}%", "pass all 11 rule checks", "target ≥ 95%"),
-            (f"{c['url_leaks']}", "URL leaks", "target 0"),
-            (f"{c['catalog_validity_pct']:.0f}%", "deeplinks from the catalog", f"{c['deeplinks']} deeplinks"),
-            (f"{p95_exact} ms", "P95 exact cache hit", "target ≤ 300 ms"),
-            (f"{p95_para} ms", "P95 unseen paraphrase hit", "0 LLM calls"),
-            (f"{p95_cold} ms", "P95 new query (CPU)", "target ≤ 8 s"),
-            (f"{zero_llm}%", "paraphrases served from cache", f"zero LLM calls · {wrong}% wrong-plan hits"),
+            (f"{o['schema_valid_pct']:.0f}%", "schema-valid", f"{o['cases']} official complaints with payload"),
+            (f"{o['rule_compliance_pct']:.0f}%", "pass all 11 rule checks", "0 violations"),
+            (f"{o['grounded_steps_pct']:.0f}%", "steps found in the article", f"{o['steps']} steps · 0 invented"),
+            (f"{o['deeplinks']}", "deeplinks, all from the catalog", "0 invalid · 0 URL leaks"),
+            (f"{lat['repeat_cache_hit']['p95']:.0f} ms", "P95 repeat (cache)", "target ≤ 300 ms · 0 LLM calls"),
+            (f"{lat['cold']['p95'] / 1000:.1f} s", "P95 cold, official kit", "target ≤ 8 s · CPU only"),
+            (f"{acc['mean_step_accuracy']:g} / 3", "gold step accuracy", "synthetic regression kit"),
+            (f"{du['zero_llm_hit_pct']:.0f}%", "paraphrases from cache", "synthetic kit · 0 LLM calls"),
         ]
         grid = "".join(f"<div class='tile'><b>{a}</b><span>{b}</span><i>{t}</i></div>" for a, b, t in tiles)
-        card_page(page, f"""<div class="wrap" style="padding-top:50px"><div class="k">MEASURED WITH bench/run.py ·
-          SYNTHETIC STARTER KIT · CPU ONLY</div><h1 style="font-size:46px;margin-top:14px">Results</h1>
+        card_page(page, f"""<div class="wrap" style="padding-top:50px"><div class="k">MEASURED WITH bench/official.py AND
+          bench/run.py · CPU ONLY</div><h1 style="font-size:46px;margin-top:14px">Results</h1>
           <div class="grid">{grid}</div>
-          <pre><em>$</em> python -m pytest -q
-{m['pytest_line']}
-<em>$</em> curl -s localhost:8000/health
-{m['health']}</pre></div>""")
+          <pre><em>$</em> python bench/official.py   <span style="color:#8b88a3"># 20 complaints → outputs/</span>
+schema-valid {o['schema_valid_pct']}% · rules {o['rule_compliance_pct']}% · grounded steps {o['grounded_steps_pct']}% of {o['steps']}
+<em>$</em> python -m pytest -q
+{m['pytest_line']}</pre></div>""")
         rec.frame()
 
     def closing(rec):
         card_page(page, f"""<div class="wrap"><div class="k">LIMITATIONS · NEXT STEPS</div>
           <h1 style="font-size:46px;margin-top:14px">Honest about the edges</h1>
-          <ul><li>Measured on a synthetic starter kit; the official kit drops into <code>data/</code> unchanged</li>
-          <li>{wrong}% of paraphrase cache hits served a neighbouring article's plan (τ trade-off)</li>
+          <ul><li>The official kit ships no deeplink catalog: ours is synthetic, in the official scheme, plus the one real entry</li>
+          <li>No gold plans for the {o['cases']} complaints: we measure contract and grounding; accuracy on synthetic gold</li>
+          <li>Relevance inside long articles is heuristic; numbered procedures are kept whole</li>
           <li>The 1.5B local SLM is too slow on CPU for the request path, so it writes cache paraphrases in the background</li></ul>
-          <h1 style="font-size:40px;margin-top:40px">Thank you · <span>docker compose up</span></h1>
+          <h1 style="font-size:40px;margin-top:34px">Thank you · <span>docker compose up</span></h1>
           <div class="sub" style="font-size:21px">{REPO}</div></div>""")
         rec.frame()
 
+    r21, r8 = rows["row_21"], rows["row_8"]
+    r8_kept = f"{r8['blocks_kept']} of {r8['blocks_scored']}"
     return [
         Segment("title", title, [
-            Beat("This is the Smart Guided Troubleshooting Engine, our prototype for Theme 2 of the Samsung PRISM "
-                 "Generative AI Hackathon."),
-            Beat("It turns a vague Galaxy complaint into a validated, ordered troubleshooting plan, where every step "
-                 "comes from trusted support content, and every fix is one tap away."),
+            Beat("This is the Smart Guided Troubleshooting Engine, team Nexora's prototype for Theme 2 of the "
+                 "Samsung PRISM Generative AI Hackathon."),
+            Beat("It takes a TechCorp Nexa complaint, together with the support article retrieved for it, and returns a "
+                 "validated, ordered troubleshooting plan. Every step comes from that article, and every Settings fix "
+                 "is one tap away."),
         ]),
         Segment("problem", slide(1), [
             Beat("People describe symptoms, but Settings speak in menus."),
-            Beat("Today, an agent reads the knowledge base, picks the steps, and orders them by hand. That takes about "
-                 "fifteen minutes per scenario, and the user still has to hunt through nested menus."),
+            Beat(f"The official kit has {o['cases']} complaints. Each one arrives with its SIIS article, as a title and "
+                 "markdown content, and the answer must match the official sample output."),
             Beat("Our targets: under three hundred milliseconds for known issues, under eight seconds for new ones, "
                  "zero invented steps, and zero invalid deeplinks."),
         ]),
         Segment("architecture", slide(3), [
-            Beat("The design principle is simple. Language models reason, retrieval grounds, and deterministic code "
-                 "validates."),
-            Beat("A complaint first goes to a semantic cache. On a miss, it is enriched, grounded in support articles "
-                 "with hybrid retrieval, and turned into steps that are copied from the source text."),
-            Beat("The steps are ordered from safe settings to critical actions, mapped to the exact Settings screen, "
-                 "and checked by eleven validators before the plan is cached."),
+            Beat("Language models reason, retrieval grounds, and deterministic code validates."),
+            Beat("The article sent with the complaint is the only source of steps. We split it into sections, keep the "
+                 "blocks that answer the complaint, and turn TechCorp's phrasing into canonical steps."),
+            Beat("Steps are ordered from safe settings to critical actions, each Settings navigation gets its exact "
+                 "deeplink, and eleven validators check the plan before it is cached."),
         ]),
-        Segment("demo_known", demo, [
-            Beat("Here is the demo interface. It runs entirely on a laptop CPU, using free, local, open models."),
-            Beat("First complaint: swipe gestures go the wrong way after installing an app.",
-                 act_type_send("swipe gestures go the wrong way after installing an app")),
-            Beat("The engine returns one automatic action with five grounded steps.", act_hl("#chat .goal")),
-            Beat("The Open button carries the exact catalog deeplink, for Display, Navigation bar, not the parent "
-                 "Display menu.", act_open),
-            Beat("It came from the cache in a few dozen milliseconds, with zero language model calls, and zero cost.",
+        Segment("demo_official", demo, [
+            Beat("Here is the demo. It runs on a laptop CPU, with free, local models, and an empty cache. The picker "
+                 "sends each official complaint together with its SIIS article, exactly like the API contract."),
+            Beat("Row twenty-one: the screen inputs are delayed, and the touch is laggy.", act_case("row_21")),
+            Beat(lambda: f"This is a new request, so the full pipeline ran, in {spoken_ms(state['row_21'])}. The "
+                         f"article is a numbered touchscreen procedure, so it is kept whole: {len(r21['actions'])} "
+                         "actions, all copied from the article.", act_hl("#chat .goal")),
+            Beat("Automatic settings come first. Turn on touch sensitivity carries the catalog deeplink for the Display "
+                 "screen.", act_open),
+            Beat("Manual checks come next, and the disruptive steps, safe mode and a factory data reset, come last.",
+                 act_scroll_critical),
+        ]),
+        Segment("demo_repeat", top, [
+            Beat("Now the same complaint, with the same article, again.", act_case("row_21")),
+            Beat(lambda: f"This time the validated plan comes from the cache, in {spoken_ms(state['row_21'])}, with "
+                         "zero model calls. A plan built from a different article is never served.",
                  act_hl(".side .card")),
+            Beat("And the response is pure JSON. With view equals contract, it has exactly the shape of the official "
+                 "sample output.", act_raw),
         ]),
-        Segment("demo_paraphrase", lambda rec: (highlight(page, None), scroll_to(rec, y=0)), [
-            Beat(f"Next, a paraphrase the system has never seen: {PARAPHRASE}.", act_type_send(PARAPHRASE)),
-            Beat("The semantic cache still recognises it, so the validated screen flickering plan comes back "
-                 "instantly, again without any model call.", act_hl(".side .card")),
+        Segment("demo_relevance", top, [
+            Beat("Row eight is harder: the main screen stays small, sent with a long screen mirroring guide.",
+                 act_case("row_8")),
+            Beat("Only one tip in that guide answers the complaint, changing the aspect ratio, so the plan has one "
+                 "action.", act_hl("#chat .goal")),
+            Beat(f"The evidence trail shows why: {r8_kept} instruction blocks were kept, with the relevance score of "
+                 "every block, and the source sentence behind every step.", act_why),
+            Beat("A support team can see exactly what was used, and what was left out.", act_why_scroll),
         ]),
-        Segment("demo_multi", lambda rec: (highlight(page, None), scroll_to(rec, y=0)), [
-            Beat("Now, two problems in one sentence: my screen flickers, and the battery dies fast.",
-                 act_type_send("my screen flickers and the battery dies fast")),
-            Beat("The engine splits the complaint, grounds each half in its own support article, and returns two "
-                 "goals.", act_hl("#chat .status", scroll=False)),
-            Beat("Within each goal, safe settings come first, physical checks next, and disruptive steps, such as "
-                 "safe mode or a restart, come last.", act_scroll_critical),
+        Segment("demo_groups", top, [
+            Beat("Row one, an email screen that goes blank, shows step groups.", act_case("row_1")),
+            Beat("Clearing the cache and clearing the data are two separate navigations, so the action has two step "
+                 "groups, each with its own deeplink.", act_two_groups),
         ]),
-        Segment("evidence", lambda rec: None, [
-            Beat("Every action carries an evidence trail.", act_why),
-            Beat("It shows the source sentence each step was copied from, the retrieval and rerank scores, the "
-                 "runner-up screen, and the confidence tier, so a support team can see exactly why each step was "
-                 "chosen.", act_why_scroll),
-        ]),
-        Segment("no_match", act_top, [
-            Beat("When the knowledge base has no answer, the engine refuses to guess."),
-            Beat("My Galaxy Watch won't sync my steps returns an empty plan with a no match flag, and the query is "
-                 "logged, so the content team can find the gaps.",
-                 lambda rec: (act_type_send("my galaxy watch wont sync my steps")(rec),
-                              highlight(page, "#chat .empty"), rec.frame())),
-        ]),
-        Segment("cold", lambda rec: (highlight(page, None), scroll_to(rec, y=0)), [
-            Beat(f"A brand new complaint goes through the full pipeline: {NEW_QUERY}.", act_type_send(NEW_QUERY)),
-            Beat("Retrieval, grounded extraction, ordering, deeplink mapping, and validation finish in well under a "
-                 "second, on the CPU.", act_hl(".side .card")),
-            Beat("And the response is pure JSON that follows the schema contract exactly.", act_raw),
+        Segment("demo_free_text", top, [
+            Beat(f"Without an article, the engine retrieves one itself: {FREE_TEXT}.", act_type_send(FREE_TEXT)),
+            Beat(lambda: f"It grounded the plan in the screen rotation article, in {spoken_ms(state[FREE_TEXT])} on the "
+                         "CPU.", act_hl("#chat .goal")),
+            Beat("When nothing answers, it refuses to guess. My Nexa watch won't sync my steps returns an empty plan "
+                 "with a no match flag, and the query is logged for the content team.", act_no_match),
         ]),
         Segment("results", results, [
-            Beat("We measured everything with our benchmark, on a synthetic starter kit."),
-            Beat(f"{c['schema_valid_pct']:.0f} percent of outputs are schema valid and pass all eleven rule checks, "
-                 f"with {'zero' if c['url_leaks'] == 0 else c['url_leaks']} URL leaks, and every deeplink comes from "
-                 "the catalog."),
-            Beat(f"Cached answers return in {p95_exact} milliseconds at the ninety-fifth percentile, new queries in "
-                 f"about {p95_cold} milliseconds, and {zero_llm} percent of unseen paraphrases are served from the "
-                 "cache, without any model call."),
-            Beat(f"All {m['tests']} tests pass, including the five gold samples."),
+            Beat(f"On all {o['cases']} official complaints, every output is schema valid and passes all eleven rule "
+                 f"checks, and every one of the {o['steps']} steps is found in its article."),
+            Beat(f"Repeats return from the cache in {round(lat['repeat_cache_hit']['p95'])} milliseconds at the "
+                 f"ninety-fifth percentile, and new requests in about {lat['cold']['p95'] / 1000:.1f} seconds, on a "
+                 "laptop CPU."),
+            Beat(f"On our synthetic regression kit, gold step accuracy stays at {acc['mean_step_accuracy']:g} out of "
+                 f"3, and {round(du['zero_llm_hit_pct'])} percent of unseen paraphrases are served without any model "
+                 f"call. All {m['tests']} tests pass."),
         ]),
         Segment("closing", closing, [
-            Beat(f"The main limitations: the results come from a synthetic kit, about {wrong} percent of paraphrase "
-                 "hits served a neighbouring plan, and the small local model is too slow on a CPU for the request "
-                 "path, so it writes cache paraphrases in the background instead."),
+            Beat("The main limitations: the official kit has no deeplink catalog and no gold answers, so our catalog is "
+                 "synthetic and accuracy is measured on synthetic gold, and relevance inside long articles is a "
+                 "heuristic."),
             Beat("Everything is open source, starts with docker compose up, and costs nothing to run. Thank you."),
         ]),
     ]
@@ -430,53 +517,60 @@ def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     tmp = Path(tempfile.mkdtemp(prefix="sgte_video_"))
     m = measured()
-    print(f"[video] measured: {m['pytest_line']} · health {m['health']}")
+    print(f"[video] measured: {m['pytest_line']}")
     slides = deck_slides([1, 3])
-    video_tmp, audio_tmp = tmp / "video.mp4", tmp / "audio.wav"
-    subs: list[tuple[float, float, str]] = []
-    samples = 0  # audio samples written so far
-    audio_chunks: list[bytes] = []
-    sr = 22050
-    with sync_playwright() as p:
-        browser = p.chromium.launch(channel="msedge", headless=True)
-        page = browser.new_page(viewport={"width": CSS_W, "height": CSS_H}, device_scale_factor=SCALE)
-        page.goto(f"{BASE}/demo")
-        rec = Recorder(page, video_tmp)
-        segments = build_script(page, m, slides)
-        n = 0
-        for seg in segments:
-            seg.setup(rec)
-            for beat in seg.beats:
-                n += 1
-                wav = tmp / f"b{n:03d}.wav"
-                dur = tts(beat.text, wav)
-                with wave.open(str(wav)) as w:
-                    sr = w.getframerate()
-                    pcm = w.readframes(w.getnframes())
-                start = rec.t
-                # keep audio locked to video: silence for frames recorded between beats (setup, scrolling)
-                lead = int(round(start * sr)) - samples
-                if lead > 0:
-                    audio_chunks.append(b"\x00\x00" * lead)
-                    samples += lead
-                caption(page, beat.text)
-                rec.frame()
-                if beat.action:
-                    beat.action(rec)
-                spent = rec.t - start
-                rec.hold(max(0.0, dur + GAP_S - spent))
-                total = rec.t - start
-                # audio: narration then silence so this beat's audio length == its video length
-                pad = max(0, int(round((total - dur) * sr)))
-                audio_chunks.append(pcm + b"\x00\x00" * pad)
-                samples += len(pcm) // 2 + pad
-                subs.append((start, start + dur, beat.text))
-                print(f"[video] {seg.name:16} beat {n:02d}  {start:6.1f}s  +{total:4.1f}s  {beat.text[:60]}")
-        caption(page, "")
-        rec.hold(1.0)
-        audio_chunks.append(b"\x00\x00" * max(0, int(round(rec.t * sr)) - samples))
-        rec.close()
-        browser.close()
+    server = Server(tmp)
+    try:
+        server.wait()
+        print(f"[video] engine ready on {BASE} (empty cache, no pre-warm)")
+        video_tmp, audio_tmp = tmp / "video.mp4", tmp / "audio.wav"
+        subs: list[tuple[float, float, str]] = []
+        samples = 0  # audio samples written so far
+        audio_chunks: list[bytes] = []
+        sr = 22050
+        with sync_playwright() as p:
+            browser = p.chromium.launch(channel="msedge", headless=True)
+            page = browser.new_page(viewport={"width": CSS_W, "height": CSS_H}, device_scale_factor=SCALE)
+            page.goto(f"{BASE}/demo")
+            rec = Recorder(page, video_tmp)
+            segments = build_script(page, m, slides)
+            n = 0
+            for seg in segments:
+                seg.setup(rec)
+                for beat in seg.beats:
+                    n += 1
+                    text = beat.text() if callable(beat.text) else beat.text
+                    wav = tmp / f"b{n:03d}.wav"
+                    dur = tts(text, wav)
+                    with wave.open(str(wav)) as w:
+                        sr = w.getframerate()
+                        pcm = w.readframes(w.getnframes())
+                    start = rec.t
+                    # keep audio locked to video: silence for frames recorded between beats (setup, scrolling)
+                    lead = int(round(start * sr)) - samples
+                    if lead > 0:
+                        audio_chunks.append(b"\x00\x00" * lead)
+                        samples += lead
+                    caption(page, text)
+                    rec.frame()
+                    if beat.action:
+                        beat.action(rec)
+                    spent = rec.t - start
+                    rec.hold(max(0.0, dur + GAP_S - spent))
+                    total = rec.t - start
+                    # audio: narration then silence so this beat's audio length == its video length
+                    pad = max(0, int(round((total - dur) * sr)))
+                    audio_chunks.append(pcm + b"\x00\x00" * pad)
+                    samples += len(pcm) // 2 + pad
+                    subs.append((start, start + dur, text))
+                    print(f"[video] {seg.name:16} beat {n:02d}  {start:6.1f}s  +{total:4.1f}s  {text[:60]}")
+            caption(page, "")
+            rec.hold(1.0)
+            audio_chunks.append(b"\x00\x00" * max(0, int(round(rec.t * sr)) - samples))
+            rec.close()
+            browser.close()
+    finally:
+        server.stop()
     with wave.open(str(audio_tmp), "wb") as w:
         w.setnchannels(1)
         w.setsampwidth(2)

@@ -29,7 +29,7 @@ def _load() -> None:
         from app.pipeline import Engine
         from scripts.prewarm import prewarm
         eng = Engine()
-        if len(eng.cache) == 0:  # no persisted cache (e.g. fresh volume): pre-warm before reporting healthy
+        if len(eng.cache) == 0 and eng.s.prewarm:  # no persisted cache (e.g. fresh volume): pre-warm before healthy
             prewarm(eng)
         STATE["engine"] = eng
         if eng.enrich_mode() == "background":  # upgrade template paraphrases with the local SLM while serving

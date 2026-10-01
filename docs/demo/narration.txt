@@ -1,61 +1,59 @@
-This is the Smart Guided Troubleshooting Engine, our prototype for Theme 2 of the Samsung PRISM Generative AI Hackathon.
+This is the Smart Guided Troubleshooting Engine, team Nexora's prototype for Theme 2 of the Samsung PRISM Generative AI Hackathon.
 
-It turns a vague Galaxy complaint into a validated, ordered troubleshooting plan, where every step comes from trusted support content, and every fix is one tap away.
+It takes a TechCorp Nexa complaint, together with the support article retrieved for it, and returns a validated, ordered troubleshooting plan. Every step comes from that article, and every Settings fix is one tap away.
 
 People describe symptoms, but Settings speak in menus.
 
-Today, an agent reads the knowledge base, picks the steps, and orders them by hand. That takes about fifteen minutes per scenario, and the user still has to hunt through nested menus.
+The official kit has 20 complaints. Each one arrives with its SIIS article, as a title and markdown content, and the answer must match the official sample output.
 
 Our targets: under three hundred milliseconds for known issues, under eight seconds for new ones, zero invented steps, and zero invalid deeplinks.
 
-The design principle is simple. Language models reason, retrieval grounds, and deterministic code validates.
+Language models reason, retrieval grounds, and deterministic code validates.
 
-A complaint first goes to a semantic cache. On a miss, it is enriched, grounded in support articles with hybrid retrieval, and turned into steps that are copied from the source text.
+The article sent with the complaint is the only source of steps. We split it into sections, keep the blocks that answer the complaint, and turn TechCorp's phrasing into canonical steps.
 
-The steps are ordered from safe settings to critical actions, mapped to the exact Settings screen, and checked by eleven validators before the plan is cached.
+Steps are ordered from safe settings to critical actions, each Settings navigation gets its exact deeplink, and eleven validators check the plan before it is cached.
 
-Here is the demo interface. It runs entirely on a laptop CPU, using free, local, open models.
+Here is the demo. It runs on a laptop CPU, with free, local models, and an empty cache. The picker sends each official complaint together with its SIIS article, exactly like the API contract.
 
-First complaint: swipe gestures go the wrong way after installing an app.
+Row twenty-one: the screen inputs are delayed, and the touch is laggy.
 
-The engine returns one automatic action with five grounded steps.
+This is a new request, so the full pipeline ran, in 1.9 seconds. The article is a numbered touchscreen procedure, so it is kept whole: 11 actions, all copied from the article.
 
-The Open button carries the exact catalog deeplink, for Display, Navigation bar, not the parent Display menu.
+Automatic settings come first. Turn on touch sensitivity carries the catalog deeplink for the Display screen.
 
-It came from the cache in a few dozen milliseconds, with zero language model calls, and zero cost.
+Manual checks come next, and the disruptive steps, safe mode and a factory data reset, come last.
 
-Next, a paraphrase the system has never seen: there is a weird flicker on my display.
+Now the same complaint, with the same article, again.
 
-The semantic cache still recognises it, so the validated screen flickering plan comes back instantly, again without any model call.
+This time the validated plan comes from the cache, in 34 milliseconds, with zero model calls. A plan built from a different article is never served.
 
-Now, two problems in one sentence: my screen flickers, and the battery dies fast.
+And the response is pure JSON. With view equals contract, it has exactly the shape of the official sample output.
 
-The engine splits the complaint, grounds each half in its own support article, and returns two goals.
+Row eight is harder: the main screen stays small, sent with a long screen mirroring guide.
 
-Within each goal, safe settings come first, physical checks next, and disruptive steps, such as safe mode or a restart, come last.
+Only one tip in that guide answers the complaint, changing the aspect ratio, so the plan has one action.
 
-Every action carries an evidence trail.
+The evidence trail shows why: 1 of 20 instruction blocks were kept, with the relevance score of every block, and the source sentence behind every step.
 
-It shows the source sentence each step was copied from, the retrieval and rerank scores, the runner-up screen, and the confidence tier, so a support team can see exactly why each step was chosen.
+A support team can see exactly what was used, and what was left out.
 
-When the knowledge base has no answer, the engine refuses to guess.
+Row one, an email screen that goes blank, shows step groups.
 
-My Galaxy Watch won't sync my steps returns an empty plan with a no match flag, and the query is logged, so the content team can find the gaps.
+Clearing the cache and clearing the data are two separate navigations, so the action has two step groups, each with its own deeplink.
 
-A brand new complaint goes through the full pipeline: sound only comes out of one earbud.
+Without an article, the engine retrieves one itself: the screen does not rotate when I turn the tablet.
 
-Retrieval, grounded extraction, ordering, deeplink mapping, and validation finish in well under a second, on the CPU.
+It grounded the plan in the screen rotation article, in 943 milliseconds on the CPU.
 
-And the response is pure JSON that follows the schema contract exactly.
+When nothing answers, it refuses to guess. My Nexa watch won't sync my steps returns an empty plan with a no match flag, and the query is logged for the content team.
 
-We measured everything with our benchmark, on a synthetic starter kit.
+On all 20 official complaints, every output is schema valid and passes all eleven rule checks, and every one of the 308 steps is found in its article.
 
-100 percent of outputs are schema valid and pass all eleven rule checks, with zero URL leaks, and every deeplink comes from the catalog.
+Repeats return from the cache in 28 milliseconds at the ninety-fifth percentile, and new requests in about 1.5 seconds, on a laptop CPU.
 
-Cached answers return in 23 milliseconds at the ninety-fifth percentile, new queries in about 428 milliseconds, and 84 percent of unseen paraphrases are served from the cache, without any model call.
+On our synthetic regression kit, gold step accuracy stays at 3 out of 3, and 80 percent of unseen paraphrases are served without any model call. All 69 tests pass.
 
-All 34 tests pass, including the five gold samples.
-
-The main limitations: the results come from a synthetic kit, about 6 percent of paraphrase hits served a neighbouring plan, and the small local model is too slow on a CPU for the request path, so it writes cache paraphrases in the background instead.
+The main limitations: the official kit has no deeplink catalog and no gold answers, so our catalog is synthetic and accuracy is measured on synthetic gold, and relevance inside long articles is a heuristic.
 
 Everything is open source, starts with docker compose up, and costs nothing to run. Thank you.
