@@ -29,19 +29,7 @@ disabled-by-default plug-in (`app/llm_client.py`); the measured cost per query i
 **Demo UI.** After `docker compose up`, open `http://localhost:8000/demo`: a phone-style page over the same API
 (plan, category badges, one-tap deeplinks, cache hit and latency, evidence trail, raw JSON).
 
-**How the demo video was made (also free).** `scripts/make_demo_video.py` drives the live `/demo` page in headless
-Microsoft Edge (Playwright), narrates with Windows' built-in offline voice, reads every number from
-`bench/report.json` and a live `pytest` run, and encodes 1080p H.264 with ffmpeg (`imageio-ffmpeg`). Re-generate it
-with `pip install -r requirements-video.txt`, then `python scripts/make_demo_video.py` while the API is running.
 
-> **Data note.** `data/` holds the **official kit**: `input.txt` (20 complaints), `siis_responses.json` (the SIIS
-> payload `{"title", "content"}` that arrives with each complaint; 11 distinct articles), `sample_output.json` and
-> `schema.py` (both byte-identical to the official files). The official kit ships **no deeplink catalog**, so
-> `data/deeplinks.json` is synthetic: 154 Settings screens in the official `voiceassist://masked/act|val/` scheme,
-> including the one real entry revealed by `sample_output.json` (*Back up data (TechCorp Cloud)*, with its validation
-> deeplink). The seeded synthetic kit the prototype was first built on lives in `data/synthetic/` and is kept for
-> regression tests and the cache / latency / ablation benchmarks, because the official kit has no labelled queries,
-> held-out paraphrases or gold plans. See [data/README.md](data/README.md).
 
 **Design principle: LLMs reason, retrieval grounds, deterministic code validates.**
 
