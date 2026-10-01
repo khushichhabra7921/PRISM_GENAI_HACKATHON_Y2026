@@ -5,7 +5,7 @@ Descriptions/messages are templated from the path so the catalog reads consisten
 """
 
 # Screens that SIIS articles mention but are deliberately NOT in the catalog, so the
-# engine has to fall back to bixby://dummy_positive (or no deeplink) for them.
+# engine has to fall back to voiceassist://dummy_positive (or no deeplink) for them.
 INTENTIONALLY_MISSING = [
     "Settings > Display > Touch sensitivity",
     "Settings > Advanced features > Motions and gestures",
@@ -139,6 +139,7 @@ CATALOG = [
     ("Settings > Advanced features > Side button", "screen", "Choose what happens when you double press or press and hold the side button", None, None),
     ("Settings > Advanced features > Video brightness", "screen", "Make videos brighter and more vivid in supported apps", None, None),
     ("Settings > Advanced features > One-handed mode", "toggle", "Shrink the screen for one-handed use with a gesture or button", "one_handed_mode", None),
+    ("Settings > Advanced features > Multi window", "screen", "Multi window options such as swipe for split screen, swipe for pop-up view and pop-up window settings", None, None),
     ("Game Launcher > Game Booster", "screen", "Game Booster options to prioritise performance, limit alerts and control heat during games", None, "Optimise games"),
     # --- general management / updates / reset -------------------------------------------
     ("Settings > General management", "screen", "General management menu with language, keyboard, date and time and reset options", None, None),
@@ -176,3 +177,19 @@ CATALOG = [
     ("Camera > Camera settings > Shooting methods", "screen", "Ways to take pictures such as voice commands, floating shutter button and palm gesture", None, None),
     ("Camera > Camera settings > Reset settings", "screen", "Reset all camera settings to their defaults", None, None),
 ]
+
+
+# Entries copied verbatim from the OFFICIAL kit (data/sample_output.json). The official kit ships no catalog;
+# this is the only real deeplink pair it reveals, so it replaces the synthetic entry for the same screen.
+OFFICIAL = {
+    "Settings > Accounts and backup > Back up data": {
+        "deeplink": "voiceassist://masked/act/b3ed3ed663",
+        "description": "Enables data backup to TechCorp Cloud via device Settings on the device.",
+        "message": "Enable Back up data (TechCorp Cloud)",
+        "originalType": "onURL",
+        "controlType": "toggle",
+        "validation": {"deeplink": "voiceassist://masked/val/266037d0c5", "key": "Back up data (TechCorp Cloud)",
+                       "resultType": "boolean", "condition": "equal", "value": "True"},
+        "source": "official: data/sample_output.json",
+    },
+}

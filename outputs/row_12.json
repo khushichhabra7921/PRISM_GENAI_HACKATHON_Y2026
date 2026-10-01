@@ -1,0 +1,66 @@
+{
+  "query": "My Nexa X1 has a floating circle that constantly hovers on my screen and gives me quick shortcuts to recent apps, home, back, screen off, volume control, and more; I want to remove it.",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Multi Window Troubleshooting",
+        "title": "Multi window fix",
+        "score": 0.6,
+        "actions": [
+          {
+            "actionName": "Customize the Quick Access Panel",
+            "description": "It will customize the quick access panel",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Customize the panel, download new panels.",
+                  "Remove apps from the panel if needed.",
+                  "To find the panel, swipe left on the gray Quick Access panel handle, which is located on the right side of your screen.",
+                  "Use the Settings, All apps, and Edit icons at the bottom of the panel to adjust your desired options."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Use Pop-Up View",
+            "description": "It will use pop-up view",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Open in split screen view: Open the app in split screen view.",
+                  "Move the icon around the screen.",
+                  "Make more than one app into an icon.",
+                  "Maximize window: Expand the app back into its regular full-screen view.",
+                  "Close app: Close the current pop-up view window."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Remove Shortcuts from Application Edge",
+            "description": "It will remove shortcuts from application edge",
+            "stepGroups": [
+              {
+                "steps": [
+                  "From any screen, swipe left on the Quick Access panel.",
+                  "Tap the Edit icon (the pencil).",
+                  "Tap the minus icon next to the shortcuts you want to remove.",
+                  "Add the shortcut back later, or add new Quick Access panels with additional apps that you'd like to use."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          }
+        ]
+      }
+    ]
+  }
+}

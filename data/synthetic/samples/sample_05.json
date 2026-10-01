@@ -3,17 +3,17 @@
     "synthetic": true,
     "generator": "scripts/make_synthetic_kit.py",
     "seed": 2026,
-    "note": "Synthetic data written from general One UI knowledge; not official Samsung content."
+    "note": "Synthetic data written from general One UI knowledge; not official TechCorp content."
   },
   "input": {
-    "query": "My Galaxy Watch won't sync my step count with the phone",
+    "query": "My Nexa Watch won't sync my step count with the phone",
     "siis_response": null,
     "siis_id": null
   },
   "output": {
-    "query": "My Galaxy Watch won't sync my step count with the phone",
+    "query": "My Nexa Watch won't sync my step count with the phone",
     "query_variations": [
-      "My Galaxy Watch won't sync my step count with the phone.",
+      "My Nexa Watch won't sync my step count with the phone.",
       "watch not syncing steps",
       "galaxy watch step sync",
       "Why doesn't my watch send my steps to my phone?",
@@ -21,7 +21,7 @@
       "my watch refuses to sync steps its so frustrating",
       "wach not synching steps",
       "How do I get my watch steps to show on my phone?",
-      "Steps from Galaxy Watch are missing on phone."
+      "Steps from Nexa Watch are missing on phone."
     ],
     "response": {
       "contexts": []

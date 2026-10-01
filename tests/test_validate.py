@@ -1,16 +1,17 @@
-"""Milestone (a): contract, rule checks, auto-fixers, data loader."""
+"""Contract, rule checks, auto-fixers, data loader (synthetic gold samples + the official sample output)."""
 import copy
 import json
 
 import pytest
 
-from app.data_loader import load_kit
+from app.data_loader import load_kit, load_synthetic_kit
 from app.textutils import fit_description, has_url, is_title_case, scrub_urls, title_case
 from app.validate import CHECKS, check_record, fix_record, validate_and_fix
 from data.schema import ContextDeeplinkResponse
 
-KIT = load_kit()
-URIS = {e.uri for e in KIT.catalog}
+KIT = load_synthetic_kit()
+URIS = {e.uri for e in KIT.catalog} | {e.val_uri for e in KIT.catalog if e.val_uri}
+OFFICIAL = load_kit()
 
 
 def _gold(name):
@@ -82,7 +83,7 @@ def test_manual_deeplink_stripped_and_critical_last():
 def test_unknown_deeplink_removed_never_invented():
     rec = _gold("sample_01")
     sg = rec["response"]["contexts"][0]["actions"][0]["stepGroups"][0]
-    sg["actionableDeeplink"]["deeplink"] = "bixby://masked/act/zzzzzz"
+    sg["actionableDeeplink"]["deeplink"] = "voiceassist://masked/act/zzzzzzzzzz"
     assert any(v.check == "catalog_deeplinks" for v in check_record(rec, URIS))
     fixed, errs = validate_and_fix(rec, URIS)
     assert fixed["response"]["contexts"][0]["actions"][0]["stepGroups"][0]["actionableDeeplink"] is None
@@ -106,10 +107,61 @@ def test_title_case_helper():
 def test_loader_accepts_raw_lists(tmp_path):
     """Official-kit style: bare lists and alternative field names (qna_description)."""
     (tmp_path / "deeplinks.json").write_text(json.dumps([
-        {"deeplink": "bixby://masked/act/abc", "description": "Open display", "message": "m",
+        {"deeplink": "voiceassist://masked/act/abc", "description": "Open display", "message": "m",
          "qna_description": "display menu"}]))
     (tmp_path / "siis_responses.json").write_text(json.dumps({"k1": "Open Settings > Display."}))
     (tmp_path / "queries.json").write_text(json.dumps(["screen issue"]))
     kit = load_kit(str(tmp_path))
     assert kit.catalog[0].cna == "display menu" and kit.catalog[0].path == ()
     assert kit.siis[0].id == "k1" and kit.queries[0].type == "no_match"
+
+
+# ------------------------------------------------------------------ official kit
+def _official_uris():
+    return {e.uri for e in OFFICIAL.catalog} | {e.val_uri for e in OFFICIAL.catalog if e.val_uri}
+
+
+def test_official_sample_output_passes_every_check():
+    """data/sample_output.json (official) is the reference shape: it must pass the contract and all checks."""
+    ref = copy.deepcopy(OFFICIAL.reference_outputs[0])
+    ContextDeeplinkResponse.model_validate(ref["response"])
+    assert "query_variations" not in ref
+    assert check_record(ref, _official_uris()) == []
+
+
+def test_official_sample_deeplinks_are_in_the_catalog():
+    """The only real deeplink pair the official kit reveals is part of the catalog, unchanged."""
+    sg = OFFICIAL.reference_outputs[0]["response"]["contexts"][0]["actions"][0]["stepGroups"][0]
+    entry = next(e for e in OFFICIAL.catalog if e.uri == sg["actionableDeeplink"]["deeplink"])
+    assert entry.description == sg["actionableDeeplink"]["description"]
+    assert entry.message == sg["actionableDeeplink"]["message"]
+    assert entry.original_type == sg["actionableDeeplink"]["originalType"]
+    assert entry.val_uri == sg["validationDeeplink"]["deeplink"]
+    assert entry.validation["key"] == sg["validationDeeplink"]["key"]
+
+
+def test_official_kit_loaded():
+    assert OFFICIAL.official and len(OFFICIAL.cases) == 20
+    assert all(c.siis_response["title"] and c.siis_response["content"] for c in OFFICIAL.cases)
+    assert len(OFFICIAL.siis) == 11  # 20 rows share 11 distinct articles
+    assert all(e.uri.startswith("voiceassist://masked/act/") for e in OFFICIAL.catalog)
+    assert {c.siis_id for c in OFFICIAL.cases} <= {d.id for d in OFFICIAL.siis}
+
+
+def test_official_payload_parsing():
+    from app.siis_text import article_from_payload
+    c = OFFICIAL.cases[0]
+    a = article_from_payload(c.siis_response)
+    assert not a.text.startswith("Smartphone,")  # product-category prefix removed
+    assert a.procedural and [s.heading for s in a.sections][1] == "Check Email Access on a PC"
+    garbled = article_from_payload(next(x.siis_response for x in OFFICIAL.cases if x.id == "row_3"))
+    assert "enteryourcurrentpin" not in garbled.text and "Improve accuracy" in garbled.text
+
+
+def test_description_length_follows_official_sample():
+    assert check_record({"query": "q", "response": {"contexts": [{
+        "goal": "Follow these steps to perform this Screen Damage Troubleshooting", "title": "Screen display damage",
+        "score": 0.9, "actions": [{"actionName": "Schedule Screen Repair Service",
+                                   "description": "It will help you locate the nearest TechCorp service center and schedule",
+                                   "stepGroups": [{"steps": ["Contact Customer Support."]}], "category": "manual"}]}]}},
+        set()) == []

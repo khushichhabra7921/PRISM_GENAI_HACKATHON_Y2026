@@ -1,0 +1,60 @@
+{
+  "query": "1. \"My Nexa X1 screen goes completely blank, just a dark screen with occasional scrolling and no visible content, so I can't see anything or use Data Transfer to transfer data.\"",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Blank Screen Troubleshooting",
+        "title": "Blank screen fix",
+        "score": 0.53,
+        "actions": [
+          {
+            "actionName": "Access Your Data",
+            "description": "It will access your data",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Even if you cannot use the touchscreen on your device, access your data with a USB mouse and keyboard.",
+                  "Connect the mouse and keyboard to your phone or tablet using a USB adapter.",
+                  "Navigate your device as needed.",
+                  "Back up your device's data by connecting it to a monitor."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Check for Physical Damage",
+            "description": "It will rule out hardware damage",
+            "stepGroups": [
+              {
+                "steps": [
+                  "If your device displays only a blank or black screen, check the device, charger, and USB cable for damage."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Force Restart Your Phone",
+            "description": "It will force the phone to restart",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Try forcing a restart by pressing and holding the Power and Volume down buttons for 20 seconds.",
+                  "Charging the device for at least one hour."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "critical"
+          }
+        ]
+      }
+    ]
+  }
+}

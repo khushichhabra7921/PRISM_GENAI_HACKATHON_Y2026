@@ -1,0 +1,122 @@
+{
+  "query": "My Nexa A14 screen looks distorted right after I received the phone, and I need a diagnostic test.",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Screen Rotation Troubleshooting",
+        "title": "Screen rotation fix",
+        "score": 0.6,
+        "actions": [
+          {
+            "actionName": "Check for Physical Damage",
+            "description": "It will rule out hardware damage",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Check for any cracks or other damage to the screen.",
+                  "If the device's screen is damaged, contact Customer Support to set up service."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Adjust Screen Orientation Settings",
+            "description": "It will adjust screen orientation settings",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Using two fingers, swipe down from the top of the screen to open the Quick settings panel.",
+                  "Locate the screen orientation icon.",
+                  "If you need to change your screen's orientation setting, switch between Portrait, Landscape, or Auto rotate by tapping the screen orientation icon."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Test App Rotation",
+            "description": "It will test app rotation",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Open an app.",
+                  "Try rotating your screen by turning your device sideways.",
+                  "Avoid touching the screen while rotating the device, as this can interfere with the rotation process."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Contact Customer Support",
+            "description": "It will arrange expert help and service",
+            "stepGroups": [
+              {
+                "steps": [
+                  "If the issue persists after completing all the above steps, contact Customer Support to arrange for service."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Restart Your Device",
+            "description": "It will refresh the phone system",
+            "stepGroups": [
+              {
+                "steps": [
+                  "On devices with a Power button: Press and hold the Power button.",
+                  "Tap Restart.",
+                  "Tap Restart again to confirm.",
+                  "On devices with a Side button: Using two fingers, swipe down from the top of the screen to open the Quick settings panel.",
+                  "Tap the Power icon.",
+                  "Tap Restart.",
+                  "Tap Restart again to confirm."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "critical"
+          },
+          {
+            "actionName": "Perform a Factory Data Reset",
+            "description": "It will restore factory default settings",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Back up your data before proceeding with this step.",
+                  "If the previous steps did not resolve the screen rotation issue, perform a factory data reset.",
+                  "Navigate to and open Settings.",
+                  "Search for and select Factory data reset.",
+                  "Tap Factory data reset again.",
+                  "Review the information presented.",
+                  "Tap Reset.",
+                  "Tap Delete all.",
+                  "If prompted, enter your TechCorp account password."
+                ],
+                "actionableDeeplink": {
+                  "deeplink": "voiceassist://masked/act/f41c48862e",
+                  "description": "Open factory data reset settings under Reset",
+                  "message": "Go to factory data reset in Reset",
+                  "originalType": "onURL"
+                },
+                "validationDeeplink": null
+              }
+            ],
+            "category": "critical"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,219 @@
+{
+  "query": "My Nexa X1 screen inputs are delayed and the touch responsiveness is laggy, causing a noticeable delay when I try to interact with the phone.",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Touchscreen Issues Troubleshooting",
+        "title": "Touchscreen issues fix",
+        "score": 0.55,
+        "actions": [
+          {
+            "actionName": "Turn On Touch Sensitivity",
+            "description": "It will turn on touch sensitivity",
+            "stepGroups": [
+              {
+                "steps": [
+                  "If you wish to keep your screen protector on, try enabling the \"Touch sensitivity\" option.",
+                  "Navigate to and open Settings.",
+                  "Tap on Display.",
+                  "Tap the switch next to Touch sensitivity."
+                ],
+                "actionableDeeplink": {
+                  "deeplink": "voiceassist://masked/act/b8a0562dd6",
+                  "description": "Open display settings",
+                  "message": "Go to display",
+                  "originalType": "onURL"
+                },
+                "validationDeeplink": null
+              }
+            ],
+            "category": "auto"
+          },
+          {
+            "actionName": "Configure Navigation Bar Settings",
+            "description": "It will let you adjust navigation bar",
+            "stepGroups": [
+              {
+                "steps": [
+                  "To prevent this, disable the full screen gesture function.",
+                  "Navigate to and open Settings.",
+                  "Tap on Display.",
+                  "Tap on Navigation bar.",
+                  "Select Buttons to turn off full screen gestures."
+                ],
+                "actionableDeeplink": {
+                  "deeplink": "voiceassist://masked/act/756ac85e20",
+                  "description": "Open navigation bar settings under Display",
+                  "message": "Choose navigation type in Display settings",
+                  "originalType": "onURL"
+                },
+                "validationDeeplink": null
+              }
+            ],
+            "category": "auto"
+          },
+          {
+            "actionName": "Turn Off Touch Sensitivity",
+            "description": "It will turn off touch sensitivity",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Navigate to and open Settings.",
+                  "Tap on Display.",
+                  "Tap the switch next to Touch sensitivity to disable it."
+                ],
+                "actionableDeeplink": {
+                  "deeplink": "voiceassist://masked/act/b8a0562dd6",
+                  "description": "Open display settings",
+                  "message": "Go to display",
+                  "originalType": "onURL"
+                },
+                "validationDeeplink": null
+              }
+            ],
+            "category": "auto"
+          },
+          {
+            "actionName": "Remove the Screen Protector",
+            "description": "It will rule out touch interference",
+            "stepGroups": [
+              {
+                "steps": [
+                  "If your screen protector is peeling or has debris under it, remove it."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Clean the Device",
+            "description": "It will remove dust and moisture",
+            "stepGroups": [
+              {
+                "steps": [
+                  "To clean your device, gently wipe the front and back with a lint-free, soft microfiber cloth or a camera lens cleaning cloth.",
+                  "Avoid applying too much pressure when cleaning."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Try a Different Charger",
+            "description": "It will rule out faulty charging accessories",
+            "stepGroups": [
+              {
+                "steps": [
+                  "If you suspect this is the case, try using a different, undamaged charger.",
+                  "Avoid using the touchscreen while your device is charging."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Contact Customer Support",
+            "description": "It will arrange expert help and service",
+            "stepGroups": [
+              {
+                "steps": [
+                  "If the issue persists after trying all these steps, reach out to Customer Support for further assistance."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Restart Your Device",
+            "description": "It will refresh the phone system",
+            "stepGroups": [
+              {
+                "steps": [
+                  "For devices with a Power button: Press and hold the Power button.",
+                  "Tap Restart.",
+                  "Tap Restart again to confirm.",
+                  "For devices with a Side button: Swipe down from the top of the screen with two fingers to open the Quick settings panel.",
+                  "Tap the Power icon.",
+                  "Tap Restart.",
+                  "Tap Restart again to confirm.",
+                  "If the touchscreen is completely unresponsive, force a restart by pressing and holding the Volume down button and the Power button (or Side button) simultaneously for about 10 seconds.",
+                  "Once the device turns off, press the Power button or Side button again to turn it back on."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "critical"
+          },
+          {
+            "actionName": "Install Software Update",
+            "description": "It will install the latest software",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Check for updates for any third-party apps you use, as these can sometimes affect gesture customization."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "critical"
+          },
+          {
+            "actionName": "Start Safe Mode",
+            "description": "It will check for problem apps",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Press and hold the Power button (or Side button) and the Volume down button at the same time.",
+                  "Alternatively, swipe down from the top of the screen with two fingers.",
+                  "Tap the Power icon.",
+                  "Touch and hold Power off.",
+                  "Tap Safe mode.",
+                  "Once in Safe mode, try removing any third-party apps that were recently updated or installed around the time the issue began.",
+                  "To exit Safe mode, restart your phone or tablet, and it will boot up normally."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "critical"
+          },
+          {
+            "actionName": "Perform a Factory Data Reset",
+            "description": "It will restore factory default settings",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Navigate to and open Settings.",
+                  "Tap on General management.",
+                  "Tap on Reset.",
+                  "Tap on Factory data reset.",
+                  "Swipe to and tap Reset.",
+                  "Tap Delete all.",
+                  "Enter your TechCorp account credentials to complete the reset."
+                ],
+                "actionableDeeplink": {
+                  "deeplink": "voiceassist://masked/act/f41c48862e",
+                  "description": "Open factory data reset settings under Reset",
+                  "message": "Go to factory data reset in Reset",
+                  "originalType": "onURL"
+                },
+                "validationDeeplink": null
+              }
+            ],
+            "category": "critical"
+          }
+        ]
+      }
+    ]
+  }
+}

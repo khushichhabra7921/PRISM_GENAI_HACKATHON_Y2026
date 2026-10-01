@@ -1,0 +1,43 @@
+{
+  "query": "My Nexa Fold X1 screen is half black—one side of the display is completely dark while the other side works fine, so I can't access the device normally.",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Blank Screen Troubleshooting",
+        "title": "Blank screen fix",
+        "score": 0.53,
+        "actions": [
+          {
+            "actionName": "Check for Physical Damage",
+            "description": "It will rule out hardware damage",
+            "stepGroups": [
+              {
+                "steps": [
+                  "If your device displays only a blank or black screen, check the device, charger, and USB cable for damage."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Force Restart Your Phone",
+            "description": "It will force the phone to restart",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Try forcing a restart by pressing and holding the Power and Volume down buttons for 20 seconds.",
+                  "Charging the device for at least one hour."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "critical"
+          }
+        ]
+      }
+    ]
+  }
+}

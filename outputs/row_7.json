@@ -1,0 +1,137 @@
+{
+  "query": "My tablet's screen stays dark and only three app icons are lit while the rest are dark and won't open, so nothing loads on the screen and I can't use the device.",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Multi Window Troubleshooting",
+        "title": "Multi window fix",
+        "score": 0.58,
+        "actions": [
+          {
+            "actionName": "Turn On Swipe for Split Screen",
+            "description": "It will turn on swipe for split",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Navigate to and open Settings.",
+                  "Tap on Advanced features.",
+                  "Tap on Multi window.",
+                  "Tap the switches next to Swipe for split screen or Swipe for pop-up view.",
+                  "Use one finger to swipe in from either top corner to put the current app into a pop-up.",
+                  "Drag the pop-up to the side of the screen to hide it.",
+                  "Tap it again to bring it back to the center of the screen."
+                ],
+                "actionableDeeplink": {
+                  "deeplink": "voiceassist://masked/act/27b434556c",
+                  "description": "Open multi window settings under Advanced features",
+                  "message": "Go to multi window in Advanced features",
+                  "originalType": "onURL"
+                },
+                "validationDeeplink": null
+              }
+            ],
+            "category": "auto"
+          },
+          {
+            "actionName": "Use Multi Window",
+            "description": "It will use multi window",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Use Multi window on your Nexa foldable and non-foldable devices.",
+                  "If you have a few favorite apps, create app pairs!",
+                  "From the screen's right side, swipe left to open the Quick Access panel.",
+                  "Tap the All apps icon (the grid).",
+                  "To open an app in split screen view on Foldable devices, drag and drop it to the left, right, top, or bottom of the screen.",
+                  "Do the same for additional apps if desired.",
+                  "To open an app in pop-up view, drag the app to the center.",
+                  "Tap Recents.",
+                  "Tap an app's icon.",
+                  "Tap either Open in split screen view or Open in pop-up view.",
+                  "When you are in pop-up view, rearrange your opened apps by moving the windows to your liking.",
+                  "If you need a larger view for a certain app, tap the expand icon at the top to expand the window.",
+                  "When you are in split screen view, use the dividers between the apps to adjust the size of the windows.",
+                  "To create an app pair from split screen view, tap the dotted divider between the apps.",
+                  "Tap the Add to app pair icon (the star).",
+                  "Select your desired location for the app pair.",
+                  "To close an app in split screen view or pop-up view, tap the blue divider at the top of the app's screen.",
+                  "Tap the X icon.",
+                  "Keep the phone propped open on a desk or in your hand to continue using split screen or pop-up view."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Exit Multi Window",
+            "description": "It will exit multi window",
+            "stepGroups": [
+              {
+                "steps": [
+                  "When you want to give Multi window a break and just use one app, close the split screen view.",
+                  "To do this, tap the Home icon."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Use Pop-Up View",
+            "description": "It will use pop-up view",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Open in split screen view: Open the app in split screen view.",
+                  "Move the icon around the screen.",
+                  "Make more than one app into an icon.",
+                  "Maximize window: Expand the app back into its regular full-screen view.",
+                  "Close app: Close the current pop-up view window."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Create an App Pair",
+            "description": "It will create an app pair",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Instead of separately opening apps you always use together, create an App pair.",
+                  "Swipe left to open the Quick Access panel.",
+                  "Touch and hold your desired app.",
+                  "Drag and drop it into the top portion of the screen.",
+                  "Once all the apps are on the screen, tap the dotted divider in the center.",
+                  "Tap the Add to app pair icon."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Remove Shortcuts from Application Edge",
+            "description": "It will remove shortcuts from application edge",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Add the shortcut back later, or add new Quick Access panels with additional apps that you'd like to use."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          }
+        ]
+      }
+    ]
+  }
+}

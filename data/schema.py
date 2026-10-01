@@ -1,8 +1,4 @@
-"""Output contract for the Smart Guided Troubleshooting Engine.
-
-Single source of truth: every module imports these models from here.
-(Synthetic starter kit: reproduced from the Theme 2 brief, Appendix A.)
-"""
+"""Response schema for the Smart Guided Troubleshooting Engine hackathon. Validate every response against it."""
 from enum import Enum
 from typing import Dict, List, Optional
 
@@ -68,5 +64,4 @@ class Goal(BaseModel):
 
 class ContextDeeplinkResponse(BaseModel):
     """RAG response containing a list of Goal objects."""
-
     contexts: List[Goal] = []

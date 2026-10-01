@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-30T02:54:14",
+  "generated": "2026-10-01T13:30:53",
   "env": {
     "os": "Windows 11",
     "python": "3.12.10",
@@ -20,12 +20,12 @@
   "background_upgrade": {
     "mode": "background",
     "queued_at_end_of_run": 67,
-    "wait_s": 608.9,
+    "wait_s": 588.8,
     "plans_with_llm_variations": 70
   },
   "results_cold_latency": {
-    "p50": 470.1,
-    "p95": 1052.7
+    "p50": 478.4,
+    "p95": 1162.9
   },
   "routing": {
     "single_correct": 79,
@@ -53,7 +53,7 @@
       "query_variations": 0
     },
     "url_leaks": 0,
-    "deeplinks": 233,
+    "deeplinks": 236,
     "catalog_validity_pct": 100.0,
     "dummy_positive": 5,
     "auto_actions": 203,
@@ -70,7 +70,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 174.9,
+        "latency_ms": 176.3,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -83,7 +83,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 192.5,
+        "latency_ms": 157.3,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -96,7 +96,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 446.4,
+        "latency_ms": 297.0,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -109,7 +109,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 395.7,
+        "latency_ms": 386.9,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -122,7 +122,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 218.5,
+        "latency_ms": 155.2,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -135,7 +135,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 241.6,
+        "latency_ms": 213.5,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -148,7 +148,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 331.2,
+        "latency_ms": 255.3,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -161,7 +161,7 @@
         "ordering": 1.0,
         "deeplink_relevance": 2.0,
         "note": "all deeplinks exact",
-        "latency_ms": 368.4,
+        "latency_ms": 280.0,
         "cost_usd": 0,
         "model": "rules-v1 (deterministic, no LLM)"
       },
@@ -171,7 +171,7 @@
         "step_accuracy": 3.0,
         "deeplink_relevance": 2.0,
         "note": "fallback=no_match",
-        "latency_ms": 84.3,
+        "latency_ms": 121.3,
         "cost_usd": 0
       },
       {
@@ -180,7 +180,7 @@
         "step_accuracy": 3.0,
         "deeplink_relevance": 2.0,
         "note": "fallback=no_match",
-        "latency_ms": 79.4,
+        "latency_ms": 124.6,
         "cost_usd": 0
       }
     ],
@@ -192,28 +192,28 @@
       "embed_model": "BAAI/bge-small-en-v1.5",
       "paraphrases": 101,
       "negatives": 12,
-      "keys": 1456,
+      "keys": 1489,
       "plans": 70,
       "by_tau": {
         "0.80": {
-          "hit_rate_pct": 80.2,
-          "any_hit_pct": 88.1,
-          "false_hits": 8,
-          "false_hit_rate_pct": 9.0,
+          "hit_rate_pct": 78.2,
+          "any_hit_pct": 90.1,
+          "false_hits": 12,
+          "false_hit_rate_pct": 13.2,
           "negatives_hit": 0
         },
         "0.85": {
-          "hit_rate_pct": 59.4,
-          "any_hit_pct": 63.4,
-          "false_hits": 4,
-          "false_hit_rate_pct": 6.2,
+          "hit_rate_pct": 57.4,
+          "any_hit_pct": 64.4,
+          "false_hits": 7,
+          "false_hit_rate_pct": 10.8,
           "negatives_hit": 0
         },
         "0.90": {
           "hit_rate_pct": 35.6,
-          "any_hit_pct": 36.6,
-          "false_hits": 1,
-          "false_hit_rate_pct": 2.7,
+          "any_hit_pct": 38.6,
+          "false_hits": 3,
+          "false_hit_rate_pct": 7.7,
           "negatives_hit": 0
         }
       }
@@ -222,28 +222,28 @@
       "embed_model": "sentence-transformers/all-MiniLM-L6-v2",
       "paraphrases": 101,
       "negatives": 12,
-      "keys": 1456,
+      "keys": 1489,
       "plans": 70,
       "by_tau": {
         "0.80": {
-          "hit_rate_pct": 44.6,
-          "any_hit_pct": 47.5,
+          "hit_rate_pct": 43.6,
+          "any_hit_pct": 46.5,
           "false_hits": 3,
-          "false_hit_rate_pct": 6.2,
+          "false_hit_rate_pct": 6.4,
           "negatives_hit": 0
         },
         "0.85": {
-          "hit_rate_pct": 31.7,
-          "any_hit_pct": 33.7,
-          "false_hits": 2,
-          "false_hit_rate_pct": 5.9,
+          "hit_rate_pct": 28.7,
+          "any_hit_pct": 31.7,
+          "false_hits": 3,
+          "false_hit_rate_pct": 9.4,
           "negatives_hit": 0
         },
         "0.90": {
-          "hit_rate_pct": 12.9,
+          "hit_rate_pct": 11.9,
           "any_hit_pct": 12.9,
-          "false_hits": 0,
-          "false_hit_rate_pct": 0.0,
+          "false_hits": 1,
+          "false_hit_rate_pct": 7.7,
           "negatives_hit": 0
         }
       }
@@ -251,54 +251,54 @@
     "dual_lookup": {
       "tau": 0.85,
       "n": 101,
-      "raw_hit_pct": 54.5,
-      "zero_llm_hit_pct": 84.2,
-      "dual_hit_pct": 86.1,
+      "raw_hit_pct": 51.5,
+      "zero_llm_hit_pct": 80.2,
+      "dual_hit_pct": 85.1,
       "correct_by_tier": {
-        "article": 30,
-        "canonical": 2,
-        "raw": 55
+        "article": 29,
+        "canonical": 5,
+        "raw": 52
       },
       "wrong_by_tier": {
-        "raw": 3,
+        "raw": 5,
         "article": 2,
-        "canonical": 1
+        "canonical": 2
       },
-      "wrong_hits": 6,
+      "wrong_hits": 9,
       "negatives": 12,
       "negatives_hit": 0,
-      "false_hit_rate_pct": 6.5
+      "false_hit_rate_pct": 9.5
     }
   },
   "latency": {
     "exact_hit": {
       "n": 95,
-      "p50": 14.6,
-      "p95": 22.8
+      "p50": 13.4,
+      "p95": 20.6
     },
     "paraphrase_hit_raw": {
-      "n": 90,
-      "p50": 14.4,
-      "p95": 24.1,
+      "n": 88,
+      "p50": 13.9,
+      "p95": 21.8,
       "key_tier": {
-        "n": 58,
-        "p95": 15.7
+        "n": 57,
+        "p95": 16.7
       },
       "article_tier": {
-        "n": 32,
-        "p95": 25.5
+        "n": 31,
+        "p95": 24.5
       }
     },
     "paraphrase_hit_canonical": {
-      "n": 2,
-      "tried": 11,
-      "p50": 34.9,
-      "p95": 35.1
+      "n": 3,
+      "tried": 13,
+      "p50": 31.3,
+      "p95": 37.4
     },
     "cold": {
       "n": 30,
-      "p50": 253.8,
-      "p95": 428.5,
+      "p50": 234.4,
+      "p95": 377.4,
       "llm_calls_mean": 0,
       "cost_usd_mean": 0,
       "tokens_in_mean": 0,
@@ -307,11 +307,11 @@
         "rules-v1 (deterministic, no LLM)"
       ],
       "stage_p50_ms": {
-        "embed_ms": 13.9,
-        "enrich_ms": 0.2,
-        "retrieve_ms": 62.0,
-        "extract_ms": 0.4,
-        "deeplink_ms": 179.6
+        "embed_ms": 12.8,
+        "enrich_ms": 0.3,
+        "retrieve_ms": 56.6,
+        "extract_ms": 0.5,
+        "deeplink_ms": 160.8
       }
     },
     "cache_hit_llm_calls": 0
@@ -322,7 +322,7 @@
       "exact_screen_pct": 100.0,
       "parent_or_dummy_pct": 0.0,
       "mean_relevance": 2.0,
-      "p95_ms_per_action": 100.9,
+      "p95_ms_per_action": 101.2,
       "cost_usd_per_action": 0.0
     },
     "bm25": {
@@ -335,10 +335,10 @@
     },
     "dense": {
       "n": 123,
-      "exact_screen_pct": 65.0,
-      "parent_or_dummy_pct": 19.5,
-      "mean_relevance": 1.496,
-      "p95_ms_per_action": 12.5,
+      "exact_screen_pct": 63.4,
+      "parent_or_dummy_pct": 21.1,
+      "mean_relevance": 1.48,
+      "p95_ms_per_action": 11.1,
       "cost_usd_per_action": 0.0
     },
     "llm": {
@@ -354,7 +354,7 @@
     "rules": {
       "mean_step_accuracy": 3.0,
       "mean_deeplink_relevance": 2.0,
-      "p95_latency_ms": 412.6,
+      "p95_latency_ms": 311.5,
       "mean_cost_usd": 0
     },
     "pointer": {
@@ -395,8 +395,5 @@
     "file": "bench/report_llm_run.json",
     "generated": "2026-09-29T23:33:50"
   },
-  "bench_seconds": 743.5,
-  "limitations": [
-    "**No-match log (bench/cluster_nomatch.py).** 14 distinct no-match queries were logged during the run: the 10 `queries.json` complaints with no SIIS coverage (Galaxy Watch sync, WhatsApp transfer, repair price, account sign-in, S Pen, eSIM, DeX, Wallet, bootloader, water damage), each its own theme, plus 4 complaints whose topic IS covered but that the conservative gate rejected ('phone is tapping things on its own', and three held-out paraphrases seen on the cold path). With this few distinct gaps the clustering yields singleton themes; it is meant for production-volume logs."
-  ]
+  "bench_seconds": 720.5
 }

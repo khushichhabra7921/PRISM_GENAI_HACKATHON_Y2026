@@ -1,0 +1,82 @@
+{
+  "query": "My TechCorp Nexa A14/A15 screen suddenly went completely black on its own after about a month of use. It doesn't display anything, even when I try to turn it on.",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Blank Display Troubleshooting",
+        "title": "Blank display fix",
+        "score": 0.74,
+        "actions": [
+          {
+            "actionName": "Check for Physical Damage and Liquid Exposure",
+            "description": "It will rule out hardware damage",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Carefully inspect your phone or tablet, charger, and USB cable for any physical damage or signs of liquid exposure.",
+                  "Remove any cases or accessories that might be covering the charging port or buttons.",
+                  "Examine the USB connections for any corrosion or bent pins.",
+                  "Turn off your phone or tablet.",
+                  "Insert the ejector tool into the small hole next to the SIM/MicroSD tray to eject the tray.",
+                  "Shine a flashlight into the SIM/MicroSD slot."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Charge the Device",
+            "description": "It will charge the device",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Connect your phone or tablet to its appropriate charger.",
+                  "Let it charge for at least 1 hour."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Attempt to Power On",
+            "description": "It will attempt to power on",
+            "stepGroups": [
+              {
+                "steps": [
+                  "After charging, disconnect the phone or tablet from the charger.",
+                  "Try to turn it on by pressing and holding the Power button (or Side button) for 15 to 20 seconds.",
+                  "Turn off your device.",
+                  "Reconnect it to the appropriate charger until it is fully charged.",
+                  "Contact the Customer Support Center for further assistance."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Force a Restart",
+            "description": "It will force the phone to restart",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Press and hold both the Power button (or Side button) and the Volume down button simultaneously for at least 20 seconds.",
+                  "If your device has a removable battery, remove the battery for 60 seconds.",
+                  "Reinsert it."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "critical"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,30 +1,37 @@
-"""Generate the SYNTHETIC starter kit in data/ (seeded, reproducible).
+"""Generate the SYNTHETIC regression kit (seeded, reproducible).
 
     python scripts/make_synthetic_kit.py
 
-Replace the files in data/ with the official kit later; only app/data_loader.py
-knows the raw formats.
+Writes data/synthetic/ (60 SIIS articles, 106 labelled queries, held-out paraphrases, 5 gold samples) and the
+Settings deeplink catalog data/deeplinks.json. The official kit (data/input.txt, data/siis_responses.json,
+data/sample_output.json, data/schema.py) ships no catalog, so the catalog stays synthetic: it uses the official
+URI scheme (voiceassist://masked/act|val/<10 hex>) and includes the one real entry from data/sample_output.json.
+Brand names are written as TechCorp / Nexa, as in the official kit.
 """
 from __future__ import annotations
 
 import json
 import random
 import re
-import string
 import sys
 from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from kit_catalog import CATALOG, INTENTIONALLY_MISSING  # noqa: E402
+from kit_catalog import CATALOG, INTENTIONALLY_MISSING, OFFICIAL  # noqa: E402
 from kit_queries import HELDOUT, HELDOUT_NEGATIVES, QUERIES, VARIATIONS  # noqa: E402
 from kit_siis import SIIS  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "data"
+DATA = ROOT / "data" / "synthetic"
+CATALOG_FILE = ROOT / "data" / "deeplinks.json"
 SEED = 2026
 META = {"synthetic": True, "generator": "scripts/make_synthetic_kit.py", "seed": SEED,
         "note": "Synthetic data written from general One UI knowledge; not official Samsung content."}
+CATALOG_META = {**META, "note": "Synthetic Settings catalog (the official kit ships none). Official URI scheme; "
+                                "entries with a 'source' field are copied from the official data/sample_output.json."}
+BRANDS = [(re.compile(r"\bSamsung\b"), "TechCorp"), (re.compile(r"\bGalaxy\b"), "Nexa")]
+HEX = "0123456789abcdef"
 
 PROPER = ["Always On Display", "Dolby Atmos", "RAM Plus", "Quick Share", "Game Booster", "Google Play",
           "Samsung Keyboard", "Wi-Fi", "Bluetooth", "NFC", "Access Point Names", "Private DNS", "Camera",
@@ -51,22 +58,30 @@ def _describe(path: list[str], ctype: str) -> tuple[str, str]:
 
 def build_deeplinks() -> list[dict]:
     rng = random.Random(SEED)
-    alphabet = string.ascii_lowercase + string.digits
     seen: set[str] = set()
+
+    def token() -> str:
+        t = ""
+        while not t or t in seen:
+            t = "".join(rng.choice(HEX) for _ in range(10))
+        seen.add(t)
+        return t
+
     out = []
     for path_s, ctype, cna, vkey, msg in CATALOG:
         path = [p.strip() for p in path_s.split(">")]
-        token = ""
-        while not token or token in seen:
-            token = "".join(rng.choice(alphabet) for _ in range(6))
-        seen.add(token)
+        act = token()
         desc, default_msg = _describe(path, ctype)
         validation = None
-        if vkey:
-            validation = {"key": vkey, "resultType": "integer" if ctype == "slider" else "boolean"}
-        out.append({"deeplink": f"bixby://masked/act/{token}", "description": desc,
-                    "message": msg or default_msg, "cna_description": cna, "controlType": ctype,
-                    "path": path, "validation": validation})
+        if vkey:  # validation deeplink: read `key` after the action to confirm it worked
+            validation = {"deeplink": f"voiceassist://masked/val/{token()}", "key": vkey,
+                          "resultType": "integer" if ctype == "slider" else "boolean"}
+        entry = {"deeplink": f"voiceassist://masked/act/{act}", "description": desc,
+                 "message": msg or default_msg, "cna_description": cna, "controlType": ctype,
+                 "originalType": "onURL", "path": path, "validation": validation}
+        if path_s in OFFICIAL:
+            entry.update(OFFICIAL[path_s])
+        out.append(entry)
     return out
 
 
@@ -205,12 +220,16 @@ def build_samples(deeplinks: list[dict], siis_by_id: dict) -> dict[str, dict]:
         else:
             actions = []
             for an, desc, cat, steps, dl_path in g["actions"]:
-                group = {"steps": steps, "validationDeeplink": None, "actionableDeeplink": None}
+                group = {"steps": steps, "actionableDeeplink": None, "validationDeeplink": None}
                 if dl_path:
                     d = by_path[dl_path]
                     group["actionableDeeplink"] = {"deeplink": d["deeplink"], "description": d["description"],
-                                                   "message": d["message"]}
-                actions.append({"actionName": an, "description": desc, "category": cat, "stepGroups": [group]})
+                                                   "message": d["message"], "originalType": d["originalType"]}
+                    v, joined = d.get("validation"), " ".join(steps).lower()
+                    if v and v["resultType"] == "boolean" and re.search(r"\bturn (?:it )?on\b", joined):
+                        group["validationDeeplink"] = {"deeplink": v["deeplink"], "key": v["key"],
+                                                       "resultType": "boolean", "condition": "equal", "value": "True"}
+                actions.append({"actionName": an, "description": desc, "stepGroups": [group], "category": cat})
             contexts = [{"goal": f"Follow these steps to perform this {g['topic']} Troubleshooting",
                          "title": g["title"], "score": g["score"], "actions": actions}]
         samples[name] = {
@@ -225,9 +244,15 @@ def build_samples(deeplinks: list[dict], siis_by_id: dict) -> dict[str, dict]:
     return samples
 
 
+def _rebrand(text: str) -> str:
+    for pat, new in BRANDS:
+        text = pat.sub(new, text)
+    return text
+
+
 def _dump(path: Path, obj) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(obj, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    path.write_text(_rebrand(json.dumps(obj, indent=2, ensure_ascii=False)) + "\n", encoding="utf-8")
 
 
 def main() -> None:
@@ -246,7 +271,7 @@ def main() -> None:
     heldout = [{"query_id": by_text[q]["id"], "query": q, "siis_id": by_text[q]["siis_id"], "paraphrases": ps}
                for q, ps in HELDOUT.items()]
 
-    _dump(DATA / "deeplinks.json", {"metadata": META, "deeplinks": deeplinks})
+    _dump(CATALOG_FILE, {"metadata": CATALOG_META, "deeplinks": deeplinks})
     _dump(DATA / "siis_responses.json", {"metadata": META, "responses": siis})
     _dump(DATA / "queries.json", {"metadata": META, "queries": queries})
     _dump(DATA / "paraphrases_heldout.json", {"metadata": {**META, "use": "cache benchmarking only; never pre-warm"},

@@ -24,9 +24,10 @@ class CacheHit:
 
 
 class SemanticCache:
-    def __init__(self, directory: Path, dim: int, tau: float):
+    def __init__(self, directory: Path, dim: int, tau: float, fingerprint: str = ""):
         self.dir = Path(directory)
         self.dim = dim
+        self.fingerprint = fingerprint  # kit + catalog identity: a cache built from other data is never loaded
         self.tau = tau
         self._lock = threading.Lock()
         self.index = faiss.IndexFlatIP(dim)
@@ -45,7 +46,8 @@ class SemanticCache:
         if idx_f.exists() and store_f.exists():
             store = json.loads(store_f.read_text(encoding="utf-8"))
             index = faiss.read_index(str(idx_f))
-            if index.d == self.dim and index.ntotal == len(store["keys"]):
+            same_kit = store.get("fingerprint", "") == self.fingerprint
+            if same_kit and index.d == self.dim and index.ntotal == len(store["keys"]):
                 self.index, self.keys, self.key_plan, self.plans = index, store["keys"], store["key_plan"], store["plans"]
 
     def save(self) -> None:
@@ -53,7 +55,8 @@ class SemanticCache:
             self.dir.mkdir(parents=True, exist_ok=True)
             idx_f, store_f = self._files
             faiss.write_index(self.index, str(idx_f))
-            store_f.write_text(json.dumps({"keys": self.keys, "key_plan": self.key_plan, "plans": self.plans},
+            store_f.write_text(json.dumps({"fingerprint": self.fingerprint, "keys": self.keys,
+                                           "key_plan": self.key_plan, "plans": self.plans},
                                           ensure_ascii=False), encoding="utf-8")
 
     def clear(self) -> None:
@@ -75,6 +78,22 @@ class SemanticCache:
     def lookup(self, vec: np.ndarray, tau: Optional[float] = None) -> Optional[CacheHit]:
         hit = self.top(vec)
         return hit if hit and hit.score >= (self.tau if tau is None else tau) else None
+
+    def lookup_for_article(self, vec: np.ndarray, digest: str, tau: Optional[float] = None,
+                           k: int = 64) -> Optional[CacheHit]:
+        """Key tier for requests that carry their own SIIS article: the closest key at or above τ among plans
+        grounded in exactly that article (by content hash). A plan from another article is never served."""
+        if self.index.ntotal == 0:
+            return None
+        tau = self.tau if tau is None else tau
+        scores, ids = self.index.search(vec.reshape(1, -1).astype("float32"), min(k, self.index.ntotal))
+        for sc, i in zip(scores[0], ids[0]):
+            if i < 0 or sc < tau:
+                break
+            pid = self.key_plan[int(i)]
+            if self.plans[pid].get("siis_hashes") == [digest]:
+                return CacheHit(pid, self.plans[pid], float(sc), self.keys[int(i)])
+        return None
 
     def best_plan_for_article(self, vec: np.ndarray, article_id: str, k: int = 64) -> Optional[CacheHit]:
         """Among cached single-article plans grounded in `article_id`, the one whose key is closest to `vec`."""

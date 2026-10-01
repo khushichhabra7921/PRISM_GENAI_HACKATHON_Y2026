@@ -3,7 +3,7 @@
     "synthetic": true,
     "generator": "scripts/make_synthetic_kit.py",
     "seed": 2026,
-    "note": "Synthetic data written from general One UI knowledge; not official Samsung content."
+    "note": "Synthetic data written from general One UI knowledge; not official TechCorp content."
   },
   "input": {
     "query": "The mobile phone swipe navigation moves up or down instead of left or right after downloading an app",
@@ -16,13 +16,13 @@
       "Ever since I installed a new app, swiping on my phone scrolls up and down instead of going left or right.",
       "Why does my phone swipe vertically when I try to swipe sideways after downloading an app?",
       "phone swipe gestures wrong direction after app install",
-      "I downloaded an application yesterday and now the swipe navigation on my Galaxy moves up or down when it should go sideways.",
+      "I downloaded an application yesterday and now the swipe navigation on my Nexa moves up or down when it should go sideways.",
       "Screen navigation gestures are misbehaving after an app download; horizontal swipes register as vertical.",
       "My phone's gesture navigation got messed up by a new app and swipes go the wrong way.",
       "What should I do when swiping left or right on my phone scrolls the screen up and down instead?",
       "Swipe navigation broken after installing app.",
       "This is so annoying - I can't swipe sideways anymore since installing that app, everything just scrolls vertically.",
-      "Navigation swipes on my Samsung phone respond in the wrong axis after a recent app installation."
+      "Navigation swipes on my TechCorp phone respond in the wrong axis after a recent app installation."
     ],
     "response": {
       "contexts": [
@@ -34,7 +34,6 @@
             {
               "actionName": "Configure Navigation Bar Settings",
               "description": "It will let you choose navigation type",
-              "category": "auto",
               "stepGroups": [
                 {
                   "steps": [
@@ -44,14 +43,16 @@
                     "Select your preferred navigation type between Buttons and Swipe gestures.",
                     "Optionally toggle on Gesture hint to display guidance lines at the bottom of the screen."
                   ],
-                  "validationDeeplink": null,
                   "actionableDeeplink": {
-                    "deeplink": "bixby://masked/act/bbr840",
+                    "deeplink": "voiceassist://masked/act/756ac85e20",
                     "description": "Open navigation bar settings under Display",
-                    "message": "Choose navigation type in Display settings"
-                  }
+                    "message": "Choose navigation type in Display settings",
+                    "originalType": "onURL"
+                  },
+                  "validationDeeplink": null
                 }
-              ]
+              ],
+              "category": "auto"
             }
           ]
         }

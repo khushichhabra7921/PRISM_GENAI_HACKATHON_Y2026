@@ -71,6 +71,17 @@ def _known(w: str, vs: set[str]) -> bool:
     return any(s in vs for s in stems if len(s) >= 3)
 
 
+ENUM_RE = re.compile(r'(?:^|(?<=[.!?"\s]))\s*\d{1,2}[.)]\s+(?=["\'A-Za-z])')
+
+
+def clean_query(q: str) -> str:
+    """Complaints may arrive as a numbered list of quoted parts:
+    '1. "My screen is cracked." 2. "The touch doesn\'t work."' -> 'My screen is cracked. The touch doesn\'t work.'"""
+    q = ENUM_RE.sub(" ", q or "")
+    q = re.sub(r'["“”]', "", q)
+    return re.sub(r"\s+", " ", q).strip()
+
+
 def normalise(q: str) -> str:
     out = []
     vocab = _vocab()
@@ -131,9 +142,9 @@ def rule_variations(query: str, canonical: Optional[str] = None, topic: str = ""
         _typo(lc),
         f"How do I fix it when {lc}?",
         f"What should I do if {lc}?",
-        f"Galaxy phone problem: {kw}",
+        f"Nexa phone problem: {kw}",
         f"{topic or guess_topic(c)} issue - {kw}",
-        f"Need help, {lc} on my Samsung",
+        f"Need help, {lc} on my TechCorp phone",
         f"Why is this happening: {lc}?",
     ]
     seen, out = {query.lower().strip()}, []
@@ -167,7 +178,7 @@ SCHEMA = {
     "required": ["canonical_query", "topic", "intent", "symptoms", "query_variations"],
 }
 
-PROMPT = """Rewrite this Samsung Galaxy phone complaint. Do NOT suggest any fixes, steps, settings paths or links.
+PROMPT = """Rewrite this TechCorp Nexa phone or tablet complaint. Do NOT suggest any fixes, steps, settings paths or links.
 Complaint: "{q}"
 Return JSON:
 - canonical_query: one short, clear sentence describing the problem (fix slang and typos).

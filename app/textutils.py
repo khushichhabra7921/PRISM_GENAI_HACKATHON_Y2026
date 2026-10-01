@@ -10,7 +10,7 @@ URL_RE = re.compile(
     r"|\b[\w-]+(?:\.[\w-]+)*\.(?:com|net|org|in|co|io|ly|info|biz|me|app|dev|uk|us)(?:/\S*)?\b",
     re.IGNORECASE,
 )
-DEEPLINK_RE = re.compile(r"bixby://\S+", re.IGNORECASE)
+DEEPLINK_RE = re.compile(r"(?:voiceassist|bixby)://\S+", re.IGNORECASE)
 
 
 def has_url(text: str) -> bool:
@@ -35,7 +35,7 @@ SMALL_WORDS = {"a", "an", "the", "and", "or", "but", "nor", "of", "to", "in", "o
                "from", "as", "into", "via", "vs", "per", "up", "off", "out"}
 # Terms that keep their own casing inside sentence-case titles.
 PROPER_TERMS = {"wi-fi", "bluetooth", "gps", "ram", "nfc", "aod", "apn", "sim", "usb", "5g", "lte", "hdr", "dns",
-                "galaxy", "samsung", "one", "ui", "dolby", "atmos", "google", "play", "store", "dex", "s", "pen",
+                "galaxy", "samsung", "techcorp", "nexa", "one", "ui", "tv", "pc", "hdmi", "smartthings", "dolby", "atmos", "google", "play", "store", "dex", "s", "pen",
                 "safe", "mode", "always", "on", "display", "hotspot", "sd", "hz"}
 
 
@@ -117,7 +117,8 @@ def fit_description(text: str) -> str:
     if rest:
         rest[0] = rest[0].lower() if not rest[0].isupper() else rest[0]
     rest = rest[:5]
-    while len(rest) > 3 and rest[-1].lower() in _TRAILING_STOP:
+    while len(rest) > 3 and rest[-1].lower() in _TRAILING_STOP and not (
+            rest[-1].lower() in PARTICLES and rest[-2].lower() in PHRASAL_VERBS):  # keep "power on", "back up"
         rest = rest[:-1]
     out = ["It", "will"] + rest
     pad = iter(["help", "fix", "the", "issue"] if not rest else DESC_PAD)
@@ -126,8 +127,8 @@ def fit_description(text: str) -> str:
     return " ".join(out)
 
 
-def is_valid_description(text: str) -> bool:
-    return text.startswith("It will") and 5 <= len(words(text)) <= 7 and not has_url(text)
+def is_valid_description(text: str, max_words: int = 7) -> bool:
+    return text.startswith("It will") and 5 <= len(words(text)) <= max_words and not has_url(text)
 
 
 # --- sentences ---------------------------------------------------------------------------

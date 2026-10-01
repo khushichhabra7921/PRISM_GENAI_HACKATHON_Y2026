@@ -48,7 +48,8 @@ def _strings(obj) -> Iterable[str]:
 
 
 def check_record(record: dict, catalog_uris: set[str]) -> list[Violation]:
-    """Run all 11 checks on {"query", "query_variations", "response": {"contexts": [...]}}."""
+    """Run all 11 checks on {"query", "query_variations", "response": {"contexts": [...]}}.
+    `catalog_uris` holds every actionable and validation deeplink of the catalog."""
     v: list[Violation] = []
     resp = record.get("response", {})
     try:
@@ -72,7 +73,7 @@ def check_record(record: dict, catalog_uris: set[str]) -> list[Violation]:
             aat = f"{at}.actions[{ai}]"
             if not is_title_case(a["actionName"]):
                 v.append(Violation("action_name_case", aat, a["actionName"]))
-            if not is_valid_description(a["description"]):
+            if not is_valid_description(a["description"], SETTINGS.desc_max_words):
                 v.append(Violation("description_format", aat, a["description"]))
             cat = a.get("category") or "manual"
             if cat not in CAT_ORDER:
@@ -94,6 +95,8 @@ def check_record(record: dict, catalog_uris: set[str]) -> list[Violation]:
     for s in _strings({"q": record.get("query_variations", []), "r": resp}):
         if has_url(s):
             v.append(Violation("zero_urls", "record", s[:80]))
+    if "query_variations" not in record:  # the official contract (sample_output.json) has no variations field
+        return v
     qv = record.get("query_variations", [])
     if not (8 <= len(qv) <= 10) or len({q.strip().lower() for q in qv}) != len(qv):
         v.append(Violation("query_variations", "record", f"{len(qv)} variations"))
@@ -162,7 +165,7 @@ def fix_record(record: dict, catalog_uris: set[str], pad: Optional[Callable[[str
                            (dl["deeplink"] not in catalog_uris and dl["deeplink"] != SETTINGS.dummy_deeplink)):
                     sg["actionableDeeplink"] = None
                 vd = sg.get("validationDeeplink")
-                if vd and vd["deeplink"] not in catalog_uris:
+                if vd and (vd["deeplink"] not in catalog_uris or a["category"] == "manual"):
                     sg["validationDeeplink"] = None
                 for key in ("actionableDeeplink",):
                     d = sg.get(key)

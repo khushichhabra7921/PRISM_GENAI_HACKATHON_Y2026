@@ -1,0 +1,46 @@
+{
+  "query": "My TechCorp Nexa Fold X1 screen flickers and goes blank whenever I open it, so I can't see anything or access the settings, which stops me from using the phone.",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Screen Flicker Troubleshooting",
+        "title": "Screen flicker fix",
+        "score": 0.5,
+        "actions": [
+          {
+            "actionName": "Visit a Service Center",
+            "description": "It will get the hardware checked",
+            "stepGroups": [
+              {
+                "steps": [
+                  "If your device has sustained any damage, visit a TechCorp walk-in service center.",
+                  "Alternatively, schedule a repair service online."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Increase the Lighting",
+            "description": "It will increase the lighting",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Increase the lighting in your scene.",
+                  "Disable Super steady mode.",
+                  "Adjust shutter speed in Pro Video mode.",
+                  "Try adjusting the shutter speed to a slower setting until the flickering disappears."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          }
+        ]
+      }
+    ]
+  }
+}

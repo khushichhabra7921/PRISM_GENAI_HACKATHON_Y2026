@@ -1,0 +1,67 @@
+{
+  "query": "My tablet screen stays completely blank when I try to use Data Transfer to scan the QR code for transferring data from my Nexa X1 phone, so the transfer can't proceed.",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Secure Folder Transfer Troubleshooting",
+        "title": "Secure folder transfer",
+        "score": 0.72,
+        "actions": [
+          {
+            "actionName": "Place the Devices",
+            "description": "It will place the devices",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Wireless connection: If you are using a wireless transfer, place the devices within 4 inches of each other.",
+                  "Wired connection: If you are using a wired transfer, plug one end of the USB cable into the charging port of the new phone.",
+                  "Connect the other end to the charging port of the old phone."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Open Data Transfer App",
+            "description": "It will open data transfer app",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Swipe up on the Home screen to access the Apps screen.",
+                  "Tap the Search field.",
+                  "Enter and select Data Transfer to open the app.",
+                  "Alternatively, navigate to the TechCorp folder on the Apps screen.",
+                  "Open Data Transfer from there.",
+                  "On the new device, tap Receive on this phone.",
+                  "On the old device, tap Send from this phone."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Select Transfer Method",
+            "description": "It will select transfer method",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Wireless transfer: On the new device, tap Nexa/Android.",
+                  "Tap Wireless transfer.",
+                  "On the old device, tap Wireless data transfer.",
+                  "Scan QR code displayed on new phone."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          }
+        ]
+      }
+    ]
+  }
+}

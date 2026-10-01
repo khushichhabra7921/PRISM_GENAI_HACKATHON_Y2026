@@ -1,0 +1,43 @@
+{
+  "query": "1. \"My Nexa Fold X1 screen is cracked again right where it folds.\" 2. \"The touch doesn't work on certain parts of the screen.\" 3. \"I can hardly see anything on the display.\"",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Cracked Screen Troubleshooting",
+        "title": "Cracked screen fix",
+        "score": 0.57,
+        "actions": [
+          {
+            "actionName": "Schedule a Repair Service",
+            "description": "It will book a device repair",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Schedule a walk-in or mail-in repair to fix your cracked screen using Genuine Parts.",
+                  "Visit Authorized Repair Services for more information."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Visit a Service Center",
+            "description": "It will get the hardware checked",
+            "stepGroups": [
+              {
+                "steps": [
+                  "For fast, quality repairs you can trust and rely on, visit a local Authorized Service Center."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          }
+        ]
+      }
+    ]
+  }
+}

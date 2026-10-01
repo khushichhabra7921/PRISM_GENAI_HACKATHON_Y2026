@@ -3,7 +3,7 @@
     "synthetic": true,
     "generator": "scripts/make_synthetic_kit.py",
     "seed": 2026,
-    "note": "Synthetic data written from general One UI knowledge; not official Samsung content."
+    "note": "Synthetic data written from general One UI knowledge; not official TechCorp content."
   },
   "input": {
     "query": "My camera photos come out blurry",
@@ -20,7 +20,7 @@
       "The camera on my device produces unfocused images.",
       "seriously every pic I take is blurry",
       "camra blurry pics",
-      "How do I fix blurry pictures on my Galaxy camera?",
+      "How do I fix blurry pictures on my Nexa camera?",
       "Photos look fuzzy and not sharp."
     ],
     "response": {
@@ -33,7 +33,6 @@
             {
               "actionName": "Turn On Scene Optimizer",
               "description": "It will improve colour and exposure",
-              "category": "auto",
               "stepGroups": [
                 {
                   "steps": [
@@ -42,61 +41,68 @@
                     "Tap on Scene optimizer.",
                     "Turn it on."
                   ],
-                  "validationDeeplink": null,
                   "actionableDeeplink": {
-                    "deeplink": "bixby://masked/act/c73isp",
+                    "deeplink": "voiceassist://masked/act/2bd1806e2a",
                     "description": "Turn scene optimizer on or off in Camera settings",
-                    "message": "Toggle scene optimizer"
+                    "message": "Toggle scene optimizer",
+                    "originalType": "onURL"
+                  },
+                  "validationDeeplink": {
+                    "deeplink": "voiceassist://masked/val/d20213a989",
+                    "key": "scene_optimizer_enabled",
+                    "resultType": "boolean",
+                    "condition": "equal",
+                    "value": "True"
                   }
                 }
-              ]
+              ],
+              "category": "auto"
             },
             {
               "actionName": "Clean the Camera Lens",
               "description": "It will remove smudges from lens",
-              "category": "manual",
               "stepGroups": [
                 {
                   "steps": [
                     "Clean the camera lens with a soft microfiber cloth."
                   ],
-                  "validationDeeplink": null,
-                  "actionableDeeplink": null
+                  "actionableDeeplink": null,
+                  "validationDeeplink": null
                 }
-              ]
+              ],
+              "category": "manual"
             },
             {
               "actionName": "Remove the Case",
               "description": "It will uncover the camera lens",
-              "category": "manual",
               "stepGroups": [
                 {
                   "steps": [
                     "Remove any case or lens protector that covers the camera."
                   ],
-                  "validationDeeplink": null,
-                  "actionableDeeplink": null
+                  "actionableDeeplink": null,
+                  "validationDeeplink": null
                 }
-              ]
+              ],
+              "category": "manual"
             },
             {
               "actionName": "Tap to Focus",
               "description": "It will sharpen focus on subject",
-              "category": "manual",
               "stepGroups": [
                 {
                   "steps": [
                     "Tap the subject on the preview screen to focus before taking the picture."
                   ],
-                  "validationDeeplink": null,
-                  "actionableDeeplink": null
+                  "actionableDeeplink": null,
+                  "validationDeeplink": null
                 }
-              ]
+              ],
+              "category": "manual"
             },
             {
               "actionName": "Reset Camera Settings",
               "description": "It will restore default camera settings",
-              "category": "critical",
               "stepGroups": [
                 {
                   "steps": [
@@ -105,14 +111,16 @@
                     "Tap on Reset settings.",
                     "Tap Reset if photos are still blurry."
                   ],
-                  "validationDeeplink": null,
                   "actionableDeeplink": {
-                    "deeplink": "bixby://masked/act/d8wo8z",
+                    "deeplink": "voiceassist://masked/act/022e5416ae",
                     "description": "Open reset settings under Camera settings",
-                    "message": "Go to reset settings in Camera settings"
-                  }
+                    "message": "Go to reset settings in Camera settings",
+                    "originalType": "onURL"
+                  },
+                  "validationDeeplink": null
                 }
-              ]
+              ],
+              "category": "critical"
             }
           ]
         }

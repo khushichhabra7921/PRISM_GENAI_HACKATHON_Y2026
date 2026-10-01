@@ -1,0 +1,169 @@
+{
+  "query": "My TechCorp A15G tablet screen flashes and then goes completely blank whenever I tap to open an email in Gmail, and after it works for a short time it goes blank again.",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Email Server Connection Troubleshooting",
+        "title": "Email server connection",
+        "score": 0.58,
+        "actions": [
+          {
+            "actionName": "Configure Wi-Fi Settings",
+            "description": "It will let you adjust Wi-Fi",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Navigate to and open Settings.",
+                  "Tap on Connections.",
+                  "Tap on Wi-Fi."
+                ],
+                "actionableDeeplink": {
+                  "deeplink": "voiceassist://masked/act/bbc2a299e4",
+                  "description": "Turn Wi-Fi on or off in Connections",
+                  "message": "Manage Wi-Fi networks",
+                  "originalType": "onURL"
+                },
+                "validationDeeplink": null
+              }
+            ],
+            "category": "auto"
+          },
+          {
+            "actionName": "Clear the Email App's Cache and Data",
+            "description": "It will clear the email app's cache",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Navigate to and open Settings.",
+                  "Tap on Apps.",
+                  "Select your email app.",
+                  "Tap Storage.",
+                  "Tap Clear cache."
+                ],
+                "actionableDeeplink": {
+                  "deeplink": "voiceassist://masked/act/2101a400f1",
+                  "description": "Open apps settings",
+                  "message": "Go to apps",
+                  "originalType": "onURL"
+                },
+                "validationDeeplink": null
+              },
+              {
+                "steps": [
+                  "Navigate to and open Settings.",
+                  "Tap on Apps.",
+                  "Select your email app.",
+                  "Tap Storage.",
+                  "Tap Clear data.",
+                  "Tap OK."
+                ],
+                "actionableDeeplink": {
+                  "deeplink": "voiceassist://masked/act/2101a400f1",
+                  "description": "Open apps settings",
+                  "message": "Go to apps",
+                  "originalType": "onURL"
+                },
+                "validationDeeplink": null
+              }
+            ],
+            "category": "auto"
+          },
+          {
+            "actionName": "Check Email Access on a PC",
+            "description": "It will check email access",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Try accessing your email on a personal computer."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Verify Your Phone's Internet Connection",
+            "description": "It will verify your phone's internet connection",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Ensure your phone is connected to a stable Wi-Fi or mobile data network.",
+                  "Swipe down from the top of your phone's screen to open the Quick settings panel.",
+                  "Touch and hold the Wi-Fi icon to check your connection status."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Try Loading a Webpage",
+            "description": "It will try loading a webpage",
+            "stepGroups": [
+              {
+                "steps": [
+                  "To confirm your internet connection is working, try loading a webpage or performing a quick search."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Review Your Email Account Settings",
+            "description": "It will review your email account settings",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Remove and re-add your email account to your phone to apply the new configuration.",
+                  "Before proceeding, make sure you have your email account's username and password readily available."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Contact Your Email Service Provider",
+            "description": "It will check your account server",
+            "stepGroups": [
+              {
+                "steps": [
+                  "If you have followed all the above steps and are still experiencing difficulties with your email connection, contact your email service provider directly for further assistance."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Restart Your Phone in Safe Mode",
+            "description": "It will check for problem apps",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Press and hold the Power button or Side button.",
+                  "If your phone doesn't have a dedicated Power button, swipe down from the top of the screen to open Quick settings.",
+                  "Tap the Power icon.",
+                  "Touch and hold the Power off icon.",
+                  "Tap Safe mode when it appears on the screen.",
+                  "While in Safe mode, check if your email app is still experiencing issues.",
+                  "Uninstall the email app if necessary while in Safe mode.",
+                  "To exit Safe mode, restart your phone normally."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "critical"
+          }
+        ]
+      }
+    ]
+  }
+}

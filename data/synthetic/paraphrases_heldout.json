@@ -3,7 +3,7 @@
     "synthetic": true,
     "generator": "scripts/make_synthetic_kit.py",
     "seed": 2026,
-    "note": "Synthetic data written from general One UI knowledge; not official Samsung content.",
+    "note": "Synthetic data written from general One UI knowledge; not official TechCorp content.",
     "use": "cache benchmarking only; never pre-warm"
   },
   "items": [

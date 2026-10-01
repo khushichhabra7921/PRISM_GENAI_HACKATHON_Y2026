@@ -8,19 +8,25 @@ Modes (SGTE_EXTRACT_MODE):
               source and ungrounded steps are dropped.
   rules       no LLM: deterministic grouping and naming (also the fallback when no LLM is up).
 Neither LLM schema has a deeplink field, so the model cannot emit a URI.
+
+Sectioned (official) articles are parsed per section and paragraph block; app/relevance.py decides which
+blocks of a long, multi-topic article answer the complaint before any grouping happens.
 """
 from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Optional, Union
 
 from rapidfuzz import fuzz
 
 from app.config import SETTINGS
 from app.llm_client import LLMClient, Usage
 from app.order import order_actions
-from app.steps import (DraftAction, Unit, categorise, find_paths, group_units, name_action, parse_units)
+from app.relevance import BlockScore, select_blocks
+from app.siis_text import Article, parse_article
+from app.steps import (DraftAction, Unit, categorise, group_units, name_action, name_actions, parse_blocks,
+                       parse_units)
 from app.textutils import as_step, scrub_step_text, sentence_case, split_sentences, title_case
 
 NAV_RE = re.compile(r"^(?:Navigate to and open (.+)|Tap on (.+)|Open the (.+) app|Swipe down .* open the (.+))\.$")
@@ -36,6 +42,13 @@ class Extraction:
     dropped_steps: int = 0
     viable: bool = True
     note: str = ""
+    relevance: list[BlockScore] = field(default_factory=list)
+    dropped_actions: int = 0
+
+    @property
+    def best_relevance(self) -> Optional[tuple[float, float]]:
+        kept = [b for b in self.relevance if b.kept]
+        return (max(b.ce for b in kept), max(b.dense for b in kept)) if kept else None
 
 
 # ------------------------------------------------------------------ grounding
@@ -51,15 +64,72 @@ def ground_score(step: str, source: str, sentences: list[str]) -> float:
     return max((fuzz.token_set_ratio(s, x.lower()) for x in sentences), default=0.0)
 
 
+# ------------------------------------------------------------------ goal topic / title
 _TRAILING_FILLER = {"in", "on", "of", "the", "a", "an", "to", "for", "with", "and", "or", "after", "while", "not",
                     "at", "by", "from"}
+DEVICE_SUFFIX_RE = re.compile(r"\s+(?:on|for|with|from|to|in)\s+(?:a\s+|an\s+|the\s+|your\s+)?(?:TechCorp\s+|Nexa\s+)?"
+                              r"(?:smartphones?|phones?|tablets?|devices?|TVs?|watch(?:es)?)\b.*$", re.IGNORECASE)
+CUT_RE = re.compile(r"\s+(?:if|when|while|after|because|using|so|with|and)\s+.*$", re.IGNORECASE)
+GENERIC_TITLE_RE = re.compile(r"^(?:some )?things to (?:check|try|know)|^(?:faq|troubleshooting|overview)\b", re.I)
+NOMINAL = {"rotate": "Rotation", "respond": "Response", "responding": "Connection", "flickers": "Flicker",
+           "flicker": "Flicker", "charge": "Charging", "charging": "Charging", "connect": "Connection",
+           "connecting": "Connection", "work": "Issue", "working": "Issue", "turn": "Power", "sync": "Sync"}
+LEAD_VERBS = {"use": None, "fix": None, "turn": None, "set": None, "transfer": "Transfer", "access": "Access",
+              "back": "Backup", "mirror": "Mirroring"}
+QUERY_TOPICS = [
+    (r"crack|shatter|smash|broken (?:screen|glass|display)", "Cracked Screen"),
+    (r"flicker|flash", "Screen Flicker"),
+    (r"(?:black|blank|dark|white)\b[^.]{0,40}\b(?:screen|display)|(?:screen|display)\b[^.]{0,60}\b(?:black|blank|dark)"
+     r"|no image|nothing (?:is )?visible", "Blank Screen"),
+    (r"touch|unresponsive|lag|delay", "Touchscreen"),
+    (r"rotat", "Screen Rotation"),
+    (r"distort", "Distorted Display"),
+    (r"transfer", "Data Transfer"),
+    (r"email|gmail", "Email Connection"),
+]
 
 
-def _topic_title(doc_title: str, actions: list[DraftAction]) -> tuple[str, str]:
+def _plain_topic(doc_title: str, actions: list[DraftAction]) -> list[str]:
     base = doc_title or (actions[0].path[-1] if actions and actions[0].path else "Device")
     ws = base.split()[:3]
     while len(ws) > 1 and ws[-1].lower() in _TRAILING_FILLER:  # "Earbuds sound in" -> "Earbuds sound"
         ws = ws[:-1]
+    return ws
+
+
+def official_topic(doc_title: str, query: str = "") -> Optional[list[str]]:
+    """'Blank or black display on a smartphone or tablet' -> Blank Display; 'Email server not responding ...' ->
+    Email Server Connection; 'Use Multi window and App pairs ...' -> Multi Window; a generic title such as
+    'Some things to check first' falls back to the complaint ('screen went black' -> Blank Screen)."""
+    t = DEVICE_SUFFIX_RE.sub("", (doc_title or "").strip())
+    if not t or GENERIC_TITLE_RE.search(t):
+        for pat, topic in QUERY_TOPICS:
+            if re.search(pat, query, re.IGNORECASE):
+                return topic.split()
+        return None
+    t = CUT_RE.sub("", t)
+    m = re.match(r"^(.*?)\s+(?:is\s+|are\s+|does\s+|do\s+|did\s+)?not\s+(\w+)", t, re.IGNORECASE)
+    if m:
+        return m.group(1).split()[:2] + [NOMINAL.get(m.group(2).lower(), "Issue")]
+    m = re.match(r"^(\w+) or \w+ (.+)$", t)  # "Blank or black display" -> "Blank display"
+    if m:
+        t = f"{m.group(1)} {m.group(2)}"
+    ws = t.split()
+    if ws and ws[0].lower() in LEAD_VERBS and len(ws) > 1:
+        noun = LEAD_VERBS[ws[0].lower()]
+        ws = [w for w in ws[1:] if w.lower() not in ("your", "my", "the", "a") and not w.lower().endswith("'s")]
+        ws = ws + [noun] if noun else ws
+    if ws and ws[-1].lower() in NOMINAL:
+        ws[-1] = NOMINAL[ws[-1].lower()]
+    ws = ws[:3]
+    while len(ws) > 1 and ws[-1].lower() in _TRAILING_FILLER:
+        ws = ws[:-1]
+    return ws or None
+
+
+def topic_title(doc_title: str, actions: list[DraftAction], query: str = "", official: bool = False
+                ) -> tuple[str, str]:
+    ws = (official_topic(doc_title, query) if official else None) or _plain_topic(doc_title, actions)
     topic = title_case(" ".join(ws))
     suffix = "settings" if actions and all(a.category == "auto" for a in actions) else "fix"
     title = sentence_case(" ".join(ws if len(ws) >= 3 else ws + [suffix]))
@@ -98,7 +168,8 @@ Return JSON: {{"viable": true, "topic": "...", "title": "...", "actions": [{{"id
 
 def _unit_line(n: int, u: Unit) -> str:
     screen = f"(screen: {' > '.join(u.path)}) " if u.path else ""
-    return f"[{n}] {screen}{u.sentence}"
+    section = f"[{u.heading}] " if u.heading else ""
+    return f"[{n}] {section}{screen}{u.sentence}"
 
 
 def _pointer(query: str, units: list[Unit], llm: LLMClient, usage: Usage, feedback: str) -> Optional[dict]:
@@ -119,7 +190,7 @@ def _from_pointer(data: dict, units: list[Unit]) -> list[DraftAction]:
         used.update(ids)
         groups = group_units([units[i] for i in sorted(ids)])  # rules split mixed screens/categories safely
         for gi, g in enumerate(groups):
-            g.name, g.description = name_action(g)
+            g.name, g.description = name_action(g, use_heading=bool(g.heading))
             if gi == 0 and len(groups) == 1:
                 g.name = str(spec.get("name") or g.name)
                 g.description = str(spec.get("description") or g.description)
@@ -179,11 +250,34 @@ def _from_generative(data: dict, units: list[Unit], source: str, known: set[str]
 
 
 # ------------------------------------------------------------------ entry point
-def extract(text: str, query: str, known: set[str], doc_title: str = "", llm: Optional[LLMClient] = None,
-            usage: Optional[Usage] = None, mode: str = "rules", feedback: list[str] | None = None
-            ) -> Optional[Extraction]:
+def _units(article: Article, query: str, known: set[str]) -> tuple[list[Unit], list[BlockScore]]:
+    if not article.headed:  # one plain paragraph (synthetic kit, legacy string payloads)
+        return parse_units(article.text, known), []
+    units = parse_blocks(article.blocks(), known)
+    scores = select_blocks(query, article, sorted({u.block for u in units}))
+    keep = {s.block for s in scores if s.kept}
+    return [u for u in units if u.block in keep], scores
+
+
+def _cap(actions: list[DraftAction], scores: list[BlockScore], article: Article) -> tuple[list[DraftAction], int]:
+    """A multi-topic article never yields more than rel_max_actions actions: the most relevant ones, source order."""
+    if article.procedural or len(actions) <= SETTINGS.rel_max_actions or not scores:
+        return actions, 0
+    ce = {s.block: s.ce for s in scores}
+    for a in actions:
+        a.relevance = max(ce.get(u.block, -99.0) for u in a.units)
+    keep = set(map(id, sorted(actions, key=lambda a: -a.relevance)[: SETTINGS.rel_max_actions]))
+    return [a for a in actions if id(a) in keep], len(actions) - len(keep)
+
+
+def extract(source: Union[str, Article], query: str, known: set[str], doc_title: str = "",
+            llm: Optional[LLMClient] = None, usage: Optional[Usage] = None, mode: str = "rules",
+            feedback: list[str] | None = None) -> Optional[Extraction]:
     usage = usage or Usage()
-    units = parse_units(text, known)
+    article = source if isinstance(source, Article) else parse_article(doc_title or "", source or "")
+    text = article.text
+    doc_title = doc_title or article.title
+    units, scores = _units(article, query, known)
     if not units:
         return None  # nothing actionable in the source -> caller returns no_match
     fb = ("\nFix these problems from your previous answer: " + "; ".join(feedback)) if feedback else ""
@@ -193,14 +287,16 @@ def extract(text: str, query: str, known: set[str], doc_title: str = "", llm: Op
             data = _pointer(query, units, llm, usage, fb)
             if data is not None:
                 if data.get("viable") is False:
-                    return Extraction("", "", [], "pointer", viable=False, note="LLM judged article not viable")
+                    return Extraction("", "", [], "pointer", viable=False, note="LLM judged article not viable",
+                                      relevance=scores)
                 actions, used_mode = _from_pointer(data, units), "pointer"
         else:
             res = llm.complete_json(GEN_PROMPT.format(query=query, text=text, feedback=fb), GEN_SCHEMA, max_tokens=900)
             usage.add(res)
             if res.ok and res.data is not None:
                 if res.data.get("viable") is False:
-                    return Extraction("", "", [], "generative", viable=False, note="LLM judged article not viable")
+                    return Extraction("", "", [], "generative", viable=False, note="LLM judged article not viable",
+                                      relevance=scores)
                 actions, dropped = _from_generative(res.data, units, text, known)
                 used_mode = "generative"
         if used_mode != "rules":
@@ -208,14 +304,14 @@ def extract(text: str, query: str, known: set[str], doc_title: str = "", llm: Op
                 str((data if mode == "pointer" else res.data).get("title", ""))
     if not actions:  # rules mode, LLM unreachable, or LLM returned nothing usable
         actions = group_units(units)
-        for a in actions:
-            a.name, a.description = name_action(a)
+        name_actions(actions)
         used_mode = "rules" if used_mode == "rules" else f"{used_mode}+rules"
+    actions, capped = _cap(actions, scores, article)
     actions = order_actions(actions)
-    rt, rtitle = _topic_title(doc_title, actions)
+    rt, rtitle = topic_title(doc_title, actions, query, official=article.headed)
     topic = topic if topic and len(topic.split()) <= 4 else rt
     title = title if title and 2 <= len(title.split()) <= 3 else rtitle
     sentences = split_sentences(text)
     grounding = [ground_score(s, text, sentences) for a in actions for s in a.steps]
     return Extraction(topic=topic, title=title, actions=actions, mode=used_mode, grounding=grounding,
-                      dropped_steps=dropped)
+                      dropped_steps=dropped, relevance=scores, dropped_actions=capped)

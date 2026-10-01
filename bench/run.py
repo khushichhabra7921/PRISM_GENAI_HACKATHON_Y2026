@@ -4,7 +4,8 @@
     python bench/run.py --quick            # fewer cold / ablation samples
     SGTE_LLM_PROVIDER=none python bench/run.py   # deterministic path only
 
-Re-runs unchanged on the official kit: drop the files into data/ (see data/README.md).
+Runs on the synthetic regression kit (data/synthetic/: labelled queries, held-out paraphrases, gold samples);
+the official kit (data/input.txt + SIIS payloads) is evaluated by bench/official.py.
 """
 from __future__ import annotations
 
@@ -27,7 +28,7 @@ sys.path.insert(0, str(ROOT))
 
 from app import models  # noqa: E402
 from app.config import SETTINGS  # noqa: E402
-from app.data_loader import load_kit  # noqa: E402
+from app.data_loader import load_synthetic_kit  # noqa: E402
 from app.deeplinks import ActionQuery  # noqa: E402
 from app.enrich import enrich  # noqa: E402
 from app.llm_client import LLMClient, Usage  # noqa: E402
@@ -329,7 +330,7 @@ def main() -> None:
     if args.quick:
         args.cold, args.llm_cases, args.canonical, args.dual, args.profile_n = 10, 3, 5, 30, 3
     t_start = time.time()
-    kit = load_kit()
+    kit = load_synthetic_kit()
     cache_dir = ROOT / "bench" / ".cache"
     s = replace(SETTINGS, cache_dir=cache_dir, log_dir=ROOT / "logs")
     eng = Engine(s, kit=kit)

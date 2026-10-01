@@ -3,7 +3,7 @@
     "synthetic": true,
     "generator": "scripts/make_synthetic_kit.py",
     "seed": 2026,
-    "note": "Synthetic data written from general One UI knowledge; not official Samsung content."
+    "note": "Synthetic data written from general One UI knowledge; not official TechCorp content."
   },
   "input": {
     "query": "My battery is draining really fast even when I'm not using the phone",
@@ -16,7 +16,7 @@
       "My phone battery drains very quickly even when I barely use it.",
       "battery dying so fast",
       "battery drain fast",
-      "Why does my Galaxy lose charge so quickly?",
+      "Why does my Nexa lose charge so quickly?",
       "The battery on my device depletes much faster than it used to.",
       "ugh my battery is dead by lunch every single day",
       "batery draning quick",
@@ -33,7 +33,6 @@
             {
               "actionName": "Check Battery Usage",
               "description": "It will show which apps drain battery",
-              "category": "auto",
               "stepGroups": [
                 {
                   "steps": [
@@ -42,19 +41,20 @@
                     "Tap on Battery usage.",
                     "Check which apps use the most battery."
                   ],
-                  "validationDeeplink": null,
                   "actionableDeeplink": {
-                    "deeplink": "bixby://masked/act/wiyma4",
+                    "deeplink": "voiceassist://masked/act/87d3b50498",
                     "description": "Open battery usage settings under Battery",
-                    "message": "Go to battery usage in Battery"
-                  }
+                    "message": "Go to battery usage in Battery",
+                    "originalType": "onURL"
+                  },
+                  "validationDeeplink": null
                 }
-              ]
+              ],
+              "category": "auto"
             },
             {
               "actionName": "Put Unused Apps to Sleep",
               "description": "It will stop unused apps running",
-              "category": "auto",
               "stepGroups": [
                 {
                   "steps": [
@@ -63,19 +63,26 @@
                     "Tap on Background usage limits.",
                     "Turn on Put unused apps to sleep."
                   ],
-                  "validationDeeplink": null,
                   "actionableDeeplink": {
-                    "deeplink": "bixby://masked/act/h6axex",
+                    "deeplink": "voiceassist://masked/act/06aa3acdec",
                     "description": "Turn put unused apps to sleep on or off in Background usage limits",
-                    "message": "Toggle put unused apps to sleep"
+                    "message": "Toggle put unused apps to sleep",
+                    "originalType": "onURL"
+                  },
+                  "validationDeeplink": {
+                    "deeplink": "voiceassist://masked/val/3bdeacb0bc",
+                    "key": "put_unused_apps_to_sleep",
+                    "resultType": "boolean",
+                    "condition": "equal",
+                    "value": "True"
                   }
                 }
-              ]
+              ],
+              "category": "auto"
             },
             {
               "actionName": "Turn On Power Saving",
               "description": "It will extend your battery life",
-              "category": "auto",
               "stepGroups": [
                 {
                   "steps": [
@@ -84,19 +91,26 @@
                     "Tap on Power saving.",
                     "Turn it on to extend battery life."
                   ],
-                  "validationDeeplink": null,
                   "actionableDeeplink": {
-                    "deeplink": "bixby://masked/act/1w8k7b",
+                    "deeplink": "voiceassist://masked/act/d37b2d28ad",
                     "description": "Turn power saving on or off in Battery",
-                    "message": "Toggle power saving"
+                    "message": "Toggle power saving",
+                    "originalType": "onURL"
+                  },
+                  "validationDeeplink": {
+                    "deeplink": "voiceassist://masked/val/975d818e9d",
+                    "key": "power_saving_enabled",
+                    "resultType": "boolean",
+                    "condition": "equal",
+                    "value": "True"
                   }
                 }
-              ]
+              ],
+              "category": "auto"
             },
             {
               "actionName": "Lower the Refresh Rate",
               "description": "It will reduce display power use",
-              "category": "auto",
               "stepGroups": [
                 {
                   "steps": [
@@ -105,28 +119,30 @@
                     "Tap on Motion smoothness.",
                     "Select Standard to lower power use."
                   ],
-                  "validationDeeplink": null,
                   "actionableDeeplink": {
-                    "deeplink": "bixby://masked/act/yswd1b",
+                    "deeplink": "voiceassist://masked/act/ad1f75e63f",
                     "description": "Open motion smoothness settings under Display",
-                    "message": "Choose screen refresh rate"
-                  }
+                    "message": "Choose screen refresh rate",
+                    "originalType": "onURL"
+                  },
+                  "validationDeeplink": null
                 }
-              ]
+              ],
+              "category": "auto"
             },
             {
               "actionName": "Restart Your Phone",
               "description": "It will clear temporary system glitches",
-              "category": "critical",
               "stepGroups": [
                 {
                   "steps": [
                     "Restart the phone."
                   ],
-                  "validationDeeplink": null,
-                  "actionableDeeplink": null
+                  "actionableDeeplink": null,
+                  "validationDeeplink": null
                 }
-              ]
+              ],
+              "category": "critical"
             }
           ]
         }

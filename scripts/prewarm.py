@@ -1,4 +1,4 @@
-"""Pre-warm the semantic cache from queries.json + gold samples (never from held-out paraphrases).
+"""Pre-warm the semantic cache from the kit's complaints (never from held-out paraphrases).
 
     python scripts/prewarm.py                 # uses the configured extractor (LLM if reachable)
     SGTE_LLM_PROVIDER=none python scripts/prewarm.py   # deterministic (used at Docker build time)
@@ -13,12 +13,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
 def prewarm(engine, verbose: bool = False) -> dict:
+    # official kit: each complaint with the SIIS payload it arrives with (the API contract), then the same
+    # complaints as free text (retrieval path); synthetic kit: labelled queries + gold samples
+    items = [(c.query, c.siis_response) for c in engine.kit.cases]
     queries = [q.query for q in engine.kit.queries]
     queries += [s["input"]["query"] for s in engine.kit.samples.values() if s.get("input", {}).get("query")]
+    items += [(q, None) for q in dict.fromkeys(queries)]  # de-duplicated, order kept
     stats = {"queries": 0, "cached": 0, "no_match": 0, "already": 0}
     t0 = time.time()
-    for q in dict.fromkeys(queries):  # de-duplicated, order kept
-        rec = engine.troubleshoot(q)
+    for q, payload in items:
+        rec = engine.troubleshoot(q, payload)
         stats["queries"] += 1
         m = rec["meta"]
         if m["cache_hit"]:

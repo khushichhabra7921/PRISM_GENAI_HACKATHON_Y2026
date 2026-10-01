@@ -1,0 +1,32 @@
+{
+  "query": "My new smartphone's main screen stays small and doesn't fill the whole display; I can't make it expand to full size and I've never seen this before.",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Screen Mirroring Troubleshooting",
+        "title": "Screen mirroring fix",
+        "score": 0.56,
+        "actions": [
+          {
+            "actionName": "Change the Aspect Ratio",
+            "description": "It will change the aspect ratio",
+            "stepGroups": [
+              {
+                "steps": [
+                  "If the device's image looks small on your screen, make it a little bigger by changing the aspect ratio.",
+                  "On your phone or tablet, tap the Smart View icon.",
+                  "Tap More options (the three vertical dots).",
+                  "Tap Settings.",
+                  "Tap Phone aspect ratio."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          }
+        ]
+      }
+    ]
+  }
+}

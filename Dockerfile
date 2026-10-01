@@ -20,8 +20,9 @@ COPY tests tests
 
 # 1) download + cache the embedding model and cross-encoder inside the image
 RUN python -c "from app import models; models.warm(); print('models cached')"
-# 2) pre-warm the semantic cache from queries.json + gold samples (no LLM is reachable during a build,
-#    so these plans come from the deterministic grounded extractor; new queries use the SLM at runtime)
+# 2) pre-warm the semantic cache from the official kit: every input.txt complaint with its SIIS payload, then as
+#    free text (no LLM is reachable during a build, so these plans come from the deterministic grounded extractor;
+#    the SLM writes extra paraphrase keys at runtime)
 RUN SGTE_LLM_PROVIDER=none python scripts/prewarm.py --fresh
 
 EXPOSE 8000

@@ -30,8 +30,17 @@ echo "[clean] /health -> $code after $(( $(date +%s) - T0 )) s"
 [ "$code" = "200" ] || { docker compose -p sgte_clean logs --tail 50 api; exit 1; }
 curl -s "localhost:$API_PORT/health"; echo
 curl -s "localhost:$API_PORT/v1/info"; echo
-for q in "phone swipe gestures wrong direction after app install" "my screen flickers and the battery dies fast" \
-         "my galaxy watch wont sync steps"; do
+# official contract: the first input.txt complaint with its SIIS payload, sample_output.json shape
+python -c "
+import json; r=json.load(open('data/siis_responses.json',encoding='utf-8'))['responses'][0]
+q=open('data/input.txt',encoding='utf-8').readline().strip()
+print(json.dumps({'query': q, 'siis_response': r['siis_response']}))" > /tmp/sgte_payload.json
+curl -s -X POST "localhost:$API_PORT/v1/troubleshoot?view=contract" -H "Content-Type: application/json" \
+     -d @/tmp/sgte_payload.json | python -c "
+import json,sys; r=json.load(sys.stdin); g=r['response']['contexts']
+print(f\"[clean] official row_1 with payload: keys={list(r)} goals={len(g)} actions={[a['actionName'] for a in g[0]['actions']][:4] if g else []}\")"
+for q in "my touchscreen is laggy and slow to respond" "my screen went completely black" \
+         "my nexa watch wont sync steps"; do
   curl -s -X POST "localhost:$API_PORT/v1/troubleshoot" -H "Content-Type: application/json" \
        -d "{\"query\": \"$q\"}" | python -c "
 import json,sys; r=json.load(sys.stdin); m=r['meta']

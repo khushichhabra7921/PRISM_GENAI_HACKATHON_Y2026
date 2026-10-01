@@ -17,7 +17,7 @@ import httpx
 
 from app.config import SETTINGS, Settings
 
-SYSTEM = ("You are a careful assistant inside a Samsung Galaxy troubleshooting engine. "
+SYSTEM = ("You are a careful assistant inside a TechCorp Nexa device troubleshooting engine. "
           "Reply with one JSON object only: no markdown, no code fences, no commentary, no URLs.")
 
 

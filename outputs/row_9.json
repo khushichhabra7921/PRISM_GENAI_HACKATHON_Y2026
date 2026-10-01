@@ -1,0 +1,54 @@
+{
+  "query": "My Nexa Fold X1 inner screen stopped working by itself; it shows no image and doesn't respond to touch, while the outer cover screen still works.",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Data Access Troubleshooting",
+        "title": "Data access fix",
+        "score": 0.52,
+        "actions": [
+          {
+            "actionName": "Access Data",
+            "description": "It will access data for",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Even if you can no longer use the touchscreen, access data, such as pictures or messages, using a USB mouse.",
+                  "Connect the adapter to your phone.",
+                  "Connect the mouse's USB to the adapter.",
+                  "Connect a keyboard the same way, so you are able to easily enter your PIN or Password.",
+                  "Once you've backed up your data, visit a TechCorp walk-in service center, or you can schedule a repair service online."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          },
+          {
+            "actionName": "Back Up Your Data",
+            "description": "It will back up your data",
+            "stepGroups": [
+              {
+                "steps": [
+                  "If your phone's screen is damaged and you can no longer see anything on it, back up your data by connecting it to your TV or monitor.",
+                  "With some devices, use a device like a DeX station or multi-port adapter to connect a mouse and keyboard in addition to HDMI.",
+                  "Connect the adapter to your phone.",
+                  "Connect the HDMI cable to the adapter.",
+                  "Connect the other end of the HDMI cable to the HDMI port on the TV or monitor.",
+                  "Power on your TV or monitor.",
+                  "Select the input that your phone is connected to.",
+                  "From here, mimic movements on your phone to back up your data with Data Transfer or other methods.",
+                  "Once you've backed up your data, visit a TechCorp walk-in service center, or you can schedule a repair service online."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ],
+            "category": "manual"
+          }
+        ]
+      }
+    ]
+  }
+}

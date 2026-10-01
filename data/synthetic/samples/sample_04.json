@@ -3,11 +3,11 @@
     "synthetic": true,
     "generator": "scripts/make_synthetic_kit.py",
     "seed": 2026,
-    "note": "Synthetic data written from general One UI knowledge; not official Samsung content."
+    "note": "Synthetic data written from general One UI knowledge; not official TechCorp content."
   },
   "input": {
     "query": "my phone got slow after the update",
-    "siis_response": "After a software update the phone may feel slow for a few days while it optimises apps. Open Settings > Device care and tap Optimize now. Update all apps from the Galaxy Store and Play Store. Open Settings > Software update > Download and install to check for a newer update that fixes known issues. Restart the phone after installing updates. If the phone is still slow, back up your data and perform a factory data reset from Settings > General management > Reset > Factory data reset.",
+    "siis_response": "After a software update the phone may feel slow for a few days while it optimises apps. Open Settings > Device care and tap Optimize now. Update all apps from the Nexa Store and Play Store. Open Settings > Software update > Download and install to check for a newer update that fixes known issues. Restart the phone after installing updates. If the phone is still slow, back up your data and perform a factory data reset from Settings > General management > Reset > Factory data reset.",
     "siis_id": "siis_p02"
   },
   "output": {
@@ -16,7 +16,7 @@
       "My phone got slow after the update.",
       "phone slow since update",
       "slow after software update",
-      "Why is my Galaxy so laggy after the latest update?",
+      "Why is my Nexa so laggy after the latest update?",
       "Device performance has degraded following the recent software update.",
       "the new update made my phone painfully slow",
       "fone slow aftr update",
@@ -33,7 +33,6 @@
             {
               "actionName": "Optimize the Device",
               "description": "It will close apps and free memory",
-              "category": "auto",
               "stepGroups": [
                 {
                   "steps": [
@@ -41,33 +40,34 @@
                     "Tap on Device care.",
                     "Tap Optimize now."
                   ],
-                  "validationDeeplink": null,
                   "actionableDeeplink": {
-                    "deeplink": "bixby://masked/act/vj9hrs",
+                    "deeplink": "voiceassist://masked/act/bc20de11f4",
                     "description": "Open device care settings",
-                    "message": "Optimise your phone"
-                  }
+                    "message": "Optimise your phone",
+                    "originalType": "onURL"
+                  },
+                  "validationDeeplink": null
                 }
-              ]
+              ],
+              "category": "auto"
             },
             {
               "actionName": "Update All Apps",
               "description": "It will install the latest app fixes",
-              "category": "manual",
               "stepGroups": [
                 {
                   "steps": [
-                    "Update all apps from the Galaxy Store and Play Store."
+                    "Update all apps from the Nexa Store and Play Store."
                   ],
-                  "validationDeeplink": null,
-                  "actionableDeeplink": null
+                  "actionableDeeplink": null,
+                  "validationDeeplink": null
                 }
-              ]
+              ],
+              "category": "manual"
             },
             {
               "actionName": "Install Software Update",
               "description": "It will install the newest system software",
-              "category": "critical",
               "stepGroups": [
                 {
                   "steps": [
@@ -76,33 +76,34 @@
                     "Tap on Download and install.",
                     "Check for a newer update that fixes known issues."
                   ],
-                  "validationDeeplink": null,
                   "actionableDeeplink": {
-                    "deeplink": "bixby://masked/act/y348bj",
+                    "deeplink": "voiceassist://masked/act/fee5292b69",
                     "description": "Open download and install settings under Software update",
-                    "message": "Go to download and install in Software update"
-                  }
+                    "message": "Go to download and install in Software update",
+                    "originalType": "onURL"
+                  },
+                  "validationDeeplink": null
                 }
-              ]
+              ],
+              "category": "critical"
             },
             {
               "actionName": "Restart Your Phone",
               "description": "It will apply updates and refresh memory",
-              "category": "critical",
               "stepGroups": [
                 {
                   "steps": [
                     "Restart the phone after installing updates."
                   ],
-                  "validationDeeplink": null,
-                  "actionableDeeplink": null
+                  "actionableDeeplink": null,
+                  "validationDeeplink": null
                 }
-              ]
+              ],
+              "category": "critical"
             },
             {
               "actionName": "Perform a Factory Data Reset",
               "description": "It will restore the original phone state",
-              "category": "critical",
               "stepGroups": [
                 {
                   "steps": [
@@ -113,14 +114,16 @@
                     "Tap on Factory data reset.",
                     "Perform a factory data reset."
                   ],
-                  "validationDeeplink": null,
                   "actionableDeeplink": {
-                    "deeplink": "bixby://masked/act/77grsc",
+                    "deeplink": "voiceassist://masked/act/f41c48862e",
                     "description": "Open factory data reset settings under Reset",
-                    "message": "Go to factory data reset in Reset"
-                  }
+                    "message": "Go to factory data reset in Reset",
+                    "originalType": "onURL"
+                  },
+                  "validationDeeplink": null
                 }
-              ]
+              ],
+              "category": "critical"
             }
           ]
         }

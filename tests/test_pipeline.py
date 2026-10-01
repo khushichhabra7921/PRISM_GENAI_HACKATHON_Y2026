@@ -1,15 +1,17 @@
-"""End-to-end pipeline tests (deterministic: no LLM). Loads the embedding + reranker models once."""
+"""End-to-end pipeline tests on the synthetic regression kit (deterministic: no LLM).
+Loads the embedding + reranker models once. Official-kit tests: tests/test_official.py."""
 import copy
 
 import pytest
 
 from app.config import Settings
-from app.data_loader import load_kit
+from app.data_loader import load_synthetic_kit
 from app.pipeline import Engine
 from app.validate import GOAL_RE, check_record
 from bench.scoring import deeplink_relevance, step_accuracy
 
-KIT = load_kit()
+KIT = load_synthetic_kit()
+DUMMY = Settings().dummy_deeplink
 
 
 @pytest.fixture(scope="module")
@@ -20,7 +22,7 @@ def engine(tmp_path_factory):
 
 
 def _uris():
-    return {e.uri for e in KIT.catalog}
+    return {e.uri for e in KIT.catalog} | {e.val_uri for e in KIT.catalog if e.val_uri}
 
 
 GOLD_WITH_PLAN = [n for n, s in sorted(KIT.samples.items()) if s["output"]["response"]["contexts"]]
@@ -35,7 +37,7 @@ def test_gold_sample_reproduced(engine, name):
     gold = sample["output"]["response"]["contexts"][0]
     pred = rec["response"]["contexts"][0]
     acc = step_accuracy(pred, gold)
-    rel = deeplink_relevance(pred, gold, KIT.catalog, "bixby://dummy_positive")
+    rel = deeplink_relevance(pred, gold, KIT.catalog, DUMMY)
     assert acc["score"] >= 2.7, acc
     assert rel["score"] >= 1.8, rel
     m, gm = GOAL_RE.match(pred["goal"]), GOAL_RE.match(gold["goal"])
@@ -87,7 +89,7 @@ def test_every_deeplink_in_catalog(engine):
             for a in g["actions"]:
                 for sg in a["stepGroups"]:
                     d = sg["actionableDeeplink"]
-                    assert d is None or d["deeplink"] in _uris() or d["deeplink"] == "bixby://dummy_positive"
+                    assert d is None or d["deeplink"] in _uris() or d["deeplink"] == DUMMY
 
 
 def test_multi_symptom_returns_two_goals(engine):

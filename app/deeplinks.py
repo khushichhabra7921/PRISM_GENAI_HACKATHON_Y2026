@@ -37,6 +37,11 @@ class ActionQuery:
             m = re.match(r"(?:Optionally\s+)?(?:turn|toggle|switch) (?:on|off) ([A-Z][^.,]*)", s, re.I)
             if m and not m.group(1).lower().startswith(("it ", "it.", "them")):
                 out.append(re.split(r" and | if | when ", m.group(1))[0].strip())
+            # official phrasing: "tap the switch next to Touch sensitivity", "search for and select Screen timeout"
+            m = re.search(r"\bswitch(?:es)? next to ([A-Z][^.,]*?)(?: to | or |[.,]|$)", s) or \
+                re.search(r"\b[Ss]earch for and select ([A-Z][^.,]*?)(?: and |[.,]|$)", s)
+            if m:
+                out.append(m.group(1).strip())
         if self.leaf:
             out.append(self.leaf)
         return out
@@ -59,11 +64,48 @@ class DeeplinkMatch:
     evidence: dict = field(default_factory=dict)
 
     def as_schema(self) -> Optional[dict]:
+        """actionableDeeplink in the official key order (deeplink, description, message, originalType)."""
         if self.uri is None:
             return None
         if self.entry is None:  # dummy_positive
             return {"deeplink": self.uri, "description": "Open the matching Settings screen", "message": ""}
-        return {"deeplink": self.entry.uri, "description": self.entry.description, "message": self.entry.message}
+        out = {"deeplink": self.entry.uri, "description": self.entry.description, "message": self.entry.message}
+        if self.entry.original_type:
+            out["originalType"] = self.entry.original_type
+        return out
+
+    def validation_schema(self, steps: list[str]) -> Optional[dict]:
+        """validationDeeplink: read the entry's key after the action. Only emitted when the expected value is
+        stated by the steps themselves (a toggle turned on or off); otherwise None, never a guess."""
+        v = self.entry.validation if self.entry else None
+        if not v or not v.get("deeplink") or not v.get("key"):
+            return None
+        if v.get("condition") and v.get("value") is not None:  # fixed expectation from the catalog (official entry)
+            expected = str(v["value"])
+        elif v.get("resultType", "boolean") == "boolean":
+            expected = toggle_target(steps, self.entry)
+            if expected is None:
+                return None
+        else:
+            return None
+        return {"deeplink": v["deeplink"], "key": v["key"], "resultType": v.get("resultType", "boolean"),
+                "condition": v.get("condition") or "equal", "value": expected}
+
+
+OFF_RE = re.compile(r"\b(?:turn|toggle|switch) (?:it |them )?off\b|\bdisable\b|\bto disable it\b", re.I)
+ON_RE = re.compile(r"\b(?:turn|toggle|switch) (?:it |them )?on\b|\benable\b", re.I)
+
+
+def toggle_target(steps: list[str], entry: CatalogEntry) -> Optional[str]:
+    """'True' / 'False' when the steps switch this toggle on / off, else None."""
+    text = " ".join(s for s in steps if not s.startswith(("Navigate to and open", "Tap on ")))
+    if OFF_RE.search(text):
+        return "False"
+    if ON_RE.search(text):
+        return "True"
+    if entry.leaf and re.search(rf"\bselect {re.escape(entry.leaf)}\b", text, re.I):
+        return "True"
+    return None
 
 
 def _subject_match(entry: CatalogEntry, term: str) -> bool:

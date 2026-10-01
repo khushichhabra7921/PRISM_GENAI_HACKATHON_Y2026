@@ -91,6 +91,18 @@ class Settings:
     # grounding: rapidfuzz token_set_ratio (0-100) a step must reach against the source
     grounding_min: float = _f("SGTE_GROUNDING_MIN", 80.0)
 
+    # relevance inside a long SIIS article (app/relevance.py): numbered procedures and articles with at most
+    # rel_keep_all instruction blocks are kept whole; otherwise blocks within rel_ce_delta (cross-encoder logit)
+    # or rel_dense_delta (cosine) of the best block are kept, and at most rel_max_actions actions are returned
+    rel_keep_all: int = _i("SGTE_REL_KEEP_ALL", 3)
+    rel_ce_delta: float = _f("SGTE_REL_CE_DELTA", 3.0)
+    rel_dense_delta: float = _f("SGTE_REL_DENSE_DELTA", 0.07)
+    rel_max_actions: int = _i("SGTE_REL_MAX_ACTIONS", 6)
+
+    # output contract: action descriptions start with "It will"; the generator writes 5-7 words, the validator
+    # accepts up to desc_max_words because the official sample_output.json uses 9- and 12-word descriptions
+    desc_max_words: int = _i("SGTE_DESC_MAX_WORDS", 12)
+
     # deeplink engine
     rrf_k: int = _i("SGTE_RRF_K", 60)
     deeplink_top_k: int = _i("SGTE_DEEPLINK_TOP_K", 10)
@@ -104,7 +116,8 @@ class Settings:
     score_a: float = _f("SGTE_SCORE_A", 1.0)
     score_b: float = _f("SGTE_SCORE_B", -0.037)
 
-    dummy_deeplink: str = "bixby://dummy_positive"
+    # returned when a Settings screen named in the SIIS text is not in the catalog (official URI scheme)
+    dummy_deeplink: str = _env("SGTE_DUMMY_DEEPLINK", "voiceassist://dummy_positive")
     extra: dict = field(default_factory=dict)
 
 

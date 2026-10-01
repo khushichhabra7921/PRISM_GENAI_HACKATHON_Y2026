@@ -64,21 +64,32 @@
   th, td { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
   th { color: var(--muted); font-weight: 600; }
   .hidden { display: none; }
+  .cases { display: flex; gap: 8px; margin: 2px 0 10px; }
+  .cases select { flex: 1; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 12px; font: inherit;
+                  font-size: 13px; background: #fff; color: var(--ink); }
+  .cases button { background: var(--brand-soft); color: var(--brand); font-size: 13px; }
+  .article { font-size: 12px; color: var(--muted); margin: -4px 0 8px auto; max-width: 85%; text-align: right; }
+  .sg + .sg { border-top: 1px dotted var(--line); margin-top: 4px; padding-top: 4px; }
+  .kept { color: var(--manual); font-weight: 700; } .dropped { color: var(--muted); }
 </style>
 </head>
 <body>
 <header>
   <h1>Smart Guided Troubleshooting Engine</h1>
-  <p>Samsung PRISM GenAI Hackathon 2026 · Theme 2 · vague complaint → grounded, ordered, deeplinked plan</p>
+  <p>PRISM GenAI Hackathon 2026 · Theme 2 · TechCorp Nexa complaint + SIIS article → grounded, ordered, deeplinked plan</p>
 </header>
 <main>
   <section class="phone">
     <h2>Troubleshoot</h2>
     <p class="sub">Describe it in your own words</p>
     <form id="f">
-      <input id="q" type="text" autocomplete="off" placeholder="e.g. my screen flickers and the battery dies fast">
+      <input id="q" type="text" autocomplete="off" placeholder="e.g. my screen went completely black">
       <button class="send" type="submit">Send</button>
     </form>
+    <div class="cases hidden" id="cases">
+      <select id="case" aria-label="Official kit complaint"></select>
+      <button type="button" id="case-send">Send with SIIS</button>
+    </div>
     <div class="chips" id="chips"></div>
     <div id="chat"></div>
   </section>
@@ -105,12 +116,13 @@
 </main>
 <script>
 const EXAMPLES = [
-  "swipe gestures go the wrong way after installing an app",
-  "my screen flickers and the battery dies fast",
-  "there is a weird flicker on my display",
-  "phone got slow after the update",
-  "my galaxy watch wont sync my steps",
+  "my touchscreen is laggy and slow to respond",
+  "my screen went completely black",
+  "the screen does not rotate when I turn the tablet",
+  "my screen is cracked",
+  "my Nexa watch wont sync my steps",
 ];
+let CASES = [];
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
 
@@ -122,22 +134,42 @@ for (const ex of EXAMPLES) {
 }
 $("f").onsubmit = (e) => { e.preventDefault(); const v = $("q").value.trim(); if (v) send(v); };
 
-async function send(query) {
-  $("chat").innerHTML = `<div class="bubble">${esc(query)}</div><p class="status">Thinking…</p>`;
+// official kit: every input.txt complaint is sent with the SIIS payload it ships with
+function loadCases(attempt = 0) {
+  fetch("/v1/examples").then((r) => {
+    if (r.status === 503 && attempt < 60) { setTimeout(() => loadCases(attempt + 1), 3000); return null; }  // engine loading
+    return r.ok ? r.json() : null;
+  }).then((d) => {
+    CASES = (d && d.examples) || [];
+    if (!CASES.length) return;
+    $("case").innerHTML = CASES.map((c, i) => `<option value="${i}">${esc(c.id)} · ${esc(c.query.slice(0, 90))}</option>`).join("");
+    $("cases").classList.remove("hidden");
+  }).catch(() => {});
+}
+loadCases();
+$("case-send").onclick = () => {
+  const c = CASES[Number($("case").value)];
+  if (c) { $("q").value = c.query; send(c.query, c.siis_response); }
+};
+
+async function send(query, siis) {
+  $("chat").innerHTML = `<div class="bubble">${esc(query)}</div>` +
+    (siis ? `<div class="article">with SIIS article “${esc(siis.title)}”</div>` : "") + `<p class="status">Thinking…</p>`;
   let r;
   try {
+    const body = siis ? {query, siis_response: siis} : {query};
     const res = await fetch("/v1/troubleshoot", {method: "POST", headers: {"Content-Type": "application/json"},
-                                                 body: JSON.stringify({query})});
+                                                 body: JSON.stringify(body)});
     r = await res.json();
     if (!res.ok) throw new Error(r.error || res.status);
   } catch (err) {
     $("chat").innerHTML += `<div class="empty">Request failed: ${esc(err.message)}</div>`;
     return;
   }
-  render(query, r);
+  render(query, r, siis);
 }
 
-function render(query, r) {
+function render(query, r, siis) {
   const m = r.meta || {};
   const goals = (r.response && r.response.contexts) || [];
   $("m-lat").textContent = `${Math.round(m.latency_ms)} ms`;
@@ -149,30 +181,34 @@ function render(query, r) {
   $("m-more").innerHTML = `model <b>${esc(m.model)}</b> · ${esc(lookup)}` + (m.fallback ? ` · fallback <b>${esc(m.fallback)}</b>` : "");
   $("raw").textContent = JSON.stringify(r, null, 2);
 
-  let html = `<div class="bubble">${esc(query)}</div>`;
+  let html = `<div class="bubble">${esc(query)}</div>` +
+    (siis ? `<div class="article">with SIIS article “${esc(siis.title)}”</div>` : "");
   if (!goals.length) {
     html += `<div class="empty"><b>No grounded fix found</b> (${esc(m.fallback)}). Nothing is invented: the query is
              logged so the SIIS content team can see the gap.</div>`;
   } else {
-    html += `<p class="status">${goals.length} issue${goals.length > 1 ? "s" : ""} found · grounded in Samsung support content
+    html += `<p class="status">${goals.length} issue${goals.length > 1 ? "s" : ""} found · grounded in TechCorp support content
              · ${m.cache_hit ? "cache hit" : "new plan"} · ${Math.round(m.latency_ms)} ms</p>`;
   }
   goals.forEach((g, gi) => {
     html += `<div class="goal"><div class="gt">Goal · ${g.score.toFixed(2)}</div><h3>${esc(g.title)}</h3>
              <div class="gs">${esc(g.goal)}</div>`;
     g.actions.forEach((a, ai) => {
-      const dl = a.stepGroups[0] && a.stepGroups[0].actionableDeeplink;
-      const steps = a.stepGroups.flatMap((sg) => sg.steps).map((s) => `<li>${esc(s)}</li>`).join("");
-      const id = `dl-${gi}-${ai}`;
       html += `<div class="action"><div class="arow"><span class="badge ${a.category}">${a.category.toUpperCase()}</span>
-               <span class="aname">${esc(a.actionName)}</span></div><div class="adesc">${esc(a.description)}</div>
-               <ol>${steps}</ol>`;
-      if (dl) {
-        html += `<button class="open ${a.category === "critical" ? "last" : ""}" type="button"
-                 onclick="document.getElementById('${id}').style.display='block'">
-                 ${a.category === "critical" ? "Last step" : "Open"} ›</button>
-                 <div class="dl" id="${id}">${esc(dl.deeplink)} · ${esc(dl.description)}</div>`;
-      }
+               <span class="aname">${esc(a.actionName)}</span></div><div class="adesc">${esc(a.description)}</div>`;
+      a.stepGroups.forEach((sg, si) => {  // one group per navigation, each with its own deeplink
+        const dl = sg.actionableDeeplink, vd = sg.validationDeeplink;
+        const id = `dl-${gi}-${ai}-${si}`;
+        html += `<div class="sg"><ol>${sg.steps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol>`;
+        if (dl) {
+          html += `<button class="open ${a.category === "critical" ? "last" : ""}" type="button"
+                   onclick="document.getElementById('${id}').style.display='block'">
+                   ${a.category === "critical" ? "Last step" : "Open"} ›</button>
+                   <div class="dl" id="${id}">${esc(dl.deeplink)} · ${esc(dl.description)}` +
+                  (vd ? `<br>check: ${esc(vd.key)} ${esc(vd.condition)} ${esc(vd.value)} (${esc(vd.deeplink)})` : "") + `</div>`;
+        }
+        html += `</div>`;
+      });
       html += `</div>`;
     });
     html += `</div>`;
@@ -194,10 +230,19 @@ function renderWhy(ev) {
   for (const g of goals) {
     const s = g.siis || {};
     html += `<p class="status">SIIS article <b>${esc(s.title || s.source || "")}</b>
-             ${s.dense != null ? `· dense ${s.dense} · bm25 ${s.bm25} · rerank ${s.rerank}` : ""}</p>
-             <table><tr><th>Action</th><th>Source sentence(s)</th><th>Deeplink decision</th></tr>`;
+             ${s.dense != null ? `· dense ${s.dense} · bm25 ${s.bm25} · rerank ${s.rerank}` : ""}
+             ${s.source ? "· sent with the request (the only grounding boundary)" : ""}</p>`;
+    if ((g.relevance || []).length) {
+      const kept = g.relevance.filter((b) => b.kept).length;
+      html += `<p class="status">Relevance: ${kept} of ${g.relevance.length} instruction blocks kept</p>
+               <table><tr><th>Section</th><th>Block</th><th>rerank / dense</th><th></th></tr>` +
+        g.relevance.map((b) => `<tr><td>${esc(b.heading || "–")}</td><td>${esc(b.text)}…</td>
+          <td>${esc(b.rerank)} / ${esc(b.dense)}</td><td class="${b.kept ? "kept" : "dropped"}">${b.kept ? "kept" : "dropped"}</td></tr>`).join("") +
+        `</table>`;
+    }
+    html += `<table><tr><th>Action</th><th>Source sentence(s)</th><th>Deeplink decision</th></tr>`;
     for (const a of g.actions || []) {
-      const d = a.deeplink;
+      const d = Array.isArray(a.deeplink) ? a.deeplink[0] : a.deeplink;
       const dtxt = d ? `${esc(d.matched || d.decision || "")}<br><span class="status">tier ${esc(d.tier)} · rerank ${esc(d.rerank)}
                    · margin ${esc(d.margin ?? "–")} · runner-up: ${esc(d.runner_up)}</span>` : "no deeplink (manual / no screen)";
       html += `<tr><td>${esc(a.actionName)}</td><td>${(a.source_sentences || []).map(esc).join("<br>")}</td><td>${dtxt}</td></tr>`;

@@ -1,17 +1,27 @@
 """The ONLY module that knows the raw starter-kit file formats.
 
-Everything else consumes the normalised dataclasses below. To use the official kit,
-drop its files into data/ and adjust the field aliases here if names differ.
+Everything else consumes the normalised dataclasses below. Two layouts are understood:
+
+  official kit (data/):  input.txt (one complaint per line), siis_responses.json
+                         ({"responses": [{"id", "original_query", "siis_response": {"title", "content"}}]}),
+                         sample_output.json, schema.py
+  synthetic kit (data/synthetic/): queries.json, siis_responses.json (plain text), paraphrases_heldout.json,
+                         samples/*.json
+
+The Settings deeplink catalog (deeplinks.json) is read from the kit folder or, if absent there, its parent
+(the official kit ships no catalog; see data/README.md).
 """
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Optional
 
 from app.config import SETTINGS
+from app.siis_text import parse_article, payload_parts
 
 # raw field name -> candidates, first match wins
 ALIASES = {
@@ -19,9 +29,10 @@ ALIASES = {
     "description": ["description", "desc"],
     "message": ["message", "msg"],
     "cna": ["cna_description", "qna_description", "cnaDescription", "qnaDescription"],
-    "control": ["controlType", "control_type", "type", "originalType"],
+    "control": ["controlType", "control_type", "type"],
+    "original_type": ["originalType", "original_type"],
     "path": ["path", "menu_path", "breadcrumb"],
-    "validation": ["validation", "validationRule", "validation_rule"],
+    "validation": ["validation", "validationDeeplink", "validationRule", "validation_rule"],
 }
 
 
@@ -33,7 +44,8 @@ class CatalogEntry:
     cna: str
     control_type: str = "screen"
     path: tuple[str, ...] = ()
-    validation: Optional[dict] = None
+    validation: Optional[dict] = None  # {"deeplink": voiceassist://masked/val/..., "key", "resultType", ...}
+    original_type: str = ""
 
     @property
     def text(self) -> str:
@@ -48,13 +60,22 @@ class CatalogEntry:
     def leaf(self) -> str:
         return self.path[-1] if self.path else ""
 
+    @property
+    def val_uri(self) -> Optional[str]:
+        return (self.validation or {}).get("deeplink") or None
+
 
 @dataclass(frozen=True)
 class SiisDoc:
     id: str
     topic: str
     title: str
-    text: str
+    text: str  # clean flat text: what retrieval indexes and what grounding checks use
+    raw: str = ""  # the payload content as received (headings, one step per line); parsed for extraction
+
+    @property
+    def source(self) -> str:
+        return self.raw or self.text
 
 
 @dataclass(frozen=True)
@@ -66,6 +87,15 @@ class QueryRec:
     type: str  # single | multi | no_match
 
 
+@dataclass(frozen=True)
+class Case:
+    """One official evaluation row: the complaint and the SIIS payload the API receives with it."""
+    id: str
+    query: str
+    siis_response: dict
+    siis_id: str
+
+
 @dataclass
 class Kit:
     catalog: list[CatalogEntry]
@@ -75,6 +105,10 @@ class Kit:
     negatives: list[str] = field(default_factory=list)
     samples: dict[str, dict] = field(default_factory=dict)
     synthetic: bool = True
+    cases: list[Case] = field(default_factory=list)
+    reference_outputs: list[dict] = field(default_factory=list)  # official sample_output.json
+    official: bool = False
+    catalog_synthetic: bool = True
 
 
 def _pick(rec: dict, key: str, default: Any = "") -> Any:
@@ -100,8 +134,15 @@ def _read(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _catalog_file(data_dir: Path) -> Path:
+    for d in (data_dir, data_dir.parent):
+        if (d / "deeplinks.json").exists():
+            return d / "deeplinks.json"
+    raise FileNotFoundError(f"deeplinks.json not found in {data_dir} or its parent")
+
+
 def load_catalog(data_dir: Path) -> tuple[list[CatalogEntry], dict]:
-    rows, meta = _records(_read(data_dir / "deeplinks.json"), "deeplinks", "entries", "data")
+    rows, meta = _records(_read(_catalog_file(data_dir)), "deeplinks", "entries", "data")
     out = []
     for r in rows:
         path = _pick(r, "path", ())
@@ -110,23 +151,60 @@ def load_catalog(data_dir: Path) -> tuple[list[CatalogEntry], dict]:
         out.append(CatalogEntry(uri=_pick(r, "deeplink"), description=_pick(r, "description"),
                                 message=_pick(r, "message") or "", cna=_pick(r, "cna") or "",
                                 control_type=str(_pick(r, "control", "screen")).lower(),
-                                path=tuple(path), validation=_pick(r, "validation", None)))
+                                path=tuple(path), validation=_pick(r, "validation", None),
+                                original_type=str(_pick(r, "original_type", "") or "")))
     return [e for e in out if e.uri], meta
 
 
-def load_siis(data_dir: Path) -> list[SiisDoc]:
+def load_siis(data_dir: Path) -> tuple[list[SiisDoc], dict[str, str]]:
+    """-> (unique articles, {row id: article id}). Official rows repeat the same article for several
+    complaints; each distinct content becomes one SiisDoc, identified by the first row that carried it."""
     rows, _ = _records(_read(data_dir / "siis_responses.json"), "responses", "entries", "data")
-    out = []
+    docs: list[SiisDoc] = []
+    by_content: dict[str, str] = {}
+    row_doc: dict[str, str] = {}
     for i, r in enumerate(rows):
-        text = r.get("text") or r.get("siis_response") or r.get("response") or r.get("content") or ""
-        title = r.get("title") or r.get("query") or text.split(".")[0][:60]
-        out.append(SiisDoc(id=str(r.get("id", f"siis_{i:03d}")), topic=r.get("topic", r.get("domain", "")),
-                           title=title, text=text))
-    return out
+        rid = str(r.get("id", f"siis_{i:03d}"))
+        payload = r.get("siis_response")
+        if isinstance(payload, dict):  # official: {"title", "content"}
+            title, content = payload_parts(payload)
+            article = parse_article(title, content)
+            text, raw = article.text, content
+        else:
+            text = r.get("text") or payload or r.get("response") or r.get("content") or ""
+            title, raw = r.get("title") or r.get("query") or text.split(".")[0][:60], ""
+        key = re.sub(r"\s+", " ", raw or text).strip()
+        if key in by_content:
+            row_doc[rid] = by_content[key]
+            continue
+        by_content[key] = row_doc[rid] = rid
+        docs.append(SiisDoc(id=rid, topic=r.get("topic", r.get("domain", "")), title=title, text=text, raw=raw))
+    return docs, row_doc
 
 
-def load_queries(data_dir: Path) -> list[QueryRec]:
-    rows, _ = _records(_read(data_dir / "queries.json"), "queries", "entries", "data")
+def _clean_line(line: str) -> str:
+    return line.strip().strip("﻿")
+
+
+def load_cases(data_dir: Path, row_doc: dict[str, str]) -> list[Case]:
+    """Pair every complaint in input.txt with the SIIS payload of the same row (the files are in the same order)."""
+    p = data_dir / "input.txt"
+    if not p.exists():
+        return []
+    lines = [_clean_line(x) for x in p.read_text(encoding="utf-8-sig").splitlines() if _clean_line(x)]
+    rows, _ = _records(_read(data_dir / "siis_responses.json"), "responses", "entries", "data")
+    rows = [r for r in rows if isinstance(r.get("siis_response"), dict)]
+    if len(rows) != len(lines):
+        raise ValueError(f"input.txt has {len(lines)} complaints but siis_responses.json has {len(rows)} payloads")
+    return [Case(id=str(r["id"]), query=q, siis_response=r["siis_response"], siis_id=row_doc[str(r["id"])])
+            for q, r in zip(lines, rows)]
+
+
+def load_queries(data_dir: Path, cases: list[Case]) -> list[QueryRec]:
+    p = data_dir / "queries.json"
+    if not p.exists():  # official kit: the labelled queries are the input.txt complaints
+        return [QueryRec(id=c.id, query=c.query, domain="", siis_ids=(c.siis_id,), type="single") for c in cases]
+    rows, _ = _records(_read(p), "queries", "entries", "data")
     out = []
     for i, r in enumerate(rows):
         if isinstance(r, str):
@@ -145,6 +223,14 @@ def load_samples(data_dir: Path) -> dict[str, dict]:
     return {p.stem: _read(p) for p in sorted(sdir.glob("*.json"))}
 
 
+def load_reference_outputs(data_dir: Path) -> list[dict]:
+    p = data_dir / "sample_output.json"
+    if not p.exists():
+        return []
+    obj = _read(p)
+    return obj if isinstance(obj, list) else [obj]
+
+
 def load_heldout(data_dir: Path) -> tuple[list[dict], list[str]]:
     p = data_dir / "paraphrases_heldout.json"
     if not p.exists():
@@ -158,5 +244,18 @@ def load_kit(data_dir: Optional[str] = None) -> Kit:
     d = Path(data_dir) if data_dir else SETTINGS.data_dir
     catalog, meta = load_catalog(d)
     heldout, negatives = load_heldout(d)
-    return Kit(catalog=catalog, siis=load_siis(d), queries=load_queries(d), heldout=heldout,
-               negatives=negatives, samples=load_samples(d), synthetic=bool(meta.get("synthetic", False)))
+    siis, row_doc = load_siis(d)
+    cases = load_cases(d, row_doc)
+    official = bool(cases)
+    return Kit(catalog=catalog, siis=siis, queries=load_queries(d, cases), heldout=heldout, negatives=negatives,
+               samples=load_samples(d), synthetic=not official, cases=cases,
+               reference_outputs=load_reference_outputs(d), official=official,
+               catalog_synthetic=bool(meta.get("synthetic", False)))
+
+
+SYNTHETIC_DIR = SETTINGS.data_dir / "synthetic"
+
+
+def load_synthetic_kit() -> Kit:
+    """The seeded regression kit (labelled queries, held-out paraphrases, gold samples)."""
+    return load_kit(str(SYNTHETIC_DIR))
